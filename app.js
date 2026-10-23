@@ -41,11 +41,13 @@ const CH = CHAPTERS.map(c => ({
   id: c.id,
   title: c.title,
   vocab: c.vocab.trim().split('\n').map((l, i) => {
-    const [k, w, m, pos] = l.split('|').map(x => x.trim());
-    return { id: `${c.id}:${i}`, ch: c.id, k, w, m, pos: pos || 'n' };
+    const [k, w, m, pos, sec] = l.split('|').map(x => x.trim());
+    return { id: `${c.id}:${i}`, ch: c.id, k, w, m, pos: pos || 'n', sec: sec || 'A' };
   }),
   grammar: c.grammar,
-  quiz: c.quiz.map(q => ({ kind: 'grammar', ch: c.id, tag: 'Ngữ pháp', q: q[0], correct: q[1], opts: [q[1], q[2], q[3], q[4]], e: q[5] })),
+  gsec: c.gsec,
+  parts: (KANJI.find(x => x.ch === c.id) || { parts: [] }).parts,
+  quiz: c.quiz.map((q, i) => ({ kind: 'grammar', sec: c.qsec[i], ch: c.id, tag: 'Ngữ pháp', q: q[0], correct: q[1], opts: [q[1], q[2], q[3], q[4]], e: q[5] })),
   kanji: ((KANJI.find(x => x.ch === c.id) || { items: [] }).items).map((it, i) => ({ ...it, id: `k${c.id}:${i}`, ch: c.id }))
 }));
 const byId = id => CH.find(c => c.id === id);
@@ -172,7 +174,7 @@ const KEY = 'jp-review-v1';
 const saved = store.get(KEY, {});
 const state = Object.assign({
   script: 'kanji', fx: true, name: '', hf: 'all', tab: 'review', subject: 'vocab', chapter: 1, mode: 'study',
-  vview: 'cards', pos: 'all', order: 'orig', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
+  vview: 'cards', pos: 'all', part: 'all', order: 'orig', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
   tcfg: { subjects: ['vocab', 'grammar'], chapters: ALL_IDS.slice(), n: 20, dir: 'mix', mins: 0 },
   jcfg: { paper: JLPT[JLPT.length - 1].id, mode: 'full', sec: 'v', timed: 1 }
 }, saved.ui || {});
@@ -236,18 +238,14 @@ function render() {
   app.classList.toggle('wide', focus);
   document.body.classList.toggle('focus', focus);
   app.innerHTML = `<div class="tabs">${tb('review', '📚 Ôn tập')}${tb('test', '📝 Kiểm tra')}${tb('jlpt', '🎧 Đề JLPT')}${tb('history', '📊 Lịch sử')}</div>
-    ${state.tab === 'jlpt' && jl.phase !== 'menu' ? '' : `<div class="panel">
+    ${state.tab === 'jlpt' && jl.phase !== 'menu' ? '' : `<div class="panel tight">
       <div class="row">
-        <span class="label">Chữ viết</span>
-        ${seg('script', state.script, [['kanji', '漢字 Kanji'], ['furi', 'Furigana'], ['kana', 'Chỉ kana']], lock)}
-        ${lock ? '<span class="note">🔒 Khóa khi đang làm bài</span>' : ''}
-      </div>
-      <div class="row">
-        <span class="label">Hiệu ứng</span>
+        ${seg('script', state.script, [['kanji', '漢字'], ['furi', 'Furigana'], ['kana', 'Kana']], lock)}
         ${seg('fx', state.fx ? 1 : 0, [[1, '✨ Bật'], [0, 'Tắt']])}
         <span class="spacer"></span>
         <button class="pill cyan" data-act="name" title="Đổi tên">👤 ${esc(state.name || 'Đặt tên')}</button>
       </div>
+      ${lock ? '<div class="row note">🔒 Chữ viết bị khóa khi đang làm bài</div>' : ''}
     </div>
     <div class="strip">📊 Tổng câu đúng: <b id="totOk">${tot.ok}</b> &nbsp;|&nbsp; 🔥 Chuỗi kỷ lục: <b id="totStreak">${tot.streak}</b></div>`}
     <div id="view"></div>`;
@@ -262,19 +260,20 @@ const seg = (act, cur, items, off = false) =>
 
 /* ================= ÔN TẬP ================= */
 function renderReview() {
-  const chips = CH.map(c => {
-    const n = state.subject === 'vocab' ? c.vocab.length : state.subject === 'kanji' ? c.kanji.length : quizOf(c).length;
-    return `<button class="chip ${c.id === state.chapter ? 'on' : ''}" data-act="chapter" data-v="${c.id}">${c.title}<small>${n}</small></button>`;
-  }).join('');
+  const c = byId(state.chapter);
+  const chs = CH.map(x => `<button class="chip sq ${x.id === state.chapter ? 'on' : ''}" data-act="chapter" data-v="${x.id}" title="${x.title}">${x.id}</button>`).join('');
+  const cur = curPart(c);
+  const parts = partOpts(c, state.subject).map(([v, l]) =>
+    `<button class="chip ${cur === v ? 'on' : ''}" data-act="part" data-v="${v}">${esc(l)}<small>${scopeCount(c, state.subject, v)}</small></button>`).join('');
   $('#view').innerHTML = `
-    <div class="panel">
+    <div class="panel tight">
       <div class="row">
-        <span class="label">Nội dung</span>
         ${seg('subject', state.subject, [['vocab', '🈶 Từ vựng'], ['grammar', '📐 Ngữ pháp'], ['kanji', '🈳 Kanji']])}
         <span class="spacer"></span>
         ${seg('mode', state.mode, [['study', '📖 Học'], ['practice', '✍️ Luyện tập']])}
       </div>
-      <div class="row"><span class="label">Chương</span><div class="chips">${chips}</div></div>
+      <div class="row"><span class="label sm">Chương</span><div class="chips mini">${chs}</div></div>
+      <div class="row"><span class="label sm">Phần</span><div class="chips mini">${parts}</div></div>
     </div>
     <div id="study"></div>`;
   drawStudy();
@@ -291,29 +290,47 @@ function drawStudy() {
 
 /* ---------- học: ngữ pháp ---------- */
 function drawGrammar(host) {
-  const c = byId(state.chapter);
-  host.innerHTML = c.grammar.map((g, n) => {
+  const c = byId(state.chapter), list = grammarScope(c);
+  host.innerHTML = list.map(({ g, n, sec }) => {
     const notes = g[2] ? `<ul class="g-notes">${g[2].split(' ｜ ').map(t => `<li>${jp(t)}</li>`).join('')}</ul>` : '';
     const ex = g.slice(3).map(t => `<div class="g-ex">${jp(t)}</div>`).join('');
-    return `<div class="g"><div class="g-pat"><span class="g-no">${n + 1}</span>${jp(g[0])}</div><div class="g-mean">${jp(g[1])}</div>${notes}${ex}</div>`;
-  }).join('') + `<p class="note" style="text-align:center">Xem xong hãy chuyển sang <b>✍️ Luyện tập</b> để làm bài trắc nghiệm của ${c.title}.</p>`;
+    return `<div class="g"><div class="g-pat"><span class="g-no">${n}</span>${jp(g[0])}<span class="g-sec">${c.id}-${sec}</span></div><div class="g-mean">${jp(g[1])}</div>${notes}${ex}</div>`;
+  }).join('') + `<p class="note" style="text-align:center">Xem xong hãy chuyển sang <b>✍️ Luyện tập</b> để làm bài trắc nghiệm.</p>`;
 }
 
 /* ---------- học: từ vựng — thẻ ghi nhớ ---------- */
-/* chip lọc loại từ cho một danh sách từ vựng */
+/* phần (A/B/C/D) và phạm vi học: Tổng hợp = cả chương */
+const partOpts = (c, subject) => {
+  if (subject === 'kanji') return [['all', 'Tổng hợp'], ...c.parts.map((p, i) => [String(i + 1), p])];
+  const letters = [...new Set(subject === 'vocab' ? c.vocab.map(w => w.sec) : c.gsec.split(''))].sort();
+  return [['all', 'Tổng hợp'], ...letters.map(l => [l, l])];
+};
+const curPart = c => (partOpts(c, state.subject).some(([v]) => v === state.part) ? state.part : 'all');
+const inPart = (p, v) => p === 'all' || String(v) === p;
+const vocabScope = (c, p = curPart(c)) => c.vocab.filter(w => inPart(p, w.sec));
+const kanjiScope = (c, p = curPart(c)) => c.kanji.filter(it => inPart(p, it.s));
+const quizScope = (c, p = curPart(c)) => quizOf(c).filter(q => inPart(p, q.sec));
+const grammarScope = (c, p = curPart(c)) => c.grammar.map((g, i) => ({ g, n: i + 1, sec: c.gsec[i] })).filter(x => inPart(p, x.sec));
+const scopeCount = (c, subject, p) => (subject === 'vocab' ? vocabScope(c, p).length
+  : subject === 'kanji' ? kanjiScope(c, p).length
+    : state.mode === 'practice' ? quizScope(c, p).length : grammarScope(c, p).length);
+
+/* lọc loại từ: ô chọn gọn thay cho hàng chip dài */
 const effPos = words => (words.some(w => inPos(w, state.pos)) ? state.pos : 'all');
-const posChips = words => {
+const posSelect = words => {
   const cur = effPos(words);
-  const chips = POS_FILTERS.map(([g, l]) => {
+  const opts = POS_FILTERS.map(([g, l]) => {
     const n = words.filter(w => inPos(w, g)).length;
-    return n ? `<button class="chip ${cur === g ? 'on' : ''}" data-act="pos" data-v="${g}">${l}<small>${n}</small></button>` : '';
+    return n ? `<option value="${g}" ${cur === g ? 'selected' : ''}>${l} (${n})</option>` : '';
   }).join('');
-  return `<div class="row"><span class="label">Loại từ</span><div class="chips">${chips}</div></div>`;
+  return `<label class="sel-wrap"><span>Loại từ</span><select class="sel" data-act="pos">${opts}</select></label>`;
 };
 
 function buildDeck() {
   const ch = byId(state.chapter);
-  let list = (state.subject === 'kanji' ? ch.kanji : ch.vocab.filter(w => inPos(w, effPos(ch.vocab)))).slice();
+  let list;
+  if (state.subject === 'kanji') list = kanjiScope(ch).slice();
+  else { const base = vocabScope(ch); list = base.filter(w => inPos(w, effPos(base))); }
   if (state.conly) list = list.filter(w => !known.has(w.id));
   if (state.cshuf) list = shuffle(list);
   cards = { list, i: 0, flip: false };
@@ -321,25 +338,26 @@ function buildDeck() {
 
 function drawCards(host) {
   if (!cards) buildDeck();
-  const all = byId(state.chapter).vocab;
+  const all = vocabScope(byId(state.chapter));
   const knownCnt = all.filter(w => known.has(w.id)).length;
   const opts = `
-    <div class="panel">
+    <div class="panel tight">
       <div class="row">
-        ${seg('vview', state.vview, [['cards', '🃏 Thẻ ghi nhớ'], ['list', '📋 Danh sách']])}
+        ${seg('vview', state.vview, [['cards', '🃏 Thẻ'], ['list', '📋 Danh sách']])}
         ${seg('cdir', state.cdir, [['jv', 'Nhật → Việt'], ['vj', 'Việt → Nhật']])}
+        <span class="spacer"></span>
+        ${posSelect(all)}
       </div>
       <div class="row">
-        <button class="chip ${state.cshuf ? 'on' : ''}" data-act="cshuf">🔀 Trộn thẻ</button>
-        <button class="chip ${state.conly ? 'on' : ''}" data-act="conly">Chỉ từ chưa nhớ</button>
+        <button class="chip ${state.cshuf ? 'on' : ''}" data-act="cshuf">🔀 Trộn</button>
+        <button class="chip ${state.conly ? 'on' : ''}" data-act="conly">Chưa nhớ</button>
         <span class="spacer"></span>
-        <span class="pill ok">✓ Đã nhớ ${knownCnt}/${all.length}</span>
-        <button class="btn" data-act="cclear">Xóa tiến độ</button>
+        <span class="pill ok">✓ ${knownCnt}/${all.length}</span>
+        <button class="btn sm" data-act="cclear" title="Xóa tiến độ “Đã nhớ”">↺</button>
       </div>
-      ${posChips(all)}
     </div>`;
   if (!cards.list.length) {
-    host.innerHTML = opts + `<div class="empty">🎉 Bạn đã nhớ hết từ vựng của ${byId(state.chapter).title}!<br>Bỏ chọn “Chỉ từ chưa nhớ” để xem lại.</div>`;
+    host.innerHTML = opts + `<div class="empty">🎉 Không còn từ nào trong phạm vi này!<br>Bỏ chọn “Chưa nhớ” để xem lại.</div>`;
     return;
   }
   const w = cards.list[cards.i];
@@ -366,21 +384,21 @@ function drawCards(host) {
 /* ---------- học: kanji — thẻ ghi nhớ & danh sách ---------- */
 function drawKCards(host) {
   if (!cards) buildDeck();
-  const all = byId(state.chapter).kanji;
+  const all = kanjiScope(byId(state.chapter));
   const knownCnt = all.filter(w => known.has(w.id)).length;
   const opts = `
-    <div class="panel">
-      <div class="row">${seg('vview', state.vview, [['cards', '🃏 Thẻ ghi nhớ'], ['list', '📋 Bảng kanji']])}</div>
+    <div class="panel tight">
       <div class="row">
-        <button class="chip ${state.cshuf ? 'on' : ''}" data-act="cshuf">🔀 Trộn thẻ</button>
-        <button class="chip ${state.conly ? 'on' : ''}" data-act="conly">Chỉ chữ chưa nhớ</button>
+        ${seg('vview', state.vview, [['cards', '🃏 Thẻ'], ['list', '📋 Bảng kanji']])}
+        <button class="chip ${state.cshuf ? 'on' : ''}" data-act="cshuf">🔀 Trộn</button>
+        <button class="chip ${state.conly ? 'on' : ''}" data-act="conly">Chưa nhớ</button>
         <span class="spacer"></span>
-        <span class="pill ok">✓ Đã nhớ ${knownCnt}/${all.length}</span>
-        <button class="btn" data-act="cclear">Xóa tiến độ</button>
+        <span class="pill ok">✓ ${knownCnt}/${all.length}</span>
+        <button class="btn sm" data-act="cclear" title="Xóa tiến độ “Đã nhớ”">↺</button>
       </div>
     </div>`;
   if (!cards.list.length) {
-    host.innerHTML = opts + `<div class="empty">🎉 Bạn đã nhớ hết kanji của ${byId(state.chapter).title}!<br>Bỏ chọn “Chỉ chữ chưa nhớ” để xem lại.</div>`;
+    host.innerHTML = opts + `<div class="empty">🎉 Không còn chữ nào trong phạm vi này!<br>Bỏ chọn “Chưa nhớ” để xem lại.</div>`;
     return;
   }
   const it = cards.list[cards.i];
@@ -415,14 +433,14 @@ function kanjiDetail(it, withKanji, cv = '') {
 function drawKList(host) {
   const c = byId(state.chapter);
   const cv = state.cover === 'm' ? 'm' : '';
-  const items = c.kanji.map(it => `<div class="kitem">
+  const items = kanjiScope(c).map(it => `<div class="kitem">
       <div class="kglyph ${state.cover === 'w' ? 'kcv' : ''}">${esc(it.k)}</div>
       <div class="kinfo">${kanjiDetail(it, false, cv)}</div>
     </div>`).join('');
   host.innerHTML = `
-    <div class="panel">
+    <div class="panel tight">
       <div class="row">
-        ${seg('vview', state.vview, [['cards', '🃏 Thẻ ghi nhớ'], ['list', '📋 Bảng kanji']])}
+        ${seg('vview', state.vview, [['cards', '🃏 Thẻ'], ['list', '📋 Bảng kanji']])}
         ${seg('cover', state.cover, [['none', 'Hiện hết'], ['m', 'Che đọc & nghĩa'], ['w', 'Che chữ Hán']])}
       </div>
       ${state.cover !== 'none' ? '<div class="row note">Nhấn vào phần bị che để xem đáp án.</div>' : ''}
@@ -435,7 +453,8 @@ function drawList(host) {
   const c = byId(state.chapter);
   const rd = w => (w.k && state.script !== 'kana' ? w.w : '—');
   const cv = (on, t) => (on ? `<td class="cover"><span>${jp(t)}</span></td>` : `<td>${jp(t)}</td>`);
-  const words = c.vocab.filter(w => inPos(w, effPos(c.vocab)));
+  const base = vocabScope(c);
+  const words = base.filter(w => inPos(w, effPos(base)));
   const rows = words.map((w, i) => `<tr>
       <td class="note">${i + 1}</td>
       ${state.cover === 'w' ? `<td class="k cover"><span>${jp(disp(w))}</span></td>` : `<td class="k">${jp(disp(w))}</td>`}
@@ -444,13 +463,14 @@ function drawList(host) {
       <td>${posBadges(w)}</td>
     </tr>`).join('');
   host.innerHTML = `
-    <div class="panel">
+    <div class="panel tight">
       <div class="row">
-        ${seg('vview', state.vview, [['cards', '🃏 Thẻ ghi nhớ'], ['list', '📋 Danh sách']])}
+        ${seg('vview', state.vview, [['cards', '🃏 Thẻ'], ['list', '📋 Danh sách']])}
         ${seg('cover', state.cover, [['none', 'Hiện hết'], ['m', 'Che nghĩa'], ['w', 'Che từ']])}
+        <span class="spacer"></span>
+        ${posSelect(base)}
       </div>
       ${state.cover !== 'none' ? '<div class="row note">Nhấn vào ô bị che để xem đáp án.</div>' : ''}
-      ${posChips(c.vocab)}
     </div>
     <div class="panel table-wrap"><table class="vt">
       <thead><tr><th>#</th><th>Từ</th><th>Cách đọc</th><th>Nghĩa</th><th>Loại từ</th></tr></thead>
@@ -462,13 +482,16 @@ function drawList(host) {
 function buildPractice() {
   const c = byId(state.chapter);
   let qs;
-  if (state.subject === 'vocab') qs = c.vocab.filter(w => inPos(w, effPos(c.vocab))).map(w => vocabQ(w, 'mix'));
-  else if (state.subject === 'kanji') qs = [...c.kw.map(e => kanjiQ(e)), ...c.kanji.filter(it => it.hv).map(kanjiHV)];
-  else qs = quizOf(c).map(finalize);
+  if (state.subject === 'vocab') { const base = vocabScope(c); qs = base.filter(w => inPos(w, effPos(base))).map(w => vocabQ(w, 'mix')); }
+  else if (state.subject === 'kanji') {
+    const inScope = new Set(kanjiScope(c).map(it => it.k));
+    qs = [...c.kw.filter(e => inScope.has(e.k)).map(e => kanjiQ(e)), ...kanjiScope(c).filter(it => it.hv).map(kanjiHV)];
+  } else qs = quizScope(c).map(finalize);
   if (state.order === 'shuffle') qs = shuffle(qs);
+  const p = curPart(c);
   practice = {
     qs, ans: qs.map(() => -1), streak: 0, logged: false, startedAt: 0,
-    label: `${KIND[state.subject]} · ${c.title}`
+    label: `${KIND[state.subject]} · ${c.title}${p === 'all' ? '' : state.subject === 'kanji' ? ` · bài ${p}` : ` · phần ${p}`}`
   };
 }
 
@@ -483,19 +506,20 @@ function qCard(q, i) {
 function drawPractice(host) {
   if (!practice) buildPractice();
   host.innerHTML = `
-    <div class="panel">
-      ${state.subject === 'vocab' ? posChips(byId(state.chapter).vocab) + '<div style="height:10px"></div>' : ''}
+    <div class="panel tight">
       <div class="stats">
         <span class="pill" id="pDone"></span>
         <span class="pill ok" id="pOk"></span>
         <span class="pill bad" id="pBad"></span>
         <span class="pill warn" id="pStreak"></span>
         <span class="spacer"></span>
+        ${state.subject === 'vocab' ? posSelect(vocabScope(byId(state.chapter))) : ''}
         ${seg('order', state.order, [['orig', 'Gốc'], ['shuffle', 'Trộn']])}
-        <button class="btn" data-act="reset">↻ Làm lại</button>
+        <button class="btn sm" data-act="reset" title="Làm lại">↻</button>
       </div>
-      <div class="bar" style="margin-top:10px"><i id="pBar"></i></div>
+      <div class="bar" style="margin-top:8px"><i id="pBar"></i></div>
     </div>
+    ${practice.qs.length ? '' : '<div class="empty">Phạm vi này chưa có câu hỏi.</div>'}
     <div id="practiceList">${practice.qs.map(qCard).join('')}</div>
     <div id="pFinish"></div>`;
   practice.qs.forEach((q, i) => {
@@ -516,6 +540,7 @@ function applyAnswer(card, q, chosen) {
 
 function updatePracticeStats() {
   const p = practice, total = p.qs.length;
+  if (!total) { $('#pDone').textContent = '✅ 0/0'; $('#pOk').textContent = '✔ Đúng 0'; $('#pBad').textContent = '✖ Sai 0'; $('#pStreak').textContent = '🔥 Chuỗi 0'; return; }
   const done = p.ans.filter(a => a !== -1).length;
   const ok = p.qs.filter((q, i) => p.ans[i] === q.a).length;
   $('#pDone').textContent = `✅ ${done}/${total}`;
@@ -579,7 +604,7 @@ function setupHTML() {
   const nG = cfg.subjects.includes('grammar') ? chs.reduce((s, c) => s + quizOf(c).length, 0) : 0;
   const nK = cfg.subjects.includes('kanji') ? chs.reduce((s, c) => s + c.kw.length + c.kanji.filter(it => it.hv).length, 0) : 0;
   const avail = nV + nG + nK;
-  const chips = CH.map(c => `<button class="chip ${cfg.chapters.includes(c.id) ? 'on' : ''}" data-act="tch" data-v="${c.id}">${c.title}</button>`).join('');
+  const chips = CH.map(c => `<button class="chip sq ${cfg.chapters.includes(c.id) ? 'on' : ''}" data-act="tch" data-v="${c.id}" title="${c.title}">${c.id}</button>`).join('');
   const mistN = Object.keys(mist).length;
   const hist = log.length
     ? `<h2 class="sec">Gần đây</h2><div class="hist">${log.slice(0, 3).map(h =>
@@ -593,11 +618,7 @@ function setupHTML() {
         <button class="chip ${cfg.subjects.includes('grammar') ? 'on' : ''}" data-act="tsub" data-v="grammar">📐 Ngữ pháp</button>
         <button class="chip ${cfg.subjects.includes('kanji') ? 'on' : ''}" data-act="tsub" data-v="kanji">🈳 Kanji</button>
       </div>
-      <div class="row"><span class="label">Chương</span><div class="chips">${chips}</div></div>
-      <div class="row"><span class="label"></span>
-        <button class="btn" data-act="tall">Chọn tất cả</button>
-        <button class="btn" data-act="tnone">Bỏ chọn</button>
-      </div>
+      <div class="row"><span class="label">Chương</span><div class="chips mini">${chips}</div><button class="btn sm" data-act="tall">Tất cả</button><button class="btn sm" data-act="tnone">Bỏ chọn</button></div>
       <div class="row"><span class="label">Số câu</span>${seg('tn', cfg.n, [[10, '10'], [20, '20'], [30, '30'], [50, '50'], [0, 'Tất cả']])}</div>
       <div class="row"><span class="label">Kiểu từ vựng</span>${seg('tdir', cfg.dir, [['mix', 'Hỗn hợp'], ['jv', 'Nhật → Việt'], ['vj', 'Việt → Nhật']])}</div>
       <div class="row"><span class="label">Thời gian</span>${seg('tmin', cfg.mins, [[0, 'Không giới hạn'], [5, '5 phút'], [10, '10 phút'], [20, '20 phút']])}</div>
@@ -1096,9 +1117,10 @@ function act(a, v) {
       state.script = v; practice = null; persist(); return render();
 
     /* ôn tập */
-    case 'subject': state.subject = v; practice = null; cards = null; persist(); return renderReview();
+    case 'part': state.part = v; practice = null; cards = null; persist(); return renderReview();
+    case 'subject': state.subject = v; state.part = 'all'; practice = null; cards = null; persist(); return renderReview();
     case 'mode': state.mode = v; persist(); return renderReview();
-    case 'chapter': state.chapter = +v; practice = null; cards = null; persist(); return renderReview();
+    case 'chapter': state.chapter = +v; state.part = 'all'; practice = null; cards = null; persist(); return renderReview();
     case 'vview': state.vview = v; persist(); return drawStudy();
     case 'order': state.order = v; practice = null; persist(); return drawStudy();
     case 'reset': practice = null; drawStudy(); return window.scrollTo(0, 0);
@@ -1106,8 +1128,8 @@ function act(a, v) {
     case 'cshuf': state.cshuf = !state.cshuf; cards = null; persist(); return drawStudy();
     case 'conly': state.conly = !state.conly; cards = null; persist(); return drawStudy();
     case 'cclear':
-      if (confirm('Xóa tiến độ “Đã nhớ” của chương này?')) {
-        (state.subject === 'kanji' ? byId(state.chapter).kanji : byId(state.chapter).vocab).forEach(w => known.delete(w.id));
+      if (confirm('Xóa tiến độ “Đã nhớ” trong phạm vi đang chọn?')) {
+        (state.subject === 'kanji' ? kanjiScope(byId(state.chapter)) : vocabScope(byId(state.chapter))).forEach(w => known.delete(w.id));
         cards = null; persist(); drawStudy();
       }
       return;
@@ -1157,6 +1179,11 @@ function act(a, v) {
   persist();
   renderTest();
 }
+
+app.addEventListener('change', e => {
+  const el = e.target.closest('select[data-act]');
+  if (el) act(el.dataset.act, el.value);
+});
 
 app.addEventListener('click', e => {
   const reveal = e.target.closest('td.cover, .kcv');
