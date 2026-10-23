@@ -96,21 +96,26 @@ function distractors(w, textOf, n = 3, filter = () => true) {
   return out;
 }
 
-/* dir: 'jv' Nhật→Việt · 'vj' Việt→Nhật · 'mix' hỗn hợp (có cả câu hỏi cách đọc) */
+/* đáp án Nhật hiển thị đầy đủ: chế độ kanji thì kèm cách đọc để vừa ôn chữ vừa ôn âm */
+const fullJp = w => (w.k && state.script === 'kanji' ? `${w.k}（${w.w}）` : disp(w));
+const posText = w => posParts(w).map(p => POS_LABEL[p] || p).join(' / ');
+
+/* dir: 'jv' Nhật→Việt · 'vj' Việt→Nhật · 'both' trộn hai chiều · 'mix' hỗn hợp (có cả câu hỏi cách đọc) */
 function vocabQ(w, dir = 'mix') {
   const canRead = w.k && state.script === 'kanji';   // hỏi cách đọc chỉ có nghĩa khi chưa hiện furigana
   let kind = dir;
+  if (dir === 'both') kind = Math.random() < .5 ? 'jv' : 'vj';
   if (dir === 'mix') kind = ['jv', 'vj', canRead ? 'rd' : 'jv'][Math.floor(Math.random() * 3)];
   if (kind === 'rd' && !canRead) kind = 'jv';
-  const e = canRead ? `${w.w}（${w.k}）= ${w.m}` : `${disp(w)} = ${w.m}`;
+  const e = `${canRead ? `${w.w}（${w.k}）` : disp(w)} = ${w.m}  ·  ${posText(w)}`;
   const notSame = x => disp(x) !== disp(w);            // từ trùng chữ (vd 高い: đắt / cao) không được làm đáp án nhiễu
   if (kind === 'vj') {
-    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Việt → Nhật', q: `「${shortM(w.m)}」 trong tiếng Nhật là?`, correct: disp(w), opts: [disp(w), ...distractors(w, disp)], e });
+    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Việt → Nhật', q: `「${w.m}」 trong tiếng Nhật là?`, correct: fullJp(w), opts: [fullJp(w), ...distractors(w, fullJp, 3, x => notSame(x) && shortM(x.m) !== shortM(w.m))], e });
   }
   if (kind === 'rd') {
     return finalize({ kind: 'vocab', ch: w.ch, tag: 'Cách đọc', q: `Cách đọc của 「${w.k}」 là?`, correct: w.w, opts: [w.w, ...distractors(w, x => x.w, 3, x => x.k && notSame(x))], e });
   }
-  return finalize({ kind: 'vocab', ch: w.ch, tag: 'Nhật → Việt', q: `「${disp(w)}」 có nghĩa là gì?`, correct: shortM(w.m), opts: [shortM(w.m), ...distractors(w, x => shortM(x.m), 3, notSame)], e });
+  return finalize({ kind: 'vocab', ch: w.ch, tag: 'Nhật → Việt', q: `「${disp(w)}」 có nghĩa là gì?`, correct: w.m, opts: [w.m, ...distractors(w, x => x.m, 3, notSame)], e });
 }
 
 /* ---------- câu hỏi kanji ---------- */
@@ -174,7 +179,7 @@ const KEY = 'jp-review-v1';
 const saved = store.get(KEY, {});
 const state = Object.assign({
   script: 'kanji', fx: true, name: '', hf: 'all', tab: 'review', subject: 'vocab', chapter: 1, mode: 'study',
-  vview: 'cards', pos: 'all', part: 'all', order: 'orig', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
+  vview: 'cards', pos: 'all', part: 'all', order: 'orig', pdir: 'both', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
   tcfg: { subjects: ['vocab', 'grammar'], chapters: ALL_IDS.slice(), n: 20, dir: 'mix', mins: 0 },
   jcfg: { paper: JLPT[JLPT.length - 1].id, mode: 'full', sec: 'v', timed: 1 }
 }, saved.ui || {});
@@ -482,7 +487,7 @@ function drawList(host) {
 function buildPractice() {
   const c = byId(state.chapter);
   let qs;
-  if (state.subject === 'vocab') { const base = vocabScope(c); qs = base.filter(w => inPos(w, effPos(base))).map(w => vocabQ(w, 'mix')); }
+  if (state.subject === 'vocab') { qs = vocabScope(c).map(w => vocabQ(w, state.pdir)); }
   else if (state.subject === 'kanji') {
     const inScope = new Set(kanjiScope(c).map(it => it.k));
     qs = [...c.kw.filter(e => inScope.has(e.k)).map(e => kanjiQ(e)), ...kanjiScope(c).filter(it => it.hv).map(kanjiHV)];
@@ -513,7 +518,7 @@ function drawPractice(host) {
         <span class="pill bad" id="pBad"></span>
         <span class="pill warn" id="pStreak"></span>
         <span class="spacer"></span>
-        ${state.subject === 'vocab' ? posSelect(vocabScope(byId(state.chapter))) : ''}
+        ${state.subject === 'vocab' ? seg('pdir', state.pdir, [['jv', 'Nhật → Việt'], ['vj', 'Việt → Nhật'], ['both', '🔀 Trộn 2 chiều']]) : ''}
         ${seg('order', state.order, [['orig', 'Gốc'], ['shuffle', 'Trộn']])}
         <button class="btn sm" data-act="reset" title="Làm lại">↻</button>
       </div>
@@ -1122,6 +1127,7 @@ function act(a, v) {
     case 'mode': state.mode = v; persist(); return renderReview();
     case 'chapter': state.chapter = +v; state.part = 'all'; practice = null; cards = null; persist(); return renderReview();
     case 'vview': state.vview = v; persist(); return drawStudy();
+    case 'pdir': state.pdir = v; practice = null; persist(); return drawStudy();
     case 'order': state.order = v; practice = null; persist(); return drawStudy();
     case 'reset': practice = null; drawStudy(); return window.scrollTo(0, 0);
     case 'cdir': state.cdir = v; cards.flip = false; persist(); return drawStudy();
