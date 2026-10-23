@@ -41,8 +41,8 @@ const CH = CHAPTERS.map(c => ({
   id: c.id,
   title: c.title,
   vocab: c.vocab.trim().split('\n').map((l, i) => {
-    const [k, w, m] = l.split('|').map(x => x.trim());
-    return { id: `${c.id}:${i}`, ch: c.id, k, w, m };
+    const [k, w, m, pos] = l.split('|').map(x => x.trim());
+    return { id: `${c.id}:${i}`, ch: c.id, k, w, m, pos: pos || 'n' };
   }),
   grammar: c.grammar,
   quiz: c.quiz.map(q => ({ kind: 'grammar', ch: c.id, tag: 'Ngữ pháp', q: q[0], correct: q[1], opts: [q[1], q[2], q[3], q[4]], e: q[5] })),
@@ -56,7 +56,17 @@ CH.forEach(c => { c.kw = c.kanji.flatMap(it => it.w.map(([w, r, m]) => ({ w, r, 
 const ALL_KW = CH.flatMap(c => c.kw);
 const ALL_KANJI = CH.flatMap(c => c.kanji);
 
-Furigana.init(EXTRA_READINGS, ALL_WORDS);
+/* nguồn cách đọc cho furigana: từ vựng + từ ví dụ của kanji */
+Furigana.init(EXTRA_READINGS, ALL_WORDS.concat(ALL_KW.map(e => ({ k: e.w, w: e.r }))));
+
+/* ---------- loại từ ---------- */
+const POS_LABEL = { n: 'Danh từ', v1: 'Động từ I', v2: 'Động từ II', v3: 'Động từ III', i: 'Tính từ い', na: 'Tính từ な', adv: 'Phó từ', suf: 'Hậu tố / trợ số từ', exp: 'Cụm từ / giao tiếp', oth: 'Khác' };
+const POS_FILTERS = [['all', 'Tất cả'], ['n', 'Danh từ'], ['v', 'Động từ'], ['i', 'Tính từ い'], ['na', 'Tính từ な'], ['adv', 'Phó từ'], ['suf', 'Hậu tố / trợ số từ'], ['exp', 'Cụm từ'], ['oth', 'Khác']];
+const posParts = w => (w.pos || 'n').split('+');
+const posGroupOf = p => (p[0] === 'v' ? 'v' : p);
+const inPos = (w, g) => g === 'all' || posParts(w).some(p => posGroupOf(p) === g);
+const posBadges = w => posParts(w).map(p => `<span class="pos pos-${posGroupOf(p)}">${POS_LABEL[p] || p}</span>`).join('');
+const shortM = m => m.replace(/\s*[［\[（(].*$/, '').trim() || m;   // nghĩa ngắn (bỏ phần chú thích) dùng cho đáp án trắc nghiệm
 
 /* Dạng chữ Nhật của một từ: chế độ "Chỉ kana" dùng cách đọc, còn lại dùng kanji (nếu có) */
 const disp = w => (w.k && state.script !== 'kana' ? w.k : w.w);
@@ -66,12 +76,14 @@ function finalize(q) {
   return { ...q, opts, a: opts.indexOf(q.correct) };
 }
 
+/* Chọn đáp án nhiễu: ưu tiên từ cùng loại từ và cùng chương để câu hỏi khó đúng mức */
 function distractors(w, textOf, n = 3, filter = () => true) {
   const seen = new Set([textOf(w)]);
-  const same = shuffle(ALL_WORDS.filter(x => x.ch === w.ch && x !== w));
-  const other = shuffle(ALL_WORDS.filter(x => x.ch !== w.ch));
+  const g = posGroupOf(posParts(w)[0]);
+  const rank = x => (posGroupOf(posParts(x)[0]) === g ? 0 : 2) + (x.ch === w.ch ? 0 : 1);
+  const pool = shuffle(ALL_WORDS.filter(x => x !== w)).sort((a, b) => rank(a) - rank(b));
   const out = [];
-  for (const x of same.concat(other)) {
+  for (const x of pool) {
     if (!filter(x)) continue;
     const t = textOf(x);
     if (seen.has(t)) continue;
@@ -89,13 +101,14 @@ function vocabQ(w, dir = 'mix') {
   if (dir === 'mix') kind = ['jv', 'vj', canRead ? 'rd' : 'jv'][Math.floor(Math.random() * 3)];
   if (kind === 'rd' && !canRead) kind = 'jv';
   const e = canRead ? `${w.w}（${w.k}）= ${w.m}` : `${disp(w)} = ${w.m}`;
+  const notSame = x => disp(x) !== disp(w);            // từ trùng chữ (vd 高い: đắt / cao) không được làm đáp án nhiễu
   if (kind === 'vj') {
-    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Việt → Nhật', q: `「${w.m}」 trong tiếng Nhật là?`, correct: disp(w), opts: [disp(w), ...distractors(w, disp)], e });
+    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Việt → Nhật', q: `「${shortM(w.m)}」 trong tiếng Nhật là?`, correct: disp(w), opts: [disp(w), ...distractors(w, disp)], e });
   }
   if (kind === 'rd') {
-    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Cách đọc', q: `Cách đọc của 「${w.k}」 là?`, correct: w.w, opts: [w.w, ...distractors(w, x => x.w, 3, x => x.k)], e });
+    return finalize({ kind: 'vocab', ch: w.ch, tag: 'Cách đọc', q: `Cách đọc của 「${w.k}」 là?`, correct: w.w, opts: [w.w, ...distractors(w, x => x.w, 3, x => x.k && notSame(x))], e });
   }
-  return finalize({ kind: 'vocab', ch: w.ch, tag: 'Nhật → Việt', q: `「${disp(w)}」 có nghĩa là gì?`, correct: w.m, opts: [w.m, ...distractors(w, x => x.m)], e });
+  return finalize({ kind: 'vocab', ch: w.ch, tag: 'Nhật → Việt', q: `「${disp(w)}」 có nghĩa là gì?`, correct: shortM(w.m), opts: [shortM(w.m), ...distractors(w, x => shortM(x.m), 3, notSame)], e });
 }
 
 /* ---------- câu hỏi kanji ---------- */
@@ -159,16 +172,18 @@ const KEY = 'jp-review-v1';
 const saved = store.get(KEY, {});
 const state = Object.assign({
   script: 'kanji', fx: true, name: '', hf: 'all', tab: 'review', subject: 'vocab', chapter: 1, mode: 'study',
-  vview: 'cards', order: 'orig', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
+  vview: 'cards', pos: 'all', order: 'orig', cdir: 'jv', cshuf: false, conly: false, cover: 'none',
   tcfg: { subjects: ['vocab', 'grammar'], chapters: ALL_IDS.slice(), n: 20, dir: 'mix', mins: 0 },
   jcfg: { paper: JLPT[JLPT.length - 1].id, mode: 'full', sec: 'v', timed: 1 }
 }, saved.ui || {});
-const known = new Set(saved.known || []);
+const DATA_V = 3;   // tăng khi từ vựng / ngữ pháp được làm lại: tiến độ "Đã nhớ" và sổ câu sai cũ của phần đó không còn khớp
+const stale = saved.dv !== DATA_V;
+const known = new Set((saved.known || []).filter(id => !stale || id[0] === 'k'));
 /* Nhật ký làm bài. Bản cũ chỉ lưu {t, score, total, label} nên được chuyển sang định dạng mới (không có chi tiết). */
 let log = saved.log || (saved.history || []).map(h => ({ ...h, id: h.t, type: 'test', legacy: true }));
-let mist = saved.mist || {};                                  // sổ câu sai: khóa → { q, n, t }
+let mist = stale ? Object.fromEntries(Object.entries(saved.mist || {}).filter(([, v]) => v.q.kind === 'kanji')) : (saved.mist || {});                                  // sổ câu sai: khóa → { q, n, t }
 let tot = saved.tot || { ok: 0, done: 0, streak: 0 };         // tổng câu đúng / đã làm / chuỗi đúng kỷ lục
-const persist = () => store.set(KEY, { ui: state, known: [...known], log, mist, tot });
+const persist = () => store.set(KEY, { dv: DATA_V, ui: state, known: [...known], log, mist, tot });
 
 let practice = null;   // phiên luyện tập hiện tại
 let cards = null;      // bộ thẻ ghi nhớ hiện tại
@@ -277,16 +292,28 @@ function drawStudy() {
 /* ---------- học: ngữ pháp ---------- */
 function drawGrammar(host) {
   const c = byId(state.chapter);
-  host.innerHTML = c.grammar.map(g => {
-    let ex = '';
-    for (let i = 2; i + 1 < g.length; i += 2) ex += `<div class="g-ex"><div>${jp(g[i])}</div><div class="vn">${esc(g[i + 1])}</div></div>`;
-    return `<div class="g"><div class="g-pat">${jp(g[0])}</div><div class="g-mean">${jp(g[1])}</div>${ex}</div>`;
+  host.innerHTML = c.grammar.map((g, n) => {
+    const notes = g[2] ? `<ul class="g-notes">${g[2].split(' ｜ ').map(t => `<li>${jp(t)}</li>`).join('')}</ul>` : '';
+    const ex = g.slice(3).map(t => `<div class="g-ex">${jp(t)}</div>`).join('');
+    return `<div class="g"><div class="g-pat"><span class="g-no">${n + 1}</span>${jp(g[0])}</div><div class="g-mean">${jp(g[1])}</div>${notes}${ex}</div>`;
   }).join('') + `<p class="note" style="text-align:center">Xem xong hãy chuyển sang <b>✍️ Luyện tập</b> để làm bài trắc nghiệm của ${c.title}.</p>`;
 }
 
 /* ---------- học: từ vựng — thẻ ghi nhớ ---------- */
+/* chip lọc loại từ cho một danh sách từ vựng */
+const effPos = words => (words.some(w => inPos(w, state.pos)) ? state.pos : 'all');
+const posChips = words => {
+  const cur = effPos(words);
+  const chips = POS_FILTERS.map(([g, l]) => {
+    const n = words.filter(w => inPos(w, g)).length;
+    return n ? `<button class="chip ${cur === g ? 'on' : ''}" data-act="pos" data-v="${g}">${l}<small>${n}</small></button>` : '';
+  }).join('');
+  return `<div class="row"><span class="label">Loại từ</span><div class="chips">${chips}</div></div>`;
+};
+
 function buildDeck() {
-  let list = (state.subject === 'kanji' ? byId(state.chapter).kanji : byId(state.chapter).vocab).slice();
+  const ch = byId(state.chapter);
+  let list = (state.subject === 'kanji' ? ch.kanji : ch.vocab.filter(w => inPos(w, effPos(ch.vocab)))).slice();
   if (state.conly) list = list.filter(w => !known.has(w.id));
   if (state.cshuf) list = shuffle(list);
   cards = { list, i: 0, flip: false };
@@ -309,6 +336,7 @@ function drawCards(host) {
         <span class="pill ok">✓ Đã nhớ ${knownCnt}/${all.length}</span>
         <button class="btn" data-act="cclear">Xóa tiến độ</button>
       </div>
+      ${posChips(all)}
     </div>`;
   if (!cards.list.length) {
     host.innerHTML = opts + `<div class="empty">🎉 Bạn đã nhớ hết từ vựng của ${byId(state.chapter).title}!<br>Bỏ chọn “Chỉ từ chưa nhớ” để xem lại.</div>`;
@@ -319,8 +347,8 @@ function drawCards(host) {
   const reading = state.script === 'kanji' && w.k ? w.w : '';   // furigana / kana đã cho sẵn cách đọc
   const back = state.cdir === 'jv' ? { main: w.m, cls: 'vn', sub: reading } : { main: disp(w), cls: '', sub: reading };
   const face = cards.flip
-    ? `<div class="card-face back" data-act="flip"><div class="card-main ${back.cls}">${jp(back.main)}</div>${back.sub ? `<div class="card-sub">${esc(back.sub)}</div>` : ''}</div>`
-    : `<div class="card-face" data-act="flip"><div class="card-main ${front.cls}">${jp(front.main)}</div><div class="card-hint">Nhấn để lật thẻ · phím Space</div></div>`;
+    ? `<div class="card-face back" data-act="flip"><div class="card-main ${back.cls}">${jp(back.main)}</div>${back.sub ? `<div class="card-sub">${esc(back.sub)}</div>` : ''}<div class="pos-row">${posBadges(w)}</div></div>`
+    : `<div class="card-face" data-act="flip"><div class="card-main ${front.cls}">${jp(front.main)}</div><div class="pos-row">${posBadges(w)}</div><div class="card-hint">Nhấn để lật thẻ · phím Space</div></div>`;
   host.innerHTML = `${opts}
     <div class="deck-info"><span>Thẻ ${cards.i + 1} / ${cards.list.length}</span>${known.has(w.id) ? '<span class="card-mark">✓ Đã nhớ</span>' : '<span></span>'}</div>
     <div class="card3d">${face}</div>
@@ -406,12 +434,14 @@ function drawKList(host) {
 function drawList(host) {
   const c = byId(state.chapter);
   const rd = w => (w.k && state.script !== 'kana' ? w.w : '—');
-  const cv = (on, t) => (on ? `<td class="cover"><span>${esc(t)}</span></td>` : `<td>${esc(t)}</td>`);
-  const rows = c.vocab.map((w, i) => `<tr>
+  const cv = (on, t) => (on ? `<td class="cover"><span>${jp(t)}</span></td>` : `<td>${jp(t)}</td>`);
+  const words = c.vocab.filter(w => inPos(w, effPos(c.vocab)));
+  const rows = words.map((w, i) => `<tr>
       <td class="note">${i + 1}</td>
       ${state.cover === 'w' ? `<td class="k cover"><span>${jp(disp(w))}</span></td>` : `<td class="k">${jp(disp(w))}</td>`}
       ${state.cover === 'w' ? cv(true, rd(w)) : `<td class="w">${esc(rd(w))}</td>`}
       ${cv(state.cover === 'm', w.m)}
+      <td>${posBadges(w)}</td>
     </tr>`).join('');
   host.innerHTML = `
     <div class="panel">
@@ -420,9 +450,10 @@ function drawList(host) {
         ${seg('cover', state.cover, [['none', 'Hiện hết'], ['m', 'Che nghĩa'], ['w', 'Che từ']])}
       </div>
       ${state.cover !== 'none' ? '<div class="row note">Nhấn vào ô bị che để xem đáp án.</div>' : ''}
+      ${posChips(c.vocab)}
     </div>
     <div class="panel table-wrap"><table class="vt">
-      <thead><tr><th>#</th><th>Từ</th><th>Cách đọc</th><th>Nghĩa</th></tr></thead>
+      <thead><tr><th>#</th><th>Từ</th><th>Cách đọc</th><th>Nghĩa</th><th>Loại từ</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
@@ -431,7 +462,7 @@ function drawList(host) {
 function buildPractice() {
   const c = byId(state.chapter);
   let qs;
-  if (state.subject === 'vocab') qs = c.vocab.map(w => vocabQ(w, 'mix'));
+  if (state.subject === 'vocab') qs = c.vocab.filter(w => inPos(w, effPos(c.vocab))).map(w => vocabQ(w, 'mix'));
   else if (state.subject === 'kanji') qs = [...c.kw.map(e => kanjiQ(e)), ...c.kanji.filter(it => it.hv).map(kanjiHV)];
   else qs = quizOf(c).map(finalize);
   if (state.order === 'shuffle') qs = shuffle(qs);
@@ -453,6 +484,7 @@ function drawPractice(host) {
   if (!practice) buildPractice();
   host.innerHTML = `
     <div class="panel">
+      ${state.subject === 'vocab' ? posChips(byId(state.chapter).vocab) + '<div style="height:10px"></div>' : ''}
       <div class="stats">
         <span class="pill" id="pDone"></span>
         <span class="pill ok" id="pOk"></span>
@@ -1079,6 +1111,7 @@ function act(a, v) {
         cards = null; persist(); drawStudy();
       }
       return;
+    case 'pos': state.pos = v; cards = null; practice = null; persist(); return drawStudy();
     case 'cover': state.cover = v; persist(); return drawStudy();
     case 'flip': cards.flip = !cards.flip; return drawStudy();
     case 'cnext': cards.i = (cards.i + 1) % cards.list.length; cards.flip = false; return drawStudy();

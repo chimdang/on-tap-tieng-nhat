@@ -1,8 +1,10 @@
 /*
-  DỮ LIỆU ÔN TẬP — Minna no Nihongo, Bài 1 ~ 12
+  DỮ LIỆU ÔN TẬP — Chương 1 ~ 12 (trích từ tài liệu trong thư mục JAPAN và japannguphap)
   -----------------------------------------------------------------
-  vocab   : mỗi dòng "Kanji|Cách đọc|Nghĩa". Không có kanji thì để trống phần đầu.
-  grammar : [mẫu câu, ý nghĩa, ví dụ (JP), ví dụ (VN), ví dụ 2 (JP)?, ví dụ 2 (VN)?]
+  vocab   : mỗi dòng "Kanji|Cách đọc|Nghĩa|Loại từ". Không có kanji thì để trống phần đầu.
+            Loại từ: n danh từ · v1/v2/v3 động từ nhóm I/II/III · i tính từ い · na tính từ な · adv phó từ
+                     suf hậu tố/trợ số từ · exp cụm từ, giao tiếp · oth khác. Ghép bằng dấu + (vd n+v3).
+  grammar : [mẫu câu, ý nghĩa, giải thích (các ý cách nhau bằng " ｜ "), ví dụ 1, ví dụ 2, ...]
   quiz    : [câu hỏi, ĐÁP ÁN ĐÚNG, sai 1, sai 2, sai 3, giải thích]
             (thứ tự đáp án được trộn tự động; "(  )" là chỗ trống)
 */
@@ -10,704 +12,1210 @@ const CHAPTERS = [
 {
   id: 1, title: "Chương 1",
   vocab: `
-私|わたし|tôi
-|あなた|bạn
-あの人|あのひと|người kia
-あの方|あのかた|vị kia (lịch sự)
-先生|せんせい|giáo viên, thầy/cô
-教師|きょうし|giáo viên (nghề nghiệp)
-学生|がくせい|học sinh, sinh viên
-会社員|かいしゃいん|nhân viên công ty
-社員|しゃいん|nhân viên (công ty ~)
-銀行員|ぎんこういん|nhân viên ngân hàng
-医者|いしゃ|bác sĩ
-研究者|けんきゅうしゃ|nhà nghiên cứu
-|エンジニア|kỹ sư
-大学|だいがく|đại học
-病院|びょういん|bệnh viện
-|だれ|ai
-|どなた|vị nào (lịch sự)
-歳|さい|tuổi
-何歳|なんさい|mấy tuổi
-|はい|vâng, dạ
-|いいえ|không
-人|じん|người (nước ~)
-|アメリカ|Mỹ
-|イギリス|Anh
-|インド|Ấn Độ
-|インドネシア|Indonesia
-韓国|かんこく|Hàn Quốc
-|タイ|Thái Lan
-中国|ちゅうごく|Trung Quốc
-|ドイツ|Đức
-日本|にほん|Nhật Bản
-|フランス|Pháp
-|ブラジル|Brazil
-|はじめまして|rất hân hạnh được làm quen
+|ベトナム|Việt Nam|n
+日本|にほん|Nhật Bản|n
+中国|ちゅうごく|Trung Quốc|n
+韓国|かんこく|Hàn Quốc|n
+|タイ|Thái Lan|n
+～人|～じん|người ～ (Cách nói quốc tịch: Tên quốc gia + じん)|suf
+ベトナム人|ベトナムじん|người Việt Nam|n
+日本人|にほんじん|người Nhật|n
+中国人|ちゅうごくじん|người Trung Quốc|n
+韓国人|かんこくじん|người Hàn Quốc|n
+タイ人|タイじん|người Thái|n
+私|わたし|tôi|n
+医者|いしゃ|bác sĩ|n
+教師|きょうし|giáo viên, giảng viên|n
+先生|せんせい|thầy/ cô giáo|n
+銀行員|ぎんこういん|nhân viên ngân hàng|n
+会社員|かいしゃいん|nhân viên công ty|n
+学生|がくせい|học sinh, sinh viên|n
+お名前|おなまえ|tên, họ tên  ［cũng đọc: なまえ］|n
+料理|りょうり|món ăn, việc nấu ăn|n
+ベトナム料理|ベトナムりょうり|món ăn Việt Nam|n
+日本料理|にほんりょうり|món ăn Nhật Bản|n
+|ビール|bia|n
+|コーヒー|cà phê|n
+|ジュース|nước hoa quả|n
+|これ、それ、あれ|cái này, cái đó, cái kia (tham khảo phần 補足, trang 21)|n
+|こちら、そちら、あちら|đây, đó, kia (phía này, phía đó, phía kia)|n
+|はい|vâng/ có|exp
+|いいえ|không (ý nghĩa phủ định đơn thuần)|exp
+|いえいえ|không sao/ không có gì (lời đáp khiêm tốn khi được xin lỗi, cảm ơn hoặc khen ngợi)|exp
+|おはようございます|chào buổi sáng|exp
+|こんにちは|chào buổi trưa/ chiều|exp
+|こんばんは|chào buổi tối|exp
+|すみません|① xin lỗi ② cảm ơn (do cảm thấy áy náy khi phiền người khác giúp đỡ mình)|exp
+|はじめまして|rất vui được gặp anh/ chị (lời chào khi lần đầu gặp ai đó)|exp
+よろしくお願いします|よろしくおねがいします|rất mong được anh/ chị giúp đỡ|exp
+|そうです|đúng vậy|exp
+|そうですか|vậy à, thế à?|exp
+失礼しました|しつれいしました|xin lỗi (được dùng khi một người trót nói hoặc làm điều gì đó thất lễ với người nghe)|exp
+大丈夫です|だいじょうぶです|không sao đâu|exp
+|ええと|ờ, ờm... (được sử dụng khi người nói đang suy nghĩ tiếp theo sẽ nói gì)|exp
+|あっ|A! (được dùng khi người nói ngạc nhiên, xúc động về một điều gì đó)|exp
+今|いま|bây giờ|n+adv
+朝|あさ|sáng sớm, buổi sáng|n+adv
+夜|よる|buổi tối|n+adv
+午前|ごぜん|A.M / sáng|n+adv
+午後|ごご|P.M / chiều|n+adv
+今日|きょう|hôm nay|n+adv
+明日|あした|ngày mai|n+adv
+明後日|あさって|ngày kia|n+adv
+休み|やすみ|nghỉ, không làm việc|n
+仕事|しごと|công việc (khi hỏi về công việc của đối phương thì sẽ dùng お仕事)  ［cũng đọc: おしごと］|n
+学校|がっこう|trường học|n
+図書館|としょかん|thư viện|n
+郵便局|ゆうびんきょく|bưu điện|n
+病院|びょういん|bệnh viện|n
+銀行|ぎんこう|ngân hàng|n
+会社|かいしゃ|công ty|n
+漢字|かんじ|chữ Hán|n
+|ひらがな|chữ hiragana|n
+|カタカナ|chữ katakana|n
+|レストラン|nhà hàng|n
+|スーパー|siêu thị|n
+|フランス|nước Pháp|n
+～語|～ご|tiếng ～ (Ngôn ngữ = Tên quốc gia + ご)|suf
+日本語|にほんご|tiếng Nhật|n
+中国語|ちゅうごくご|tiếng Trung|n
+韓国語|かんこくご|tiếng Hàn|n
+英語|えいご|tiếng Anh (trường hợp ngoại lệ)|n
+タイ語|タイご|tiếng Thái|n
+ベトナム語|ベトナムご|tiếng Việt|n
+フランス語|フランスご|tiếng Pháp|n
+～時|～じ|～giờ|suf
+何時|なんじ|mấy giờ|n
+～分|～ふん|～phút  ［cũng đọc: ～ぷん］|suf
+何分|なんぷん|mấy phút|n
+|あの|xin lỗi, xin hỏi… (Lời đánh tiếng khi gọi hoặc bắt chuyện với ai đó, khác với từ chỉ thị 「あの」sẽ học ở bài 2B)  ［cũng đọc: あのー］|exp
+違います|ちがいます|nhầm rồi, sai rồi, không phải|exp
+|ありがとうございます|cảm ơn|exp
+|もしもし|alo|exp
+辞書|じしょ|từ điển|n
+|かばん|cặp, túi|n
+手帳|てちょう|sổ tay|n
+電子辞書|でんしじしょ|kim từ điển|n
+市役所|しやくしょ|toà thị chính|n
+交番|こうばん|đồn cảnh sát|n
+大使館|たいしかん|đại sứ quán|n
+電話番号|でんわばんごう|số điện thoại|n
+月曜日|げつようび|thứ Hai|n
+火曜日|かようび|thứ Ba|n
+水曜日|すいようび|thứ Tư|n
+木曜日|もくようび|thứ Năm|n
+金曜日|きんようび|thứ Sáu|n
+土曜日|どようび|thứ Bảy|n
+日曜日|にちようび|Chủ nhật|n
+何曜日|なんようび|thứ mấy|n
+何|なん|cái gì|n
+|いくら|bao nhiêu tiền|n
+～円|～えん|yên (đơn vị tiền tệ của Nhật)|suf
+|～ドン|đồng (đơn vị tiền tệ của Việt Nam)|suf
+本当だ|ほんとうだ|Đúng thật/ Thật này. (Dùng khi nhận ra lời của đối phương đúng với sự thật)|exp
+|じゃ|Vậy thì, thế thì ...|exp
+|えっ|Ô! (tiếng ngạc nhiên)|exp
+|ああ|(thán từ thể hiện sự ngại ngùng, bối rối, xấu hổ...)|exp
 `,
   grammar: [
-    ["N1 は N2 です", "N1 là N2. Trợ từ は đọc là「わ」; です là cách nói khẳng định lịch sự.", "わたしは マイク・ミラーです。", "Tôi là Mike Miller."],
-    ["N1 は N2 じゃ ありません", "N1 không phải là N2. Trong văn viết dùng では ありません.", "サントスさんは 学生じゃ ありません。", "Anh Santos không phải là sinh viên."],
-    ["S か", "Thêm か vào cuối câu để tạo câu hỏi (lên giọng ở cuối câu).", "ミラーさんは アメリカ人ですか。", "Anh Miller là người Mỹ phải không?", "はい、そうです。", "Vâng, đúng vậy."],
-    ["N も", "Cũng là N (thay は khi thông tin giống câu trước).", "ミラーさんは 会社員です。グプタさんも 会社員です。", "Anh Miller là nhân viên công ty. Anh Gupta cũng vậy."],
-    ["N1 の N2", "N1 bổ nghĩa cho N2: trực thuộc, sở thuộc (công ty, trường học...).", "ミラーさんは IMCの 社員です。", "Anh Miller là nhân viên của công ty IMC."],
-    ["～さん / ～人 / ～歳", "さん gắn sau tên người khác (không dùng cho mình); 人 chỉ quốc tịch; 歳 chỉ tuổi.", "テレサちゃんは 9歳です。", "Bé Teresa 9 tuổi."]
+    ["(N1 は) N2 です","N1 là N2","Câu khẳng định có vị ngữ là danh từ, ở thì phi quá khứ. ｜ Dùng để giới thiệu chủng loại, thời gian, địa điểm, tên tuổi, giới tính. ｜ Trợ từ は đứng sau chủ đề câu, đọc là “wa”. ｜ 「N1 は」 có thể được lược bỏ.","鈴木です。","ナムさんは ベトナム人です。","かなえさんは 学生です。","これは フォーです。"],
+    ["(N1 は) N2 ですか","N1 có phải là N2 không?","Câu nghi vấn có vị ngữ là danh từ. ｜ Trả lời: はい、そうです／(N1 は) N2 です = Phải, đúng vậy. ｜ いいえ、(N1 は) N3 です = Không phải, mà là N3.","A：田中さんですか。\nB：はい、そうです。","A：会社員ですか。\nB：いいえ、学生です。","これは フォーですか。→ いいえ、これは ブンです。"],
+    ["N も ～","N cũng ～","Trợ từ も = “cũng”. ｜ Khi trả lời phủ định cho câu hỏi dùng も, trợ từ không còn là も nữa mà trở về は.","これは ベトナム料理です。それも ベトナム料理です。","ランさんは 日本人ですか。→ いいえ、ランさんは ベトナム人です。"],
+    ["(N1 は) N2 じゃないです / じゃありません / ではありません","N1 không phải N2","Dạng phủ định của 「N1 は N2 です」.","田中さんは 銀行員じゃないです。","A：これは 日本語ですか。\nB：いいえ、違います。日本語じゃないです。中国語です。"],
+    ["Cách nói giờ, phút: ～時 ～分","Giờ: Số đếm + 時 (何時 = mấy giờ) ｜ Phút: Số đếm + 分 (何分 = mấy phút)","1時 いちじ, 2時 にじ, 3時 さんじ, 4時 よじ, 5時 ごじ, 6時 ろくじ, 7時 しちじ, 8時 はちじ, 9時 くじ, 10時 じゅうじ, 11時 じゅういちじ, 12時 じゅうにじ. ｜ ～時半 = ～ giờ rưỡi; 午前 (AM) / 午後 (PM) đặt trước giờ. ｜ Phút: 1分 いっぷん, 2分 にふん, 3分 さんぷん, 4分 よんぷん, 5分 ごふん, 6分 ろっぷん, 7分 ななふん, 8分 はちふん/はっぷん, 9分 きゅうふん, 10分 じゅっぷん/じっぷん, 30分 さんじゅっぷん/さんじっぷん. ｜ Khi hỏi giờ, người Nhật thường không dùng は trừ khi nhấn mạnh thời điểm hỏi.","今 何時ですか。→ 今 4時です。","今 何時 何分ですか。→ 今 4時15分です。","10時半：10 giờ rưỡi"],
+    ["N は 何時から 何時までですか","N từ mấy giờ đến mấy giờ?","Trả lời: ～から ～までです = Từ ～ giờ đến ～ giờ. ｜ Hỏi và trả lời về thời gian bắt đầu - kết thúc của một tổ chức, cơ quan, chương trình, sự kiện. ｜ から và まで có thể dùng riêng, độc lập.","図書館は ９時からです。","図書館は ６時までです。","A：郵便局は 何時から 何時までですか。\nB：午前9時半から 午後４時半までです。"],
+    ["(N は) いくらですか","N bao nhiêu tiền?","Trả lời: (N は) số tiền です.","A：これは いくらですか。\nB：そちらは 500円です。"],
+    ["(N1 は) 何ですか","N1 là cái gì?","Mẫu câu dùng để hỏi về đồ vật. ｜ 「何」 là từ để hỏi đồ vật: cái gì? ｜ Trả lời: (N1 は) N2 です.","A：これは 何ですか。\nB：カメラです。"],
+    ["～ね","nhỉ?","Đặt cuối câu để xác nhận lại thông tin từ đối phương.","A：電話番号は 080-1234-5678です。\nB：080-1234-5678ですね。"],
+    ["～よね / ～よ","(đúng không) nhỉ? / đấy, cơ","「よね」 = ～ (đúng không) nhỉ: đặt cuối câu để xác nhận hoặc tìm kiếm sự đồng tình. ｜ 「よ」 = ～ đấy/ cơ: đặt cuối câu để nói cho đối phương một thông tin mà người đó chưa biết.","A：今日は ３日ですよね。\nB：はい。そうです。","A：明日は 土曜日ですよね。\nB：いいえ、明日は 日曜日ですよ。"]
   ],
   quiz: [
-    ["わたし(  ) マイク・ミラーです。", "は", "を", "に", "の", "は đánh dấu chủ đề của câu (đọc là「わ」)."],
-    ["ミラーさんは 会社員です。サントスさん(  ) 会社員です。(Anh Santos cũng là nhân viên công ty)", "も", "は", "の", "を", "も = cũng. Dùng thay は khi thông tin giống câu trước."],
-    ["わたしは 学生(  )。(Tôi không phải là sinh viên)", "じゃ ありません", "ありません", "じゃ ません", "じゃ です", "Phủ định danh từ: N じゃ ありません."],
-    ["あの 人は だれ(  )。(Người kia là ai?)", "ですか", "ですよ", "ですも", "ですの", "Thêm か ở cuối câu để tạo câu hỏi."],
-    ["ミラーさんは IMC(  ) 社員です。(…nhân viên của công ty IMC)", "の", "は", "も", "を", "N1 の N2: N1 là nơi trực thuộc của N2."],
-    ["Câu nào có nghĩa「Tôi là kỹ sư」?", "わたしは エンジニアです。", "わたしは エンジニアですか。", "わたしも エンジニアじゃ ありません。", "わたしの エンジニアです。", "N1 は N2 です: khẳng định."],
-    ["A: ミラーさんは 医者ですか。 B: いいえ、(  )。", "医者じゃ ありません", "医者です", "医者も ありません", "医者の ありません", "Trả lời phủ định: いいえ、N じゃ ありません."],
-    ["ミラーさんは (  )ですか。…38歳です。", "何歳", "だれ", "どこ", "いくら", "何歳 (なんさい) dùng để hỏi tuổi."],
-    ["「～人」gắn sau tên nước để chỉ quốc tịch. 「Người Nhật」là?", "日本人", "日本語", "日本の", "日本さん", "日本 + 人 (じん) = 日本人 (にほんじん)."]
+    ["ナムさん(  ) ベトナム人です。","は","を","に","の","Trợ từ は đứng sau chủ đề câu (đọc là “wa”): N1 は N2 です."],
+    ["ランさんは 日本人です。ミンさん(  ) 日本人です。(Minh cũng là người Nhật)","も","は","の","を","Trợ từ も = “cũng”."],
+    ["A：ランさんも 日本人ですか。 B：いいえ、ランさん(  ) ベトナム人です。","は","も","を","で","Khi trả lời phủ định cho câu hỏi dùng も, trợ từ trở về は."],
+    ["Câu nào có nghĩa 「Anh Tanaka không phải là nhân viên ngân hàng」?","田中さんは 銀行員じゃないです。","田中さんは 銀行員です。","田中さんも 銀行員ですか。","田中さんは 銀行員じゃですか。","Phủ định danh từ: N1 は N2 じゃないです."],
+    ["「4時」đọc là gì?","よじ","しじ","よんじ","よっじ","4時 = よじ."],
+    ["「9時」đọc là gì?","くじ","きゅうじ","ここのじ","なんじ","9時 = くじ."],
+    ["「7時」đọc là gì?","しちじ","ななじ","ひちじ","なのじ","7時 = しちじ."],
+    ["「10分」đọc là gì?","じゅっぷん","じゅうふん","じゅっふん","じゅうぷん","10分 = じゅっぷん (hoặc じっぷん)."],
+    ["郵便局は (  )から (  )までですか。(Bưu điện làm việc từ mấy giờ đến mấy giờ?)","何時 … 何時","どこ … どこ","いくら … いくら","何 … 何","Hỏi thời gian: 何時から 何時までですか."],
+    ["A：これは (  )ですか。 B：500円です。","いくら","何","何時","どこ","Hỏi giá tiền dùng いくら."],
+    ["A：明日は 土曜日ですよね。 B：いいえ、明日は 日曜日(  )。(nói cho đối phương thông tin họ chưa biết)","ですよ","ですか","ですも","でした","「よ」 = ～ đấy/ cơ: nói cho đối phương một thông tin họ chưa biết."]
   ]
 },
 {
   id: 2, title: "Chương 2",
   vocab: `
-|これ|cái này (gần người nói)
-|それ|cái đó (gần người nghe)
-|あれ|cái kia (xa cả hai)
-本|ほん|sách
-辞書|じしょ|từ điển
-雑誌|ざっし|tạp chí
-新聞|しんぶん|báo
-|ノート|vở
-手帳|てちょう|sổ tay
-名刺|めいし|danh thiếp
-|カード|thẻ
-鉛筆|えんぴつ|bút chì
-|ボールペン|bút bi
-鍵|かぎ|chìa khóa
-時計|とけい|đồng hồ
-傘|かさ|cái ô
-|かばん|cặp, túi xách
-|テレビ|ti vi
-|カメラ|máy ảnh
-|コンピューター|máy vi tính
-車|くるま|ô tô
-机|つくえ|cái bàn (học)
-椅子|いす|cái ghế
-|チョコレート|sô cô la
-|コーヒー|cà phê
-お土産|おみやげ|quà lưu niệm
-英語|えいご|tiếng Anh
-日本語|にほんご|tiếng Nhật
-何|なん|cái gì
-|そう|đúng vậy
-|ちがいます|không phải, sai rồi
-|どうぞ|xin mời
-|どうも|cảm ơn (thân mật)
+昨日|きのう|hôm qua|adv
+一昨日|おととい|hôm kia|n+adv
+今朝|けさ|sáng nay|n+adv
+先週|せんしゅう|tuần trước|n+adv
+今週|こんしゅう|tuần này|n+adv
+来週|らいしゅう|tuần sau|n+adv
+誕生日|たんじょうび|sinh nhật|n
+指輪|ゆびわ|nhẫn|n
+|うち|nhà (Ngoài ra còn có nghĩa là "tôi, tớ" hay "chúng tôi")|n
+雨|あめ|mưa|n
+晴れ|はれ|nắng|n
+曇り|くもり|âm u, nhiều mây|n
+|アルバイト|việc làm thêm|n
+|ゴールデンウィーク|tuần lễ vàng|n
+|プレゼント|quà tặng|n
+|ずっと|suốt|adv
+一日|ついたち|ngày mùng 1|n
+二日|ふつか|ngày mùng 2|n
+三日|みっか|ngày mùng 3|n
+四日|よっか|ngày mùng 4|n
+五日|いつか|ngày mùng 5|n
+六日|むいか|ngày mùng 6|n
+七日|なのか|ngày mùng 7|n
+八日|ようか|ngày mùng 8|n
+九日|ここのか|ngày mùng 9|n
+十日|とおか|ngày mùng 10|n
+～日|～にち|ngày ～ (Ngoại trừ một số trường hợp đặc biệt, từ ngày 11 ta có cách nói: Số đếm + にち)|suf
+十四日|じゅうよっか|ngày 14|n
+二十日|はつか|ngày 20|n
+|どうでしたか|... thế nào? ( Hỏi về cảm nhận của đối phương về một sự vật, sự việc trong quá khứ )|exp
+誰|だれ|ai|n
+|どなた|ai (cách nói lịch sự của 誰)|n
+人|ひと|người|n
+本|ほん|sách|n
+家|いえ|nhà|n
+鍵|かぎ|chìa khóa|n
+傘|かさ|cái ô|n
+車|くるま|xe ô tô|n
+お菓子|おかし|bánh kẹo|n
+豆|まめ|đậu|n
+米|こめ|gạo|n
+お酒|おさけ|rượu|n
+|ぶどう|nho|n
+|りんご|táo|n
+|シーディー|CD|n
+|スマホ|điện thoại (thông minh)|n
+|テレビ|tivi|n
+|パン|bánh mì|n
+|ケーキ|bánh kem|n
+|ワイン|rượu vang|n
+|バイク|xe máy (từ thường dùng trong cuộc sống)|n
+|オートバイ|xe máy (từ thường dùng trong tin tức, báo chí ...)|n
+|カメラ|máy ảnh|n
+|チョコレート|socola|n
+|この|(cái bánh) này|oth
+|その|(chiếc xe ô tô) đó|oth
+|あの|(ngôi nhà) kia ( đứng trước và bổ nghĩa cho danh từ)|oth
+国|くに|đất nước, quê hương|n
+社員|しゃいん|nhân viên|n
+職員|しょくいん|nhân viên, công chức, viên chức|n
+作家|さっか|nhà văn, tác giả|n
+運転手|うんてんしゅ|tài xế|n
+大学|だいがく|trường đại học|n
+昔|むかし|ngày xưa|n+adv
+|エンジニア|kĩ sư|n
+|カンパニー|công ty (thường đi sau tên riêng của 1 công ty)|n
+|ええ|vâng|exp
+|へえ|ồ (từ cảm thán, thể hiện sự ngạc nhiên hoặc trầm trồ)|exp
+|よかったら|nếu được thì...|exp
+|どうぞ|xin mời|exp
 `,
   grammar: [
-    ["これ / それ / あれ", "Đại từ chỉ vật: これ (gần người nói), それ (gần người nghe), あれ (xa cả hai). Không đi kèm danh từ.", "これは 辞書です。", "Đây là từ điển."],
-    ["この N / その N / あの N", "Đứng trước danh từ để chỉ định vật/người.", "この 本は わたしのです。", "Cuốn sách này là của tôi."],
-    ["そうです / そうじゃ ありません", "Trả lời câu hỏi danh từ: đúng / không đúng.", "それは 辞書ですか。…はい、そうです。", "Đó là từ điển à? — Vâng, đúng vậy."],
-    ["S1 か、S2 か", "Câu hỏi lựa chọn. Trả lời bằng cách nhắc lại phương án đúng, KHÔNG dùng はい / いいえ.", "これは「9」ですか、「7」ですか。…「9」です。", "Đây là số 9 hay số 7? — Số 9."],
-    ["N1 の N2 / N1 の", "N1 の N2: N2 của N1 (sở hữu, loại). N1 の đứng một mình thay cho danh từ đã nhắc (cái của N1).", "あの かばんは わたしのです。", "Cái cặp kia là của tôi."],
-    ["～は ～語で 何ですか", "Hỏi cách nói một từ bằng ngôn ngữ nào đó.", "「ありがとう」は 英語で 何ですか。", "Từ「ありがとう」tiếng Anh là gì?"]
+    ["(N1 は) N2 でした","N1 (đã) là N2","Câu khẳng định trong quá khứ có vị ngữ là danh từ. ｜ Muốn tạo câu nghi vấn thì thêm 「か」 ở cuối câu, giống thì phi quá khứ.","昨日は 休みでした。","5日は 誕生日でした。","これは 1,000円でした。"],
+    ["(N1 は) N2 じゃなかったです / じゃありませんでした / ではありませんでした","N1 (đã) không phải là N2","Câu phủ định trong quá khứ có vị ngữ là danh từ.","昨日は 仕事じゃなかったです。","A：昨日は 仕事でしたか。\nB：いいえ、仕事じゃなかったです。休みでした。"],
+    ["誰の N2ですか → N1 (chủ sở hữu) の N2 です","N2 của ai? → N2 của N1","の là trợ từ nối giữa 2 danh từ, nghĩa là “của”.","A：この かばんは 誰の かばんですか。\nB：ナムさんの かばんです。","A：これ、誰の スマホですか。\nB：あ、私のです。"],
+    ["何の N2ですか → N1 (nội dung) の N2 です","N2 về cái gì? → N2 về N1","Khi trả lời không bỏ N2 sau の: ×「料理のです」 ○「料理の 本です」.","日本語の 本","ベトナム語の 先生","A：これ、何の 鍵ですか。\nB：車の 鍵です。"],
+    ["どこの N2ですか → N1 (xuất xứ) の N2 です","N2 có nguồn gốc, xuất xứ ở đâu? → N2 của/ từ N1","","A：ナムさんの バイクは どこの バイクですか。\nB：韓国の バイクです。","A：田中さんの 車は どこの 車ですか。\nB：日本の 車です。"],
+    ["何の N2ですか → N1 (nguyên liệu) の N2 です","N2 được làm từ gì? → N2 được làm từ N1","Khi trả lời không bỏ N2: ×「豆のです」 ○「豆の お菓子です」.","A：それは 何の お菓子ですか。\nB：豆の お菓子です。","A：日本酒は 何の お酒ですか。\nB：米の お酒です。"],
+    ["N1 (nơi sở thuộc) の N2","N2 của/ thuộc (cơ quan, tổ chức) N1","","田中さんは ABCカンパニーの 社員です。","私は、大学の 職員です。"],
+    ["(N1 は) N2 で N3 です","N1 là N2 và là N3","Cách nói liệt kê cho 2 danh từ trở lên đứng liền kề nhau. ｜ Trợ từ 「で」 nối trực tiếp giữa các danh từ.","田中さんは 日本人で ABCカンパニーの 社員です。","アインさんは 会社員で エンジニアです。"]
   ],
   quiz: [
-    ["(  )は 本です。(Đây là sách — vật gần người nói)", "これ", "この", "あの", "その", "これ là đại từ đứng một mình; この phải đi kèm danh từ."],
-    ["A: それは 何ですか。 B: (  )は 辞書です。", "これ", "それ", "あれ", "あの", "A hỏi vật ở gần B, nên B trả lời bằng これ (gần người nói)."],
-    ["(  ) かさは わたしのです。(Cái ô kia — xa cả hai người)", "あの", "あれ", "これ", "それ", "Trước danh từ dùng あの, không dùng あれ."],
-    ["A: これは 本ですか、雑誌ですか。 B: (  )。(Đó là tạp chí)", "雑誌です", "はい、雑誌です", "いいえ、雑誌です", "はい、そうです", "Câu hỏi lựa chọn không trả lời はい/いいえ."],
-    ["これは 日本語(  ) 本です。(Đây là sách tiếng Nhật)", "の", "は", "を", "も", "N1 の N2: 日本語の 本 = sách (về) tiếng Nhật."],
-    ["A: それは ミラーさんの かさですか。 B: はい、(  )。", "そうです", "そうじゃ ありません", "ちがいます", "そうですか", "Trả lời đồng ý: はい、そうです."],
-    ["この 本は (  )のですか。(Cuốn sách này của ai?)", "だれ", "なん", "どこ", "いつ", "Hỏi người sở hữu dùng だれ."],
-    ["「ありがとう」は 英語(  ) 何ですか。", "で", "は", "の", "を", "N語で: bằng tiếng ~."]
+    ["昨日は 休み(  )。(Hôm qua là ngày nghỉ)","でした","です","でしたか","じゃありません","Câu danh từ khẳng định quá khứ: N でした."],
+    ["昨日は 仕事(  )。(Hôm qua không phải đi làm)","じゃなかったです","じゃないです","じゃなかったですか","でした","Phủ định quá khứ: N じゃなかったです / じゃありませんでした."],
+    ["この かばんは (  ) かばんですか。…ナムさんの かばんです。","誰の","何の","どこの","いつの","Hỏi chủ sở hữu: 誰の N ですか."],
+    ["その 本は (  ) 本ですか。…日本語の 本です。","何の","誰の","どこの","誰が","Hỏi nội dung: 何の N ですか."],
+    ["ナムさんの バイクは (  ) バイクですか。…韓国の バイクです。","どこの","何の","誰の","どこで","Hỏi xuất xứ: どこの N ですか."],
+    ["田中さんは 日本人(  ) ABCカンパニーの 社員です。","で","と","の","を","Liệt kê 2 danh từ cho cùng 1 người: N2 で N3 です (không dùng と)."],
+    ["私は 大学(  ) 職員です。(Tôi là nhân viên của trường đại học)","の","で","と","は","N1 (nơi sở thuộc) の N2."],
+    ["A：それは 何の お菓子ですか。 B：(  )。","豆の お菓子です","豆のです","豆お菓子です","豆で お菓子です","Không được bỏ N2 khi trả lời: ○「豆の お菓子です」 ×「豆のです」."]
   ]
 },
 {
   id: 3, title: "Chương 3",
   vocab: `
-|ここ|chỗ này
-|そこ|chỗ đó
-|あそこ|chỗ kia
-|どこ|ở đâu
-|こちら|phía này (lịch sự)
-|そちら|phía đó (lịch sự)
-|あちら|phía kia (lịch sự)
-|どちら|phía nào, đâu (lịch sự)
-教室|きょうしつ|lớp học
-食堂|しょくどう|nhà ăn
-事務所|じむしょ|văn phòng
-会議室|かいぎしつ|phòng họp
-受付|うけつけ|quầy lễ tân
-部屋|へや|căn phòng
-お手洗い|おてあらい|nhà vệ sinh
-階段|かいだん|cầu thang
-|エレベーター|thang máy
-|エスカレーター|thang cuốn
-自動販売機|じどうはんばいき|máy bán hàng tự động
-電話|でんわ|điện thoại
-国|くに|đất nước
-会社|かいしゃ|công ty
-|うち|nhà
-靴|くつ|giày
-|ネクタイ|cà vạt
-売り場|うりば|quầy bán hàng
-地下|ちか|tầng hầm
-階|かい|tầng
-何階|なんがい|tầng mấy
-円|えん|yên (Nhật)
-|いくら|bao nhiêu tiền
-百|ひゃく|trăm
-千|せん|nghìn
-万|まん|vạn (mười nghìn)
+店|みせ|cửa hàng|n
+店員|てんいん|nhân viên cửa hàng|n
+部屋|へや|căn phòng|n
+東京|とうきょう|Tokyo|n
+町|まち|thành phố, thị trấn|n
+駅|えき|nhà ga|n
+|こっち・そっち・あっち|chỗ này, chỗ đó, chỗ kia (cách nói thân mật)|n
+地下鉄|ちかてつ|tàu điện ngầm|n
+毎日|まいにち|hàng ngày, ngày nào cũng|n+adv
+最近|さいきん|gần đây|n+adv
+|ラーメン|mì ramen|n
+|アパート|chung cư (thấp tầng, thường có giá bình dân)|n
+|おいしい|ngon|i
+高い|たかい|cao, đắt|i
+安い|やすい|rẻ|i
+|いい|tốt, hay|i
+悪い|わるい|xấu, dở|i
+広い|ひろい|rộng|i
+狭い|せまい|chật, hẹp|i
+暑い|あつい|nóng|i
+寒い|さむい|lạnh|i
+古い|ふるい|cũ|i
+新しい|あたらしい|mới|i
+忙しい|いそがしい|bận|i
+|きれい|sạch, đẹp|na
+|にぎやか|náo nhiệt, nhộn nhịp|na
+静か|しずか|yên tĩnh|na
+暇|ひま|rảnh rỗi|na
+便利|べんり|tiện lợi|na
+複雑|ふくざつ|phức tạp|na
+簡単|かんたん|đơn giản|na
+元気|げんき|khỏe mạnh|na
+有名|ゆうめい|nổi tiếng|na
+丁寧|ていねい|lịch sự, cẩn thận, chỉn chu|na
+|ハンサム|đẹp trai|na
+|すごく|rất|adv
+|とても|rất|adv
+|まあまあ|tàm tạm|adv
+|ちょっと|một chút|adv
+少し|すこし|một chút|adv
+|あまり|không ～ lắm|adv
+全然|ぜんぜん|hoàn toàn (không)|adv
+|そんなに|đến thế, đến mức như thế|adv
+本当に|ほんとうに|thật sự|adv
+|それに|hơn nữa|oth
+|でも|nhưng|oth
+|じゃ、また|hẹn gặp lại (câu chào khi tạm biệt; cũng có trường hợp nói 「じゃあ、また」, khi đó chữ 「あ」 sẽ xuống giọng)|exp
+失礼します|しつれいします|tôi xin phép nhé. (một cách chào lịch sự khi ra về, đi vào/ rời khỏi nơi nào đó)|exp
+|ええっ|hả? gì? (từ cảm thán, thể hiện sự giật mình ngạc nhiên, kinh ngạc)|exp
+一人暮らし|ひとりぐらし|sống 1 mình|n
+生活|せいかつ|cuộc sống|n
+授業|じゅぎょう|giờ học|n
+楽しい|たのしい|vui|i
+寂しい|さびしい|cô đơn|i
+小さい|ちいさい|nhỏ, bé|i
+大きい|おおきい|to, lớn|i
+|かわいい|đáng yêu|i
+辛い|からい|cay|i
+面白い|おもしろい|thú vị|i
+多い|おおい|nhiều|i
+明るい|あかるい|sáng sủa (tính chất sự vật); tươi sáng, lạc quan (tính cách)|i
+難しい|むずかしい|khó|i
+素敵|すてき|đẹp, trang nhã|na
+親切|しんせつ|thân thiện, tốt bụng|na
+不思議|ふしぎ|kì lạ|na
+大変|たいへん|vất vả|na
+頭がいい|あたまがいい|thông minh|i
+人が多い|ひとがおおい|đông người|i
+肉|にく|thịt|n
+所|ところ|nơi, chỗ|n
+|バーベキュー|nướng thịt ngoài trời/ nướng BBQ|n
+バーベキュー場|バーベキューじょう|khu vực nướng BBQ|n
+|パーティー|bữa tiệc|n
+|テスト|bài kiểm tra|n
+残念|ざんねん|tiếc, đáng tiếc|na
+|どんな|～như thế nào (luôn đứng trước danh từ)|oth
+|そういえば|nói mới nhớ|exp
+山|やま|núi|n
+富士山|ふじさん|núi Phú Sĩ|n
+建物|たてもの|tòa nhà|n
+歌手|かしゅ|ca sĩ|n
+一年|いちねん|1 năm|n+adv
+|ほう|phía ～|n
+|どれ|cái nào|n
+|どこ|chỗ nào; ở đâu|n
+何|なに|cái gì|n
+|スカート|chân váy|n
+|パンツ|quần lót quần dài|n
+|ズボン|quần dài|n
+赤い|あかい|màu đỏ|i
+黒い|くろい|màu đen|i
+一番|いちばん|nhất, số một|adv
+多分|たぶん|có lẽ|adv
+|いつ|khi nào|n
+|どちら|phía nào|n
+|どっち|phía nào|n
+～月|～がつ|tháng ～|suf
+四月|しがつ|tháng 4|n
+七月|しちがつ|tháng 7|n
+九月|くがつ|tháng 9|n
+何月|なんがつ|tháng mấy|n
+|そのなか|trong số đó|exp
 `,
   grammar: [
-    ["ここ / そこ / あそこ / どこ", "Chỉ nơi chốn: ở đây / ở đó / ở kia / ở đâu.", "ここは 食堂です。", "Đây là nhà ăn."],
-    ["N は địa điểm です", "Nói vị trí của người / vật.", "トイレは あそこです。", "Nhà vệ sinh ở đằng kia."],
-    ["こちら / そちら / あちら / どちら", "Cách nói lịch sự của ここ/そこ/あそこ/どこ; còn chỉ phương hướng. どちら còn hỏi nước, công ty, trường.", "お国は どちらですか。", "Bạn đến từ nước nào ạ?"],
-    ["N1 の N2 (xuất xứ)", "N1 là nước / công ty sản xuất, N2 là sản phẩm.", "これは 日本の 車です。", "Đây là xe của Nhật."],
-    ["いくら", "Hỏi giá tiền.", "この ワインは いくらですか。…3,000円です。", "Chai rượu này bao nhiêu tiền? — 3.000 yên."],
-    ["Số lớn & ～階", "百, 千, 万 có biến âm: 300 = さんびゃく, 600 = ろっぴゃく, 800 = はっぴゃく, 3000 = さんぜん, 8000 = はっせん. ～階: 1階 = いっかい, 3階 = さんがい.", "会議室は 3階です。", "Phòng họp ở tầng 3."]
+    ["(N は) Aい です","N (có tính chất, đặc điểm) Aい","Tiếng Nhật có 2 loại tính từ: tính từ đuôi い (Aい) và tính từ đuôi な (Aな). ｜ Phó từ chỉ mức độ đặt trước Aい: ちょっと (một chút), すこし (hơi hơi), まあまあ (bình thường, tàm tạm), とても (rất), 本当に (thật sự).","今日は 暑いです。","ベトナム料理は とても おいしいです。","この 店は 本当に 安いですね。"],
+    ["(N は) Aいくないです","N không có (tính chất, đặc điểm) Aい","Dạng phủ định của Aい: bỏ い + くない. ｜ Trường hợp đặc biệt: いい → よくない. ｜ Phó từ thường đi kèm: あまり (không ～ lắm), 全然 (hoàn toàn không), そんなに (không ～ đến mức đó).","今日は 暑くないです。","この 学校は あまり 新しくないです。"],
+    ["(N は) Aな です","N (có tính chất, đặc điểm) Aな","Một số tính từ kết thúc bằng い nhưng thuộc nhóm Aな: きれい、ていねい、ゆうめい、きらい.","あの 人、すごく ハンサムですね。","この レストランは とても 有名です。"],
+    ["(N は) Aな じゃないです / じゃありません","N không có (tính chất, đặc điểm) Aな","Dạng phủ định giống với danh từ.","この 駅は あまり 便利じゃないです。","私の会社は ぜんぜん ゆうめいじゃないです。"],
+    ["(N は) Aい / Aな ですか","Câu hỏi có vị ngữ là tính từ","","A：ベトナムは 今、暑いですか。\nB：ええ、とても 暑いですよ。","A：ハノイは 賑やかですか。\nB：はい、賑やかですよ。"],
+    ["(N は) Aいくて + Aい / Aな です","Nối Aい với một tính từ khác","Aい đứng trước đổi sang dạng 「Aい + くて」 (いい → よくて). ｜ Hai tính từ phải cùng chiều đánh giá: cùng tích cực hoặc cùng tiêu cực.","安くて おいしいです。","新しくて 広いです。","この 店は、新しくて きれいですね。"],
+    ["(N は) Aなで + Aい / Aな です","Nối Aな với một tính từ khác","Aな đứng trước đổi sang dạng 「Aな + で」.","静かで きれいです。","この 町は、便利で にぎやかです。"],
+    ["(N は) どうですか","N thì thế nào?","","A：学校は どうですか。\nB：楽しいです。","A：その 料理、どうですか。\nB：ちょっと 辛いです。"],
+    ["(N は) ～が ～","N thì ～ nhưng ～","Nối 2 mệnh đề đánh giá trái ngược, tương phản nhau: A です が B です.","この 店は 美味しいですが、安くないです。","仕事は 忙しいですが、面白いです。"],
+    ["(N は) Aいかったです / Aいくなかったです","N đã / đã không (có tính chất, đặc điểm) Aい","Aい → Aいかった; Aくない → Aくなかった. ｜ いい → よかった (+), よくなかった (－).","バーベキューは 楽しかったです。","昨日は 忙しくなかったです。"],
+    ["(N は) Aなでした / Aなじゃなかったです","N đã / đã không (có tính chất, đặc điểm) Aな","Aなです → Aなでした; Aなじゃないです → Aなじゃなかったです.","昨日の パーティーは にぎやかでした。","この 町は 昔 便利じゃなかったです。"],
+    ["どんな N ですか → Aい N / Aな N です","Tính từ bổ nghĩa cho danh từ","Aい + N; Aな + な + N. ｜ Khi bổ nghĩa cho danh từ không chia tính từ về quá khứ mà đưa danh từ về quá khứ: 「Aい/Aな + N でした」. ｜ 「どう」 có thể đi trực tiếp với 「ですか」, còn 「どんな」 luôn phải đi cùng một danh từ.","A：山田さんは、どんな 人ですか。\nB：とても 親切な 人ですよ。","A：Bさんの 部屋は どんな 部屋ですか。\nB：広くて 明るい 部屋です。","この 町は 昔、小さくて 不便な町でした。"],
+    ["(N1 で) N2 が 一番 A です","Trong phạm vi N1 thì N2 A nhất","「～で」 đứng sau phạm vi hoặc địa điểm so sánh. ｜ 「～が」 đứng sau đối tượng được đánh giá có mức độ cao nhất. ｜ Từ để hỏi theo nhóm đối tượng: Người (だれ), Vật (なに/どれ), Địa điểm (どこ), Thời gian (いつ、なんがつ…).","A：クラスで、誰が 一番 ハンサムですか。\nB：ズン先生が 一番 ハンサムです。","A：日本で、どこが 一番 寒いですか。\nB：北海道が 一番 寒いです。"],
+    ["N1 と N2 (と)、どっち/どちらが A ですか → N1 (N2) の ほうが A です","N1 và N2 thì cái nào hơn? → N1/ N2 hơn","Luôn dùng từ để hỏi 「どちら」 hoặc 「どっち」 dù N1, N2 là người, vật hay địa điểm. ｜ Muốn nói cả hai đều như nhau thì dùng 「どちらも/ どっちも」.","A：この 店と あの 店と どちらが おいしいですか。\nB：あの 店の ほうが おいしいですよ。","A：フォーと バインミー、どちらが 有名ですか。\nB：どちらも 有名です。"],
+    ["N1 (は) N2 より A です","N1 A hơn N2","Câu so sánh hơn: N1 được đưa ra so sánh với N2.","フォーは バインミーより 有名です。","ベトナムは 日本より 暑いです。"]
   ],
   quiz: [
-    ["電話は (  )です。(Điện thoại ở chỗ kia — xa cả hai)", "あそこ", "ここ", "そこ", "どこ", "あそこ = chỗ kia (xa cả người nói và người nghe)."],
-    ["食堂は (  )ですか。(Nhà ăn ở đâu?)", "どこ", "だれ", "なに", "いくら", "Hỏi địa điểm dùng どこ."],
-    ["この ワインは (  )ですか。(Chai rượu này bao nhiêu tiền?)", "いくら", "どこ", "だれ", "なんさい", "Hỏi giá dùng いくら."],
-    ["「こちら」là cách nói lịch sự của từ nào?", "ここ", "そこ", "あそこ", "どこ", "こちら ← ここ, そちら ← そこ, あちら ← あそこ, どちら ← どこ."],
-    ["これは イタリア(  ) くつです。(Đây là giày của Ý)", "の", "は", "で", "を", "N1 の N2 chỉ xuất xứ."],
-    ["会議室は 3(  )です。(Phòng họp ở tầng 3)", "階", "円", "時", "人", "～階 (かい) là tầng."],
-    ["このネクタイは 3,000(  )です。", "円", "階", "時", "人", "～円 (えん) là đơn vị tiền Nhật."],
-    ["「300円」đọc là gì?", "さんびゃくえん", "さんひゃくえん", "さんぴゃくえん", "さんびゃくいん", "300 = さんびゃく (biến âm び)."]
+    ["今日は 暑(  )。(Hôm nay không nóng)","くないです","じゃないです","いくないです","ではありません","Phủ định của Aい: bỏ い + くないです."],
+    ["この 学校は (  ) 新しくないです。(không ～ lắm)","あまり","とても","ちょっと","まあまあ","あまり + phủ định = không ～ lắm."],
+    ["この 町は 便利(  ) にぎやかです。(tiện lợi và náo nhiệt)","で","くて","な","と","Nối Aな: Aな + で."],
+    ["この 店は 安(  ) おいしいです。(rẻ và ngon)","くて","で","いくて","な","Nối Aい: bỏ い + くて."],
+    ["この 店は (  )。(Cửa hàng này không tốt)","よくないです","いくないです","いいくないです","よいじゃないです","いい → よくない (trường hợp đặc biệt)."],
+    ["あの 人は (  ) 人ですか。…とても 親切な 人です。","どんな","どう","だれ","どこ","どんな + danh từ; どう đi trực tiếp với ですか."],
+    ["山田さんは 親切(  ) 人です。","な","で","の","い","Aな + な + N."],
+    ["この 店は 美味しいです(  )、安くないです。(ngon nhưng không rẻ)","が","と","を","も","「が」 nối 2 mệnh đề trái ngược nhau: nhưng."],
+    ["クラスで、誰(  ) 一番 ハンサムですか。","が","は","を","と","N1 で N2 が 一番 A: 「が」 đứng sau đối tượng được đánh giá cao nhất."],
+    ["この 店と あの 店と (  ) おいしいですか。(Cửa hàng nào ngon hơn?)","どちらが","どれが","だれが","なにが","So sánh hai đối tượng: どちら / どっち."],
+    ["フォーは バインミー(  ) 有名です。(Phở nổi tiếng hơn bánh mì)","より","から","まで","だけ","N1 は N2 より A: N1 A hơn N2."],
+    ["昨日は 忙し(  )。(Hôm qua không bận)","くなかったです","くないでした","じゃなかったです","くないです","Aい quá khứ phủ định: bỏ い + くなかったです."],
+    ["昨日の パーティーは にぎやか(  )。(đã náo nhiệt)","でした","かったです","でしたか","じゃなかったです","Aな quá khứ: Aな + でした."]
   ]
 },
 {
   id: 4, title: "Chương 4",
   vocab: `
-起きます|おきます|thức dậy
-寝ます|ねます|ngủ
-働きます|はたらきます|làm việc
-休みます|やすみます|nghỉ ngơi
-勉強します|べんきょうします|học
-終わります|おわります|kết thúc
-銀行|ぎんこう|ngân hàng
-郵便局|ゆうびんきょく|bưu điện
-図書館|としょかん|thư viện
-美術館|びじゅつかん|bảo tàng mỹ thuật
-今|いま|bây giờ
-時|じ|giờ
-分|ふん/ぷん|phút
-半|はん|rưỡi
-何時|なんじ|mấy giờ
-午前|ごぜん|buổi sáng (AM)
-午後|ごご|buổi chiều (PM)
-朝|あさ|buổi sáng
-昼|ひる|buổi trưa
-晩|ばん|buổi tối
-昨日|きのう|hôm qua
-今日|きょう|hôm nay
-明日|あした|ngày mai
-毎日|まいにち|mỗi ngày
-毎朝|まいあさ|mỗi sáng
-休み|やすみ|ngày nghỉ
-月曜日|げつようび|thứ Hai
-火曜日|かようび|thứ Ba
-水曜日|すいようび|thứ Tư
-木曜日|もくようび|thứ Năm
-金曜日|きんようび|thứ Sáu
-土曜日|どようび|thứ Bảy
-日曜日|にちようび|Chủ nhật
-番号|ばんごう|số, số hiệu
+女の人|おんなのひと|phụ nữ, con gái|n
+男の人|おとこのひと|đàn ông, con trai|n
+女優|じょゆう|nữ diễn viên|n
+子ども|こども|con, trẻ con|n
+恋人|こいびと|người yêu|n
+妹|いもうと|em gái của mình|n
+妹さん|いもうとさん|em gái của người khác|n
+試験|しけん|kỳ thi, bài thi|n
+お祭り|おまつり|lễ hội|n
+本当|ほんとう|thật, sự thật|n
+今晩|こんばん|tối nay|n+adv
+|スマホケース|ốp điện thoại|n
+|デザイン|thiết kế|n
+|おとなしい|điềm tĩnh, ít nói|i
+|おしゃべり|hay chuyện, nói nhiều|na
+|あんまり|không ～lắm|adv
+|うん|ừ, ừm (cách nói suồng sã của 「はい」. Có nhiều trường hợp phát âm bằng âm mũi 「んん」)|exp
+|ううん|không (cách nói thân mật, suồng sã của 「いいえ」. Có nhiều trường hợp phát âm bằng âm mũi 「んんん」và lên giọng ở chữ「ん」cuối cùng.)|exp
+よく見て|よくみて|hãy nhìn kĩ|exp
+違う（よ）|ちがうよ|khác, không phải|exp
+|～かな（あ）|có phải ～ không nhỉ? (được dùng trong hội thoại thân mật)|exp
+恋人かな|こいびとかな|có phải người yêu không nhỉ?|exp
+本当かな|ほんとうかな|có thật không nhỉ?|exp
+|うーん|Hmmm (lời ậm ừ khi phân vân, suy nghĩ)|exp
+外国|がいこく|nước ngoài|n
+外国人|がいこくじん|người nước ngoài|n
+外国語|がいこくご|ngoại ngữ|n
+外国語大学|がいこくごだいがく|đại học Ngoại ngữ|n
+髪型|かみがた|kiểu tóc|n
+美容院|びよういん|tiệm làm tóc, salon|n
+飲み会|のみかい|buổi nhậu, buổi liên hoan|n
+駅前|えきまえ|trước nhà ga|n
+勉強|べんきょう|việc học|n
+全部|ぜんぶ|toàn bộ, tất cả|n+adv
+全部で|ぜんぶで|tổng cộng là|n+adv
+|サークル|câu lạc bộ|n
+|よかったね|hay nhỉ, tốt rồi nhỉ!|exp
+|～けど|nhưng mà (cách nói suồng sã, thân mật của 「～が」)|exp
 `,
   grammar: [
-    ["今 ～時 ～分です", "Nói giờ. 4時 = よじ, 7時 = しちじ, 9時 = くじ. Phút: 1 = いっぷん, 2 = にふん, 3 = さんぷん, 4 = よんぷん, 5 = ごふん, 6 = ろっぷん, 8 = はっぷん, 10 = じゅっぷん.", "今 4時 5分です。", "Bây giờ là 4 giờ 5 phút."],
-    ["V ます / V ません", "Thì hiện tại / tương lai: khẳng định ～ます, phủ định ～ません.", "毎朝 6時に 起きます。", "Mỗi sáng tôi dậy lúc 6 giờ."],
-    ["V ました / V ませんでした", "Thì quá khứ khẳng định / phủ định.", "昨日 勉強しませんでした。", "Hôm qua tôi đã không học."],
-    ["N(thời điểm) に V", "Trợ từ に đi sau thời điểm cụ thể (giờ, ngày, thứ). Không dùng với 今日, 毎朝, 昨日, 今...", "7時に 寝ます。", "Tôi ngủ lúc 7 giờ."],
-    ["N1 から N2 まで", "Từ N1 đến N2 (thời gian / nơi chốn).", "銀行は 9時から 3時までです。", "Ngân hàng làm việc từ 9 giờ đến 3 giờ."],
-    ["N1 と N2", "N1 và N2 (nối danh từ). Cuối câu thêm ね để xác nhận, đồng cảm.", "休みは 土曜日と 日曜日です。", "Ngày nghỉ là thứ Bảy và Chủ nhật."]
+    ["Thể thường (suồng sã) của câu danh từ / Aな","Dùng với người thân, bạn bè","Thể lịch sự → thể thường: ですか → bỏ か, lên giọng; はい → うん; いいえ → ううん. ｜ N2/Aな です → N2/Aな だ; じゃないです/じゃありません → じゃない; でした → だった; じゃなかったです → じゃなかった.","これは 何ですか。→ これ（は）何？","A：明日は 仕事ですか。→ 明日（は）仕事？"],
+    ["(N1 は) N2/Aな です(よ/ね/よね) → (N1 は) N2/Aな (だよ/だね/だよね)","Thể thường của です + よ/ね/よね","「です」 → 「だ」 (thường được lược bỏ). ｜ 「だ」 giữ nguyên trong 2 trường hợp: khi sau 「だ」 có 「よ、ね、よね」; khi nói về điều mình mới biết hay mới phát hiện ra.","ベトナム人です。→ ベトナム人。","ベトナム人ですよ。→ ベトナム人だよ。","田中さんは とても 親切ですよ。→ 田中さんは とても 親切だよ。"],
+    ["(N1 は) N2/Aな じゃないですか → じゃない？","Chẳng phải ～ hay sao?","Dùng để xác nhận ý kiến đối phương, lên giọng ở cuối câu. ｜ 「じゃないですか/じゃありませんか」 → 「じゃない」; 「ではないですか/ではありませんか」 → 「ではない」. ｜ Còn câu phủ định bình thường 「じゃない」 thì xuống giọng.","ベトナム料理じゃないですか？→ ベトナム料理じゃない？","ベトナム料理じゃないです。→ ベトナム料理じゃない。"],
+    ["(N1 は) N2/Aな でしたか → N2/Aな だった？","Thể thường quá khứ của N / Aな","「でしたか」 → 「だった?」; 「でした」 → 「だった」.","昨日は 雨でした。→ 昨日は 雨だった。","A：テスト、どうでしたか。→ テスト、どうだった？\nB：簡単でした。→ 簡単だった。"],
+    ["(N1 は) N2/Aな じゃなかったです → じゃなかった","Phủ định quá khứ thể thường","「じゃなかったです/じゃありませんでした」 → 「じゃなかった」.","あの人、マイさんじゃなかった。","昨日、暇じゃなかった。"],
+    ["Thể thường của tính từ đuôi い","Aい です → Aい; Aいくないです → Aいくない; Aいですか → Aい？","Phi quá khứ: Aいです → Aい; Aいくないです → Aいくない; Aいですか → Aい？ (bỏ ですか, lên giọng). ｜ Quá khứ: Aいかったです → Aいかった; Aいくなかったです → Aいくなかった; Aいかったですか → Aいかった？ ｜ Không dùng だ sau Aい: ×おいしいだね → ○おいしいね; ×おいしいだよ → ○おいしいよ.","これは おいしいですか。→ これ、おいしい？","ベトナム料理は おいしいです。→ ベトナム料理は おいしい。","日本語は 難しくないですね。→ 日本語は 難しくないね。","高かったです。→ 高かった。"],
+    ["～が ～ → ～けど ～","nhưng ～","「けど」 là thể thường của 「が」. ｜ Từ đứng trước 「けど」 cũng đưa về thể thường: Aい → Aい けど; Aな/N → Aな/N だけど.","この 店は おいしいですが、高いですね。→ この 店、おいしいけど、高いね。","この 町は 便利ですが、きれいじゃないですね。→ この 町は 便利だけど、きれいじゃないね。"]
   ],
   quiz: [
-    ["わたしは 毎朝 6時(  ) 起きます。", "に", "で", "を", "へ", "Thời điểm cụ thể (giờ) + に."],
-    ["昨日は 勉強(  )。(Hôm qua tôi đã không học)", "しませんでした", "しません", "しました", "しないでした", "Quá khứ phủ định: ～ませんでした."],
-    ["銀行は 9時(  ) 3時(  )です。", "から … まで", "まで … から", "に … まで", "から … に", "N1 から N2 まで = từ N1 đến N2."],
-    ["日曜日は 働き(  )。(Chủ nhật tôi không làm việc)", "ません", "ませんでした", "ました", "ない", "Phủ định hiện tại / tương lai: ～ません."],
-    ["「4時5分」đọc là gì?", "よじ ごふん", "よじ ごぷん", "しじ ごふん", "よじ ごっぷん", "4時 = よじ; 5分 = ごふん."],
-    ["「起きます」ở dạng quá khứ phủ định là?", "起きませんでした", "起きません", "起きました", "起きなかった", "～ます → ～ませんでした."],
-    ["昨日が 火曜日です。今日は (  )です。", "水曜日", "木曜日", "月曜日", "金曜日", "火 → 水: hôm nay là thứ Tư."],
-    ["昼休みは 12時(  ) 1時までです。", "から", "に", "を", "で", "Bắt đầu từ ~: から."]
+    ["「学生ですか」の thể thường (hỏi, lên giọng) là?","学生？","学生だ？","学生です？","学生か？","Thể thường: bỏ 「ですか」 và lên giọng ở cuối câu."],
+    ["A：明日、勉強する？ B：(  )、勉強する。","うん","ううん","はい","いいえ","Thể thường: はい → うん, いいえ → ううん."],
+    ["A：明日も 仕事？ B：(  )、休みだよ。","ううん","うん","はい","ええ","Phủ định ở thể thường: ううん."],
+    ["ベトナム人です。→ ベトナム人(  )。(thể thường, có よ ở cuối)","だよ","ですよ","よだ","だです","Giữ 「だ」 khi sau nó có よ / ね / よね."],
+    ["「おいしいですね」 → thể thường đúng là?","おいしいね","おいしいだね","おいしいですね","おいしいなね","Sau Aい không dùng だ: ×おいしいだね → ○おいしいね."],
+    ["昨日は 雨でした。→ 昨日は 雨(  )。","だった","でした","だ","かった","「でした」 → 「だった」."],
+    ["この 店は おいしいですが、高いです。→ この 店は おいしい(  )、高い。","けど","が","だけど","ですけど","「けど」 là thể thường của 「が」; sau Aい đặt trực tiếp けど."],
+    ["この 町は 便利(  )、きれいじゃないね。","だけど","けど","ですけど","いけど","Aな/N + だけど."],
+    ["「高かったです」 → thể thường là?","高かった","高いだった","高くなかった","高かっただ","Aいかったです → Aいかった (bỏ です)."]
   ]
 },
 {
   id: 5, title: "Chương 5",
   vocab: `
-行きます|いきます|đi
-来ます|きます|đến
-帰ります|かえります|về
-学校|がっこう|trường học
-|スーパー|siêu thị
-駅|えき|nhà ga
-飛行機|ひこうき|máy bay
-船|ふね|thuyền, tàu thủy
-電車|でんしゃ|tàu điện
-地下鉄|ちかてつ|tàu điện ngầm
-新幹線|しんかんせん|tàu Shinkansen
-|バス|xe buýt
-|タクシー|taxi
-自転車|じてんしゃ|xe đạp
-歩いて|あるいて|đi bộ
-友達|ともだち|bạn bè
-彼|かれ|anh ấy, bạn trai
-彼女|かのじょ|cô ấy, bạn gái
-家族|かぞく|gia đình
-一人で|ひとりで|một mình
-先週|せんしゅう|tuần trước
-今週|こんしゅう|tuần này
-来週|らいしゅう|tuần sau
-先月|せんげつ|tháng trước
-今月|こんげつ|tháng này
-来月|らいげつ|tháng sau
-去年|きょねん|năm ngoái
-今年|ことし|năm nay
-来年|らいねん|năm sau
-|いつ|khi nào
-誕生日|たんじょうび|sinh nhật
-1日|ついたち|ngày mùng 1
-2日|ふつか|ngày mùng 2
-3日|みっか|ngày mùng 3
-4日|よっか|ngày mùng 4
-5日|いつか|ngày mùng 5
-8日|ようか|ngày mùng 8
-10日|とおか|ngày mùng 10
-20日|はつか|ngày 20
+本屋|ほんや|hiệu sách|n
+庭|にわ|sân vườn|n
+公園|こうえん|công viên|n
+売り場|うりば|quầy bán hàng|n
+ワイン売り場|ワインうりば|quầy rượu vang|n
+お菓子売り場|おかしうりば|quầy bánh kẹo|n
+肉売り場|にくうりば|quầy bán thịt|n
+|はさみ|cái kéo|n
+引き出し|ひきだし|ngăn kéo|n
+机|つくえ|cái bàn|n
+椅子|いす|ghế|n
+本棚|ほんだな|giá sách|n
+冷蔵庫|れいぞうこ|tủ lạnh|n
+電子レンジ|でんしレンジ|lò vi sóng|n
+台所|だいどころ|nhà bếp|n
+財布|さいふ|ví tiền|n
+自転車|じてんしゃ|xe đạp|n
+箱|はこ|hộp|n
+木|き|cây|n
+前|まえ|trước đây, phía trước|n
+後ろ|うしろ|phía sau|n
+右|みぎ|bên phải|n
+左|ひだり|bên trái|n
+上|うえ|bên trên|n
+下|した|bên dưới|n
+中|なか|bên trong|n
+外|そと|bên ngoài|n
+間|あいだ|ở giữa|n
+真ん中|まんなか|chính giữa|n
+横|よこ|(ngang) bên cạnh, sát bên|n
+隣|となり|gần bên, hàng xóm|n
+近く|ちかく|gần, nơi lân cận|n
+|ここ、そこ、あそこ|chỗ này, chỗ đó, chỗ kia|n
+消しゴム|けしゴム|cục tẩy|n
+|ホッチキス|dập ghim|n
+|ノート|vở|n
+|ソファ|ghế sô-pha|n
+|ベッド|giường|n
+|あります|có, ở|v1
+|ない|không có|i
+|それから|ngoài ra, và còn, sau đó|oth
+|あと|ngoài ra, và còn|oth
+～階|～かい|tầng ～|suf
+１階|いっかい|tầng 1|n
+２階|にかい|tầng 2|n
+３階|さんがい|tầng 3|n
+何階|なんがい|tầng mấy?|n
+申し訳ありません|もうしわけありません|Tôi xin lỗi ạ. (Cách nói xin lỗi một cách lịch sự khi người nói thừa nhận về hành động của mình; hoặc được dùng để bày tỏ sự tiếc nuối, đáng tiếc với người nghe)|exp
+申し訳ございません|もうしわけございません|Tôi xin lỗi ạ. (Cách nói lịch sự hơn của 「申し訳ありません」)|exp
+映画|えいが|phim ảnh|n
+教室|きょうしつ|lớp học|n
+食堂|しょくどう|nhà ăn|n
+事務所|じむしょ|văn phòng|n
+休憩|きゅうけい|nghỉ giải lao|n
+電話|でんわ|cuộc điện thoại, điện thoại|n
+窓|まど|cửa sổ|n
+社長|しゃちょう|giám đốc|n
+部長|ぶちょう|trưởng bộ phận, trưởng ban|n
+課長|かちょう|trưởng phòng|n
+誰か|だれか|ai đó|n
+猫|ねこ|con mèo|n
+犬|いぬ|con chó|n
+鳥|とり|con chim|n
+怖い|こわい|sợ hãi, đáng sợ|i
+|いらっしゃいます|có, ở (kính ngữ của 「います」,được sử dụng khi nói về sự tồn tại của người bề trên)|v1
+|います|có, ở|v2
+|なんだ|tưởng gì! (Sử dụng khi điều mình lo lắng không có gì to tát, hoặc có việc gì đó xảy ra ngoài mong đợi)|exp
+お願いします|おねがいします|nhờ anh/chị.|exp
+温泉|おんせん|suối nước nóng|n
+袋|ふくろ|túi|n
+皿|さら|đĩa  ［cũng đọc: おさら］|n
+|いちご|dâu tây|n
+|あめ|kẹo|n
+|たまご|quả trứng|n
+大人|おとな|người lớn, người trưởng thành|n
+兄|あに|anh trai của mình|n
+女の子|おんなのこ|bé gái|n
+男の子|おとこのこ|bé trai|n
+友達|ともだち|bạn bè|n
+何歳|なんさい|mấy tuổi|n
+|おいくつ|mấy tuổi (おいくつ là cách nói lịch sự hơn 何歳)  ［cũng đọc: いくつ］|n
+|テーブル|cái bàn|n
+|コップ|cốc|n
+|たくさん|nhiều|n+adv
+大勢|おおぜい|nhiều (chỉ dùng cho người)|n+adv
+～歳|～さい|～tuổi (tham khảo thêm trang bên 169)|suf
+～人|～にん|～người (tham khảo thêm trang 173)|suf
+～匹|～ひき|～con (đếm động vật nhỏ - tham khảo thêm trang 173)|suf
+|～つ|～cái/ chiếc (dùng chung cho các đồ vật- tham khảo thêm trang 173)|suf
+|ええ|Ôi! Ối (tiếng kêu ngạc nhiên)|exp
+1歳|いっさい|1 tuổi|n
+2歳|にさい|2 tuổi|n
+3歳|さんさい|3 tuổi|n
+4歳|よんさい|4 tuổi|n
+5歳|ごさい|5 tuổi|n
+6歳|ろくさい|6 tuổi|n
+7歳|ななさい|7 tuổi|n
+8歳|はっさい|8 tuổi|n
+9歳|きゅうさい|9 tuổi|n
+10歳|じゅっさい|10 tuổi|n
+11歳|じゅういっさい|11 tuổi|n
+18歳|じゅうはっさい|18 tuổi|n
+20歳|はたち|20 tuổi|n
+30歳|さんじゅっさい|30 tuổi|n
 `,
   grammar: [
-    ["N(nơi) へ 行きます / 来ます / 帰ります", "Trợ từ へ (đọc là「え」) chỉ hướng di chuyển.", "わたしは 京都へ 行きます。", "Tôi đi Kyoto."],
-    ["どこ[へ]も 行きません", "Không đi đâu cả (phủ định hoàn toàn).", "昨日 どこへも 行きませんでした。", "Hôm qua tôi không đi đâu cả."],
-    ["N(phương tiện) で 行きます", "Trợ từ で chỉ phương tiện. Đi bộ dùng 歩いて (không có で).", "電車で 行きます。", "Tôi đi bằng tàu điện.", "駅から 歩いて 帰ります。", "Tôi đi bộ từ ga về."],
-    ["N(người) と V", "Làm gì cùng với ai. Một mình: 一人で.", "友達と 日本へ 来ました。", "Tôi đã đến Nhật cùng bạn."],
-    ["いつ", "Hỏi thời điểm (không dùng に sau いつ). Ngày tháng: ～月 ～日.", "誕生日は いつですか。…3月3日です。", "Sinh nhật bạn khi nào? — Ngày 3 tháng 3."],
-    ["～よ", "Cuối câu: nhấn mạnh, thông báo điều người nghe chưa biết.", "この 電車は 大阪へ 行きますよ。", "Tàu này đi Osaka đấy."]
+    ["N (đồ vật) (は) ありますか","Có N không?","Trả lời: はい、あります／いいえ、ないです・ありません. ｜ 「あります」 thể hiện sự tồn tại của đồ vật. ｜ Phủ định của 「あります」: 「ありません」 và 「ないです」. ｜ 「は」 có thể được lược đi. ｜ Thêm 「ね」 cuối câu để câu nói mềm mại hoặc khi bày tỏ cảm xúc đáng tiếc, áy náy.","A：あのー、MoriPhoneの スマホケース、ありますか。\nB：はい、あります。こちらです。","A：あのー、この ワインは ありますか。\nB：すみません、こちらの ワインは ありません（ね）。"],
+    ["N1 は N2 (địa điểm) です / N2 (địa điểm) に あります","N1 có ở N2","「に」 đứng sau danh từ chỉ vị trí, địa điểm. ｜ Hỏi vị trí: ❶ N は どこですか ❷ N は どこに ありますか. ｜ Từ chỉ vị trí đứng sau 「の」: となり、横、上、下、中、近く. ｜ Giữa A và B: A と B の 間.","公園は 銀行の 隣です。","ノートは 机の 上に あります。","スマホは かばんの 中に あります。","銀行と 学校の 間"],
+    ["N1 (địa điểm) に N2 (vật, địa điểm) が あります","Ở N1 có N2","Mẫu câu miêu tả vị trí tồn tại của đồ vật, tòa nhà, cây cối…","庭に オートバイが あります。","ベッドの 上に かばんが あります。","ここに 辞書が あります。"],
+    ["N (người, động vật) (は) いますか","Có N (người, động vật) không?","Trả lời: はい、います／いいえ、いないです・いません. ｜ 「います」 thể hiện sự tồn tại của người và động vật.","A：すみません、山田さん（は）いますか。\nB：はい、いますよ。","A：あのー、田中さん（は）、いますか。\nB：あー、田中さんは、今 いないですよ。"],
+    ["N1 (người, động vật) は N2 (địa điểm) です / N2 (địa điểm) に います","N1 có ở N2","Hỏi vị trí: ❶ N は どこですか ❷ N は どこに いますか. ｜ Khi nói về sự tồn tại của người bề trên (khách hàng, cấp trên…) người Nhật thường dùng 「いらっしゃいます」 thay cho 「います」.","鈴木さんは 部屋に います。","ミンさんは 教室に います。","ナム社長は 今、事務所に いらっしゃいます。"],
+    ["N1 (địa điểm) に N2 (người, động vật) が います","Ở N1 (địa điểm) có N2 (người, động vật)","Hỏi sự tồn tại của ai đó dùng 誰; hỏi sự tồn tại của động vật dùng 何.","窓の 外に 誰が いますか。","公園に 犬が います。","A：誰が いますか。\nB：田中さんが います。"],
+    ["N には / にも ～","Ở N có / cũng có","「に」: trợ từ biểu thị địa điểm tồn tại. ｜ 「は」 đứng sau 「に」, nhấn mạnh chủ đề của câu. ｜ 「も」 đứng sau 「に」 để thể hiện một chủ thể có ở địa điểm A và cũng có ở địa điểm B.","会社には 食堂が あります。学校にも 食堂が ありますか。","ミンさんの うちには 猫が います。ゆいさんの うちにも 猫が いますか。"],
+    ["N1 と N2","N1 và N2","「と」: trợ từ nối hai danh từ cùng chủng loại. ｜ Không dùng 「と」 khi: ❶ nói về một người/vật vừa là N1 vừa là N2 (dùng 「で」); ❷ nối những từ không phải danh từ (dùng 「くて/で」).","部屋に 田中さんと ナムさんが います。","休みは 土曜日と 日曜日です。","×田中さんは ABCカンパニーの 社員と エンジニアです。→ ○社員で エンジニアです。"],
+    ["Cách đếm người, động vật nhỏ, đồ vật","1人, 1匹, 1つ","Người: 1人 ひとり, 2人 ふたり, 3人 さんにん, 4人 よにん, 5人 ごにん, 6人 ろくにん, 7人 ななにん/しちにん, 8人 はちにん, 9人 きゅうにん/くにん, 10人 じゅうにん (何人 = mấy người). ｜ Động vật nhỏ: 1匹 いっぴき, 2匹 にひき, 3匹 さんびき, 4匹 よんひき, 5匹 ごひき, 6匹 ろっぴき, 7匹 ななひき, 8匹 はっぴき, 9匹 きゅうひき, 10匹 じゅっぴき (何匹 = mấy con). ｜ Đồ vật chung: ひとつ, ふたつ, みっつ, よっつ, いつつ, むっつ, ななつ, やっつ, ここのつ, とお (いくつ = mấy cái)."],
+    ["Số đếm + います / あります","Có (số lượng) người / động vật / đồ vật","Không thêm 「が」 sau số lượng từ. ｜ 「います」 và 「あります」 còn dùng để diễn tả sự sở hữu, được biểu thị bởi 「に（は）」.","田中さんには 車が ありません。","私には 子供が 2人 います。","テーブルの 上に コップが 2つ あります。"]
   ],
   quiz: [
-    ["わたしは 会社(  ) 行きます。", "へ", "を", "で", "が", "Hướng di chuyển: へ (đọc là え)."],
-    ["電車(  ) 学校へ 行きます。", "で", "を", "に", "と", "Phương tiện: N で."],
-    ["駅まで (  ) 行きます。(Đi bộ đến ga)", "歩いて", "歩きて", "歩きます", "歩いに", "Đi bộ: 歩いて (không dùng で)."],
-    ["友達(  ) 日本へ 来ました。(Đến Nhật cùng bạn)", "と", "で", "を", "も", "Cùng với người: N と."],
-    ["昨日は どこ(  ) 行きませんでした。(Hôm qua không đi đâu cả)", "へも", "を", "は", "に", "どこへも + phủ định = không đi đâu cả."],
-    ["誕生日は (  )ですか。(Sinh nhật khi nào?)", "いつ", "どこ", "だれ", "なに", "Hỏi thời điểm: いつ."],
-    ["「3月3日」đọc là gì?", "さんがつ みっか", "さんがつ さんにち", "さんがつ みか", "さんがつ さんか", "3日 = みっか (ngày đặc biệt)."],
-    ["一人(  ) 日本へ 行きます。(Đi Nhật một mình)", "で", "と", "を", "に", "一人で = một mình."]
+    ["机の 上に ノートが (  )。(Trên bàn có quyển vở)","あります","います","ありません","いません","Đồ vật tồn tại: あります."],
+    ["公園に 犬が (  )。(Trong công viên có con chó)","います","あります","いません","ありません","Người và động vật tồn tại: います."],
+    ["ノートは 机の 上(  ) あります。","に","で","を","と","Địa điểm tồn tại: に."],
+    ["銀行(  ) 学校の 間に 公園が あります。(Giữa ngân hàng và trường học)","と","の","に","も","Giữa A và B: A と B の 間."],
+    ["ミンさんは 病院(  ) います。","に","で","を","が","Địa điểm tồn tại của người: に います."],
+    ["A：誰(  ) いますか。 B：田中さんが います。","が","を","に","の","Hỏi sự tồn tại của người: 誰が いますか."],
+    ["会社(  ) 食堂が あります。学校にも 食堂が あります。","には","では","とは","へは","「に」 + 「は」 nhấn mạnh chủ đề; 「にも」 = cũng có ở."],
+    ["「4人」đọc là gì?","よにん","よんにん","しにん","よっにん","4人 = よにん."],
+    ["「3匹」đọc là gì?","さんびき","さんひき","さんぴき","みっぴき","3匹 = さんびき."],
+    ["「8つ」đọc là gì?","やっつ","はちつ","ようつ","やつつ","8つ = やっつ."],
+    ["田中さんは ABCカンパニーの 社員(  ) エンジニアです。","で","と","の","も","Một người vừa là N1 vừa là N2 thì dùng 「で」, không dùng 「と」."]
   ]
 },
 {
   id: 6, title: "Chương 6",
   vocab: `
-食べます|たべます|ăn
-飲みます|のみます|uống
-吸います|すいます|hút (thuốc)
-見ます|みます|xem, nhìn
-聞きます|ききます|nghe, hỏi
-読みます|よみます|đọc
-書きます|かきます|viết, vẽ
-買います|かいます|mua
-撮ります|とります|chụp (ảnh)
-|します|làm
-会います|あいます|gặp (bạn bè)
-ご飯|ごはん|cơm, bữa ăn
-朝ご飯|あさごはん|bữa sáng
-昼ご飯|ひるごはん|bữa trưa
-晩ご飯|ばんごはん|bữa tối
-|パン|bánh mì
-卵|たまご|trứng
-肉|にく|thịt
-魚|さかな|cá
-野菜|やさい|rau
-果物|くだもの|trái cây
-水|みず|nước
-お茶|おちゃ|trà
-牛乳|ぎゅうにゅう|sữa bò
-|ジュース|nước ép
-|ビール|bia
-お酒|おさけ|rượu
-映画|えいが|phim
-手紙|てがみ|thư
-写真|しゃしん|ảnh
-店|みせ|cửa hàng
-庭|にわ|vườn
-宿題|しゅくだい|bài tập về nhà
-お花見|おはなみ|ngắm hoa anh đào
-一緒に|いっしょに|cùng nhau
-|ちょっと|một chút
-時々|ときどき|thỉnh thoảng
-|いつも|luôn luôn
+天気|てんき|thời tiết|n
+体調|たいちょう|tình trạng cơ thể|n
+ご飯|ごはん|cơm, bữa cơm|n
+毎朝|まいあさ|hàng sáng, sáng nào cũng|n+adv
+毎晩|まいばん|hàng tối, tối nào cũng|n+adv
+|スケジュール|lịch trình|n
+|すごい|tuyệt vời, siêu, giỏi|i
+働きます|はたらきます|làm việc|v1
+歩きます|あるきます|đi bộ|v1
+休みます|やすみます|nghỉ ngơi|v1
+遊びます|あそびます|chơi|v1
+寝ます|ねます|ngủ|v2
+起きます|おきます|thức dậy|v2
+疲れます|つかれます|mệt mỏi|v2
+出かけます|でかけます|ra ngoài|v2
+勉強|べんきょう|học|n+v3
+|これから|từ giờ (trở đi)|n+adv
+|いつも|lúc nào cũng|n+adv
+|ときどき|thỉnh thoảng|adv
+|ゆっくり|từ từ, thong thả|adv
+～時間|～じかん|～ tiếng|suf
+１時間|いちじかん|1 tiếng|n
+２時間|にじかん|2 tiếng|n
+３時間|さんじかん|3 tiếng|n
+|～くらい|khoảng ～ (cũng nói ～ぐらい)  ［cũng đọc: ～ぐらい］|suf
+１時くらい|いちじくらい|khoảng 1 giờ|n
+２時くらい|にじくらい|khoảng 2 giờ|n
+４時くらい|よじくらい|khoảng 4 giờ|n
+気持ちがいい|きもちがいい|cảm thấy thoải mái, dễ chịu|exp
+|さあ|nào (hô hào, thúc giục trước khi làm việc gì đó)|exp
+問題ない|もんだいない|không vấn đề gì|exp
+実家|じっか|nhà (bố mẹ đẻ)|n
+寮|りょう|kí túc xá|n
+写真|しゃしん|ảnh|n
+お正月|おしょうがつ|Tết Dương lịch  ［cũng đọc: しょうがつ］|n
+～年|～ねん|năm ～|n+adv
+2020年|にせんにじゅうねん|năm 2020|n+adv
+2021年|にせんにじゅういちねん|năm 2021|n+adv
+毎年|まいとし|hằng năm|n+adv
+毎月|まいつき|hàng tháng|n+adv
+毎週|まいしゅう|hàng tuần|n+adv
+今年|ことし|năm nay|n+adv
+去年|きょねん|năm ngoái|n+adv
+一昨年|おととし|năm kia|n+adv
+来年|らいねん|năm sau|n+adv
+再来年|さらいねん|năm sau nữa|n+adv
+今月|こんげつ|tháng này|n+adv
+先月|せんげつ|tháng trước|n+adv
+来月|らいげつ|tháng sau|n+adv
+楽しみ|たのしみ|mong đợi, mong chờ|n+na
+|わかります|hiểu, biết|v1
+行きます|いきます|đi  ［へ/ に］|v1
+帰ります|かえります|về, trở về  ［へ/ に］|v1
+来ます|きます|đến  ［へ/ に］|v3
+買い物|かいもの|mua sắm|n+v3
+|もうすぐ|sắp|adv
+試合|しあい|trận đấu|n
+|もの|đồ vật|n
+水|みず|nước|n
+魚|さかな|cá|n
+紅茶|こうちゃ|hồng trà|n
+|おにぎり|cơm nắm|n
+寿司|すし|sushi  ［cũng đọc: おすし］|n
+朝ご飯|あさごはん|cơm sáng/ bữa sáng|n
+昼ご飯|ひるごはん|cơm trưa/ bữa trưa|n
+晩ご飯|ばんごはん|cơm tối/ bữa tối|n
+夕飯|ゆうはん|cơm tối/ bữa tối|n
+お土産|おみやげ|quà (lưu niệm)|n
+家族|かぞく|gia đình|n
+音楽|おんがく|âm nhạc|n
+雑誌|ざっし|tạp chí|n
+靴|くつ|giày|n
+|～たち|nhóm, bọn, các... (đi với danh từ biểu thị số nhiều; 「N + たち」 được sử dụng như một cụm danh từ)|suf
+会社の人たち|かいしゃのひとたち|nhóm người trong công ty/ mọi người ở công ty|n
+|ナムさんたち|nhóm Nam/ Nam với mấy bạn|n
+田中さんたち|たなかさんたち|nhóm Tanaka/ Tanaka với mọi người|n
+|デパート|trung tâm mua sắm|n
+|サッカー|bóng đá|n
+眠い|ねむい|buồn ngủ|i
+一人で|ひとりで|một mình (được dùng như một phó từ)|adv
+買います|かいます|mua  ［～を］|v1
+読みます|よみます|đọc  ［～を］|v1
+聞きます|ききます|①nghe ②hỏi  ［～を］|v1
+飲みます|のみます|uống  ［～を］|v1
+食べます|たべます|ăn  ［～を］|v2
+見ます|みます|xem, nhìn  ［～を］|v2
+旅行|りょこう|du lịch|v3
 `,
   grammar: [
-    ["N を V (tha động từ)", "Trợ từ を chỉ đối tượng của hành động.", "わたしは パンを 食べます。", "Tôi ăn bánh mì."],
-    ["N(nơi) で V", "Trợ từ で chỉ nơi diễn ra hành động.", "図書館で 本を 読みます。", "Tôi đọc sách ở thư viện."],
-    ["V ませんか", "Rủ rê, mời mọc một cách lịch sự.", "いっしょに 映画を 見ませんか。", "Cùng xem phim không?"],
-    ["V ましょう", "Đề nghị cùng làm / đồng ý với lời mời.", "ええ、見ましょう。", "Vâng, cùng xem nào."],
-    ["何も V ません", "Không ... gì cả (何も + phủ định). Hỏi: 何を ～ますか.", "昨日 何も 食べませんでした。", "Hôm qua tôi không ăn gì cả."],
-    ["N を します", "します = làm / chơi khi đi với danh từ (môn thể thao, trò chơi...).", "日曜日 サッカーを します。", "Chủ nhật tôi chơi bóng đá."]
+    ["V ます / V ました","Hiện tại - tương lai / quá khứ","「Vます」 dùng để nói về thói quen, hành động diễn ra ở hiện tại hoặc tương lai. ｜ 「Vました」 dùng để nói về hành động diễn ra trong quá khứ.","寝ます／寝ました","起きます／起きました","働きます／働きました"],
+    ["～時に + V","V vào lúc ～ giờ","「に」: trợ từ đứng sau thời điểm xảy ra hành động. ｜ 「何時に Vか?」 = 「いつ Vか?」. ｜ Không dùng 「に」 với các trạng từ chỉ thời gian chung chung (昨日、今日、明日、先週…).","今朝 11時に 出かけました。","A：毎朝、何時に 起きますか。\nB：5時50分に 起きます。"],
+    ["～時間 / 分 + V","V (trong) ～ tiếng / phút","Không thêm trợ từ vào sau lượng từ chỉ khoảng thời gian xảy ra hành động.","田中さんは 今朝 30分 歩きました。","私は 昨日 4時間くらい 勉強しました。","マイさんは 毎日 8時間 働きます。"],
+    ["～から ～まで + V","V từ ～ đến ～","「から」 biểu thị thời điểm bắt đầu; 「まで」 biểu thị thời điểm kết thúc. ｜ Có thể dùng độc lập 「から」 hoặc 「まで」.","月曜日から、金曜日まで 働きます。","私は 毎日 9時から 6時まで 働きます。"],
+    ["V ません / V ませんでした","Không V / Đã không V","「Vません」 là dạng phủ định của 「Vます」; 「Vませんでした」 là dạng phủ định của 「Vました」.","私は 土曜日と 日曜日 働きません。","A：（Bさんは）毎日、勉強しますか。\nB：いいえ、毎日、勉強しません。ときどき 勉強します。","田中さんは 昨日、働きませんでした。"],
+    ["N (địa điểm) へ / に 帰ります","Về / trở về N","「へ」、「に」: trợ từ biểu thị phương hướng, địa điểm di chuyển.","今週の 金曜日（に）、実家へ 帰ります。","今日は 8時に うちに 帰ります。"],
+    ["N (địa điểm) へ / に 行きます","Đi tới / đi đến N","Diễn tả việc di chuyển ra xa địa điểm của người nói, hoặc đối tượng di chuyển từ địa điểm này sang địa điểm khác.","A：日曜日は どこへ/に 行きますか。\nB：図書館へ/に 行きます。","田中さんは 昨日、郵便局へ/に 行きました。"],
+    ["N (địa điểm) へ / に 来ます","Đến N","","私は いつも 8時50分に 会社に/へ 来ます。","私は 一昨年に 日本に 来ました。"],
+    ["N を V","V tác động đến N","「を」: trợ từ đứng sau đối tượng chịu tác động, ảnh hưởng của hành động. ｜ Hỏi: 何を Vか.","昨日、本を 買いました。","A：今晩 何を 食べますか。\nB：すしと ラーメンを 食べます。"],
+    ["N (địa điểm) で V","V ở / tại N","「へ」 biểu thị phương hướng và địa điểm di chuyển (có thể thay bằng 「に」). ｜ 「に」 biểu thị địa điểm tồn tại của người, vật. ｜ 「で」 biểu thị địa điểm xảy ra hành động. ｜ Hỏi: どこで Vか.","ベトナム料理の 店で フォーを 食べます。","A：いつも どこで 本を 読みますか。\nB：図書館で 読みます。"],
+    ["N と V","V cùng với N","「と」 là trợ từ biểu thị đối tượng cùng thực hiện hành động. ｜ Hỏi: 誰と Vか. ｜ Làm gì một mình: 一人で + V.","友達と お酒を 飲みます。","妹と 日本に 来ました。","今朝 一人で 音楽を 聞きました。"],
+    ["N1 とか N2 (とか) / N1 や N2 (など)","Nào là N1, nào là N2 / ví dụ như N1, N2…","「とか」 thường dùng trong văn nói, 「とか」 sau N2 có thể lược bỏ. ｜ 「や～など」 thường dùng trong văn viết, 「など」 có thể lược bỏ. ｜ Không tùy tiện kết hợp: ○ N1や N2など ○ N1とか N2とか ✕ N1や N2とか ✕ N1とか N2など.","東京で 本とか お菓子（とか）を 買いました。","家族と ハノイや ダナンに 行きます。"]
   ],
   quiz: [
-    ["毎朝 パン(  ) 食べます。", "を", "が", "に", "へ", "Đối tượng của hành động: を."],
-    ["図書館(  ) 本を 読みます。(Đọc sách ở thư viện)", "で", "を", "へ", "と", "Nơi diễn ra hành động: で."],
-    ["いっしょに 映画を 見(  )。(Cùng xem phim không?)", "ませんか", "ますか", "ません", "ました", "Rủ rê: V ませんか."],
-    ["A: いっしょに 昼ご飯を 食べませんか。 B: ええ、(  )。", "食べましょう", "食べません", "食べますか", "食べました", "Đồng ý lời mời: V ましょう."],
-    ["昨日 何(  ) 食べませんでした。(Hôm qua không ăn gì cả)", "も", "を", "が", "に", "何も + phủ định = không ... gì cả."],
-    ["駅(  ) 友達に 会いました。(Gặp bạn ở ga)", "で", "を", "へ", "が", "Nơi gặp gỡ (hành động): で."],
-    ["音楽を (  )。(Nghe nhạc)", "聞きます", "見ます", "読みます", "飲みます", "音楽を 聞きます."],
-    ["ちょっと 休み(  )。(Nghỉ một chút nào)", "ましょう", "ません", "ませんか", "ました", "Đề nghị cùng làm: V ましょう."]
+    ["毎朝 5時50分(  ) 起きます。","に","を","で","と","Thời điểm cụ thể (giờ) + に."],
+    ["Câu nào đúng: 「Sáng nay Tanaka đã đi bộ 30 phút」?","田中さんは 今朝 30分 歩きました。","田中さんは 今朝 30分に 歩きました。","田中さんは 今朝 30分を 歩きました。","田中さんは 今朝 30分が 歩きました。","Không thêm trợ từ sau lượng từ chỉ khoảng thời gian."],
+    ["私は 毎日 9時(  ) 6時まで 働きます。","から","に","を","で","から = thời điểm bắt đầu, まで = thời điểm kết thúc."],
+    ["昨日、働き(  )。(Hôm qua tôi đã không làm việc)","ませんでした","ません","ました","ないでした","Phủ định quá khứ: Vませんでした."],
+    ["日曜日は どこ(  ) 行きますか。(trợ từ phương hướng, đọc là え)","へ","を","で","が","「へ」: trợ từ biểu thị phương hướng di chuyển."],
+    ["昨日、本(  ) 買いました。","を","に","で","と","Đối tượng chịu tác động của hành động: を."],
+    ["ベトナム料理の 店(  ) フォーを 食べます。","で","に","を","へ","Địa điểm xảy ra hành động: で."],
+    ["友達(  ) お酒を 飲みます。(uống rượu cùng bạn)","と","に","を","で","Đối tượng cùng thực hiện hành động: と."],
+    ["今朝 (  ) 音楽を 聞きました。(Sáng nay nghe nhạc một mình)","一人で","一人と","一人に","一人を","Làm gì một mình: 一人で + V."],
+    ["Cách kết hợp nào đúng?","ハノイや ホーチミンなど","ハノイや ホーチミンとか","ハノイとか ホーチミンなど","ハノイと ホーチミンとか","Không kết hợp lẫn lộn: ○ N1や N2など, ○ N1とか N2とか; ✕ N1や N2とか, ✕ N1とか N2など."]
   ]
 },
 {
   id: 7, title: "Chương 7",
   vocab: `
-切ります|きります|cắt
-送ります|おくります|gửi
-|あげます|cho, tặng
-|もらいます|nhận
-貸します|かします|cho mượn
-借ります|かります|mượn
-教えます|おしえます|dạy, chỉ
-習います|ならいます|học (từ ai đó)
-掛けます|かけます|gọi (điện thoại)
-手|て|tay
-箸|はし|đũa
-|スプーン|thìa
-|ナイフ|dao ăn
-|フォーク|nĩa
-|はさみ|kéo
-|パソコン|máy tính cá nhân
-|ファクス|máy fax
-消しゴム|けしゴム|cục tẩy
-紙|かみ|giấy
-花|はな|hoa
-|シャツ|áo sơ mi
-|プレゼント|quà tặng
-荷物|にもつ|hành lý, đồ đạc
-お金|おかね|tiền
-切符|きっぷ|vé (tàu, xe)
-|クリスマス|Giáng sinh
-父|ちち|bố (của mình)
-母|はは|mẹ (của mình)
-お父さん|おとうさん|bố (người khác)
-お母さん|おかあさん|mẹ (người khác)
-|もう|đã, rồi
-|まだ|chưa
-|これから|từ bây giờ
+夏休み|なつやすみ|kì nghỉ hè|n
+お盆休み|おぼんやすみ|kỳ nghỉ lễ Obon|n
+週末|しゅうまつ|cuối tuần|n
+海|うみ|biển|n
+喫茶店|きっさてん|quán nước, quán giải khát|n
+|プール|bể bơi|n
+|スキューバダイビング|lặn biển|n
+|します|làm|v3
+|とっても|rất (cách nói nhấn mạnh của とても, thường dùng trong văn nói suồng sã.)|adv
+小説|しょうせつ|tiểu thuyết|n
+服|ふく|quần áo|n
+紙|かみ|giấy|n
+|ワイシャツ|áo sơ mi dài tay|n
+|プリン|bánh pudding|n
+|スプーン|thìa|n
+|ペン|bút|n
+|バナナ|quả chuối|n
+短い|みじかい|ngắn|i
+|おすすめ|giới thiệu, đề xuất, gợi ý, khuyến nghị|n+v3
+|どのくらい|bao lâu, bao nhiêu  ［cũng đọc: どのくらい］|adv
+|どのぐらい|bao lâu, bao nhiêu  ［cũng đọc: どのぐらい］|adv
+|よく|thường, hay|adv
+|たまに|thi thoảng, đôi khi|adv
+半年|はんとし|nửa năm|n
+～年|～ねん|～năm|suf
+～か月|～かげつ|～ tháng (tham khảo 補足, trang 234)|suf
+～週間|～しゅうかん|～ tuần|suf
+～冊|～さつ|～ quyển|suf
+～枚|～まい|～ tờ, tấm, trang|suf
+～杯|～はい|～ cốc  ［cũng đọc: ～ばい, ～ぱい］|suf
+～個|～こ|～ cái|suf
+|かしこまりました|tôi hiểu rồi ạ (dùng khi bề dưới nói với bề trên）|exp
+お腹|おなか|bụng|n
+昼|ひる|buổi trưa|n
+今夜|こんや|tối nay, đêm nay|n
+電動自転車|でんどうじてんしゃ|xe đạp điện|n
+自動車|じどうしゃ|xe ô tô|n
+電気自動車|でんきじどうしゃ|xe ô tô điện|n
+時計|とけい|đồng hồ|n
+ラーメン屋|ラーメンや|quán mì ramen|n
+|シーエム|quảng cáo|n
+|パソコン|máy tính, laptop|n
+欲しい|ほしい|muốn|i
+軽い|かるい|nhẹ|i
+丈夫|じょうぶ|bền, chắc, khoẻ mạnh|na
+一緒に|いっしょに|cùng nhau|adv
+空きます|すきます|trống, trống rỗng|v1
+お腹が空きます|おなかがすきます|đói bụng|exp
+初めて|はじめて|lần đầu tiên|n+adv
+映画館|えいがかん|rạp chiếu phim|n
+冗談|じょうだん|nói đùa|n
+野菜|やさい|rau|n
+機械|きかい|máy móc|n
+|ころ|hồi, lúc|n
+小さいころ|ちいさいころ|lúc nhỏ|n
+子供のころ|こどものころ|hồi bé|n
+学生のころ|がくせいのころ|thời sinh viên|n
+切符|きっぷ|vé (tàu, xe...)|n
+|チケット|vé (xem phim, ca nhạc...)|n
+アクション映画|アクションえいが|phim hành động|n
+|トイレ|nhà vệ sinh|n
+会います|あいます|gặp  ［人に］|v1
+撮ります|とります|chụp (ảnh)|v1
+説明|せつめい|giải thích|n+v3
+散歩|さんぽ|đi dạo|n+v3
+留学|りゅうがく|du học|n+v3
+食事|しょくじ|dùng bữa|n+v3
+|ぜひ|① nhất định ② rất muốn (khi đi với thể mong muốn V たい) (nhấn mạnh khi khuyến khích hay đưa ra nguyện vọng)|adv
 `,
   grammar: [
-    ["N(công cụ) で V", "Trợ từ で chỉ phương tiện, dụng cụ, ngôn ngữ: bằng ~.", "はしで ご飯を 食べます。", "Tôi ăn cơm bằng đũa."],
-    ["N(người) に あげます", "Cho / tặng ai cái gì. Tương tự: 貸します, 教えます, 送ります, 電話を かけます.", "わたしは 友達に 花を あげました。", "Tôi đã tặng hoa cho bạn."],
-    ["N(người) に もらいます", "Nhận từ ai (に hoặc から). Tương tự: 借ります, 習います.", "わたしは 母に 本を もらいました。", "Tôi được mẹ cho một cuốn sách."],
-    ["N1(người) は N2(người) に N3 を V", "Cấu trúc ba thành phần: người cho — người nhận — vật.", "ミラーさんは 木村さんに 本を 貸しました。", "Anh Miller đã cho chị Kimura mượn sách."],
-    ["もう V ました", "Đã làm ... rồi. Phủ định: いいえ、まだです。", "もう 昼ご飯を 食べましたか。…いいえ、まだです。", "Bạn đã ăn trưa chưa? — Chưa."]
+    ["どこ / だれ / 何 + か (trợ từ) + V か","Có V đâu đó / ai đó / cái gì đó không?","Thêm 「か」 vào sau từ để hỏi, để xác nhận phỏng đoán với người nghe. ｜ Khi thêm 「か」 sau từ nghi vấn thì 「へ」「を」「が」 có thể được lược bỏ, còn 「と」「で」 thì không. ｜ Trả lời: 「はい、～V ます/ V ました」 hoặc 「いいえ、từ để hỏi + も～V ません/ V ませんでした」.","何か（を）食べますか。","誰か（が）いますか。","A：昨日 どこかへ 行きましたか。\nB：はい、東京へ 行きました。"],
+    ["どこ（へ）/ だれ（と）/ 何 + も + V ません","Không V đâu / với ai / cái gì cả","Từ để hỏi + も + động từ phủ định.","明日、どこ（へ）も 行きません。","誰とも 行きません。","今朝 何も 食べませんでした。","誰も いない。／何も ない。"],
+    ["N を (số lượng từ) ください / お願いします","Hãy cho tôi (số lượng) N","Đơn vị đếm thường gặp: ～冊 (sách, vở, tạp chí), ～枚 (vật mỏng, dẹt: giấy, quần áo, CD), ～本 (vật thon dài: bút, ô, chai, lọ), ～杯 (vật đựng: cốc bia, bát cơm), ～個 / ～つ (vật nhỏ: quả trứng, cốc, bánh). ｜ Số từ thường đứng trước động từ. ｜ Khi liệt kê nhiều đồ vật, có thể thêm 「と」 ngay sau lượng từ của đồ vật trước đó.","ケーキを 1つ ください。(×1つ ケーキを)","すみません、ペンを 3本と 消しゴムを お願いします。","公園に 男の 子が 1人と 女の 子が 2人 います。"],
+    ["(Khoảng thời gian + に) + tần suất / số lượng + V","V ～ lần (hoặc số lượng cụ thể khác)","Phó từ tần suất thường dùng: よく、ときどき、あまり… ｜ 「よく」 thường dùng trong câu nghi vấn để xác nhận đối phương có thường xuyên làm hành động nào đó không.","1か月に 1回、ラーメンを 食べます。","1週間に 4日、働きます。","A：田中さんは 本を よく 読みますか。\nB：よく 読みますよ。","映画を あまり 見ません。"],
+    ["V ませんか / V ましょう / V ましょうか","Rủ rê, đề nghị","「Vませんか」: mời, rủ ai cùng làm. ｜ 「Vましょう」: đồng ý với lời mời hoặc cùng làm. ｜ 「Vましょうか」: đề nghị, hỏi ý kiến (dùng với 「～は どうですか」).","A：一緒に 行きませんか。\nB：いいですね。行きましょう。","A：どこで 見ましょうか。\nB：「サンライズシアター」は どうですか。"],
+    ["N が 欲しいです","Muốn có N","「欲しい」 dùng khi nói về mong muốn của bản thân, hoặc dùng để hỏi về mong muốn của ai đó. ｜ Không dùng 「欲しい」 để nói về mong muốn của người khác.","時計が 欲しいです。","A：今、何が 一番 欲しいですか。\nB：スマホが 一番 欲しいです。"],
+    ["(N1 へ/に) + N2 に 行きます / 来ます / 帰ります","Đi / đến / về địa điểm N1 để N2","「に」: trợ từ đứng sau N2, chỉ mục đích di chuyển. ｜ N2 là danh từ: 買い物、留学、食事、散歩、旅行… hoặc danh từ chỉ sự kiện như （パーティー）、（お祭り）、（コンサート）.","スーパーへ／に 買い物に 来ました。","東京へ／に コンサートに 行きました。"],
+    ["(N へ/に) + V ますに 行きます / 来ます / 帰ります","Đi / đến / về địa điểm N để V","Bỏ ます của động từ rồi thêm 「に」.","ベトナム料理の 店へ／に フォーを 食べに 行きます。","国へ／に ベトナム料理を 食べに 帰ります。"],
+    ["N が V ますたいです","Muốn V","Dùng 「が」 thay cho 「を」. ｜ Dạng phủ định: Vたい + くない. ｜ Giống 欲しい, không dùng khi chủ ngữ là người khác (nhưng dùng khi hỏi hay xác nhận lại mong muốn của người khác).","フォーが／を 食べたいです。","会社へ 行きたくないです。","A：日本で 何が 買いたいですか。\nB：CDが 買いたいです。"],
+    ["V ます + 方","Cách V","Bỏ ます rồi thêm 「方」.","行き方、読み方、食べ方","電子辞書の 使い方","これは 漢字の 書き方の 説明です。"]
   ],
   quiz: [
-    ["鉛筆(  ) 手紙を 書きます。(Viết thư bằng bút chì)", "で", "を", "に", "と", "Dụng cụ / phương tiện: で."],
-    ["友達(  ) 花を あげました。(Tặng hoa cho bạn)", "に", "を", "で", "が", "Người nhận của あげます: に."],
-    ["友達(  ) 本を もらいました。(Nhận sách từ bạn)", "から", "で", "を", "へ", "Người cho trong もらいます: に hoặc から."],
-    ["A: もう 昼ご飯を 食べましたか。 B: いいえ、(  )です。", "まだ", "もう", "いつも", "よく", "Chưa làm: いいえ、まだです."],
-    ["先生は わたし(  ) 英語を 教えました。", "に", "を", "で", "へ", "Người được dạy: に."],
-    ["A: もう 宿題を しましたか。 B: はい、(  ) しました。", "もう", "まだ", "ぜんぜん", "あまり", "Đã làm rồi: はい、もう V ました."],
-    ["友達に お金を (  )。(Tôi cho bạn mượn tiền)", "貸しました", "借りました", "もらいました", "あげました", "貸します = cho mượn; 借ります = mượn."],
-    ["Câu nào đúng:「Tôi đã tặng hoa cho Mary」?", "わたしは メリーさんに 花を あげました。", "わたしは メリーさんで 花を あげました。", "わたしは メリーさんを 花に あげました。", "わたしに メリーさんは 花を あげました。", "Người nhận + に, vật + を."]
+    ["何(  ) 食べますか。(Bạn có ăn gì đó không?)","か","も","は","が","Từ để hỏi + か = “đó” (có ～ nào đó không?)."],
+    ["今朝 何(  ) 食べませんでした。(Sáng nay tôi không ăn gì cả)","も","か","を","が","Từ để hỏi + も + phủ định = không ～ gì cả."],
+    ["Câu nào đúng?","ケーキを 1つ ください。","1つ ケーキを ください。","ケーキを 1つで ください。","ケーキを 1つが ください。","Số lượng từ thường đứng trước động từ: ケーキを 1つ ください."],
+    ["1か月(  ) 1回、ラーメンを 食べます。","に","を","で","が","Khoảng thời gian + に + tần suất."],
+    ["A：一緒に 行き(  )。 B：いいですね。行きましょう。","ませんか","ましょう","ますか","ません","Rủ rê: Vませんか."],
+    ["どこで 見(  )。(Xem ở đâu nhỉ? — đề nghị, hỏi ý kiến)","ましょうか","ませんか","ましたか","ませんでした","Vましょうか: đề nghị, hỏi ý kiến."],
+    ["時計(  ) 欲しいです。","が","を","に","で","N が 欲しいです."],
+    ["スーパーへ 買い物(  ) 来ました。","に","を","で","と","N2 に 行きます/来ます: đến để N2."],
+    ["フォー(  ) 食べたいです。","が","に","で","と","Vたい: dùng 「が」 (hoặc を) thay cho 「を」."],
+    ["会社へ 行き(  )。(Tôi không muốn đến công ty)","たくないです","たいくないです","たくないでした","たいないです","Phủ định: Vたい + くない → Vたくないです."],
+    ["「行きます」+ 方 = (  ) (cách đi)","行き方","行く方","行って方","行きます方","V ます + 方: bỏ ます rồi thêm 方."]
   ]
 },
 {
   id: 8, title: "Chương 8",
   vocab: `
-|ハンサム|đẹp trai (な)
-|きれい|đẹp, sạch sẽ (な)
-静か|しずか|yên tĩnh (な)
-|にぎやか|náo nhiệt (な)
-有名|ゆうめい|nổi tiếng (な)
-親切|しんせつ|tốt bụng (な)
-元気|げんき|khỏe (な)
-暇|ひま|rảnh rỗi (な)
-便利|べんり|tiện lợi (な)
-|すてき|tuyệt vời (な)
-大きい|おおきい|to, lớn (い)
-小さい|ちいさい|nhỏ (い)
-新しい|あたらしい|mới (い)
-古い|ふるい|cũ (い)
-|いい|tốt (い)
-悪い|わるい|xấu, tệ (い)
-暑い|あつい|nóng (thời tiết) (い)
-熱い|あつい|nóng (đồ vật) (い)
-寒い|さむい|lạnh (thời tiết) (い)
-冷たい|つめたい|lạnh (đồ vật) (い)
-難しい|むずかしい|khó (い)
-易しい|やさしい|dễ (い)
-高い|たかい|cao, đắt (い)
-安い|やすい|rẻ (い)
-低い|ひくい|thấp (い)
-面白い|おもしろい|thú vị (い)
-|おいしい|ngon (い)
-忙しい|いそがしい|bận (い)
-楽しい|たのしい|vui (い)
-白い|しろい|trắng (い)
-黒い|くろい|đen (い)
-赤い|あかい|đỏ (い)
-青い|あおい|xanh dương (い)
-桜|さくら|hoa anh đào
-山|やま|núi
-町|まち|thị trấn, phố
-仕事|しごと|công việc
-|とても|rất
-|あまり|không ... lắm
+箸|はし|đũa|n
+故郷|ふるさと|quê, quê hương  ［cũng đọc: こきょう］|n
+電車|でんしゃ|tàu điện|n
+銭湯|せんとう|nhà tắm công cộng|n
+|こと|việc|n
+楽器|がっき|nhạc cụ|n
+新幹線|しんかんせん|tàu shinkansen (một loại tàu siêu tốc của Nhật Bản)|n
+飛行機|ひこうき|máy bay|n
+|バス|xe buýt|n
+|タクシー|xe taxi|n
+|ショッピングモール|trung tâm thương mại|n
+|スポーツ|thể thao|n
+|スポーツジム|phòng tập gym|n
+|ピアノ|piano|n
+|ギター|đàn ghi-ta|n
+|パクチー|rau mùi|n
+|カレー|cà ri|n
+重い|おもい|nặng|i
+色々|いろいろ|nhiều, đa dạng (về chủng loại)|na
+泳ぎます|およぎます|bơi|v1
+使います|つかいます|sử dụng  ［～を］|v1
+運びます|はこびます|vận chuyển, bê, vác  ［～を］|v1
+持ちます|もちます|có, cầm  ［～を］|v1
+弾きます|ひきます|đánh, chơi (nhạc cụ)  ［～を］|v1
+送ります|おくります|gửi  ［～を］|v1
+話します|はなします|nói chuyện  ［～を］|v1
+|かかります|mất, tốn (thời gian, tiền bạc)|v1
+|やっぱり|quả nhiên|adv
+|いっぱい|đầy|adv
+色んな|いろんな|nhiều (về chủng loại, đứng trước danh từ)|oth
+|～か～|～ hoặc ～ (ví dụ: 2 hoặc 3 cái)|oth
+|そうなんですか|Vậy à?/ Vậy sao? (Sử dụng khi biết được điều gì đó mà từ trước đến nay mình chưa biết)|exp
+|これくらい|Mức này, cỡ này. (Sử dụng khi nói về việc gì đó có mức độ thấp)|exp
+|これぐらい|cỡ này, mức này (ví dụ: これぐらい大丈夫だ。 = Cỡ này thì không sao cả.)|exp
+|みんな|mọi người|n+adv
+絵|え|bức tranh|n
+歌|うた|bài hát|n
+数学|すうがく|môn toán|n
+人気|にんき|sự yêu thích (được yêu thích)|n
+人気があります|にんきがあります|được yêu thích|exp
+卓球|たっきゅう|bóng bàn|n
+水泳|すいえい|bơi lội|n
+|バドミントン|cầu lông|n
+|バスケットボール|bóng rổ|n
+|バレーボール|bóng chuyền|n
+|ライブ|buổi biểu diễn trực tiếp, live show|n
+|カラオケ|karaoke|n
+|ダンス|nhảy, nhảy múa|n
+|ディーブイディー|DVD|n
+色|いろ|màu, màu sắc|n
+何色|なにいろ|màu gì|n
+赤|あか|màu đỏ|n
+白|しろ|màu trắng|n
+青|あお|màu xanh|n
+黒|くろ|màu đen|n
+黄色|きいろ|màu vàng|n
+緑（色）|みどり|màu xanh lá cây  ［cũng đọc: みどりいろ］|n
+ピンク（色）|ピンク|màu hồng  ［cũng đọc: ピンクいろ］|n
+オレンジ（色）|オレンジ|màu cam  ［cũng đọc: オレンジいろ］|n
+甘い|あまい|ngọt|i
+|かっこいい|ngầu|i
+近い|ちかい|gần|i
+好き|すき|thích|na
+大好き|だいすき|rất thích|na
+嫌い|きらい|ghét|na
+大嫌い|だいきらい|rất ghét|na
+上手|じょうず|giỏi|na
+下手|へた|kém|na
+得意|とくい|giỏi, mạnh (sở trường)|na
+苦手|にがて|không giỏi, yếu, dở, (không thích, sợ)|na
+計算|けいさん|tính toán|n+v3
+特に|とくに|đặc biệt|adv
+|そうそう|đúng vậy, đúng thế. (Được dùng để thể hiện sự đồng ý, tán thành với lời nói, hành động của đối phương)|exp
+父|ちち|bố của mình|n
+お父さん|おとうさん|bố (khi nói về bố của người khác hoặc gọi bố mình một cách thân thiết)|n
+母|はは|mẹ của mình|n
+お母さん|おかあさん|mẹ (khi nói về mẹ của người khác hoặc gọi mẹ mình một cách thân thiết)|n
+お兄さん|おにいさん|anh (khi nói về anh của người khác hoặc gọi anh mình một cách thân thiết)|n
+姉|あね|chị gái của mình|n
+お姉さん|おねえさん|chị (khi nói về chị của người khác hoặc gọi chị mình một cách thân thiết)|n
+弟|おとうと|em trai của mình|n
+弟さん|おとうとさん|em trai của người khác|n
+祖父|そふ|ông của mình|n
+|おじいさん|ông (khi nói về ông của người khác hoặc gọi ông mình một cách thân thiết )|n
+祖母|そぼ|bà của mình|n
+|おばあさん|bà (khi nói về bà của người khác hoặc gọi bà mình một cách thân thiết)|n
+頭|あたま|đầu|n
+背|せ|lưng|n
+髪|かみ|tóc|n
+目|め|mắt|n
+鼻|はな|mũi|n
+足|あし|bàn chân|n
+食べ物|たべもの|đồ ăn|n
+景色|けしき|phong cảnh|n
+気温|きおん|nhiệt độ (bên ngoài)|n
+身長|しんちょう|chiều cao cơ thể|n
+|ホテル|khách sạn|n
+|ドラマ|phim truyền hình|n
+|アニメ|anime|n
+低い|ひくい|thấp|i
+長い|ながい|dài|i
+|～センチ|～ cm (「số đếm + センチ」 được sử dụng như phó từ)|suf
+|いっせんち|1 cm|n
+|にせんち|2 cm|n
+|さんせんち|3 cm|n
+|どの|cái ～ nào (đứng trước danh từ)|oth
 `,
   grammar: [
-    ["N は い-Adj / な-Adj です", "Tính từ làm vị ngữ. い-Adj kết thúc bằng い; な-Adj bỏ な khi làm vị ngữ.", "桜は きれいです。", "Hoa anh đào đẹp.", "富士山は 高いです。", "Núi Phú Sĩ cao."],
-    ["Adj + N", "い-Adj + N; な-Adj + な + N.", "きれいな 町です。", "Là một thành phố đẹp.", "高い 山です。", "Là một ngọn núi cao."],
-    ["Phủ định của tính từ", "い-Adj: ～い → ～くないです. な-Adj: ～じゃ ありません. Riêng いい → よくないです.", "この 本は 面白くないです。", "Cuốn sách này không thú vị.", "あの 人は 親切じゃ ありません。", "Người đó không tốt bụng."],
-    ["とても / あまり", "とても + Adj: rất ~; あまり + Adj phủ định: không ~ lắm.", "この 料理は とても おいしいです。", "Món này rất ngon."],
-    ["S1 が、S2", "Nhưng (nối hai vế trái ngược).", "日本語は 難しいですが、面白いです。", "Tiếng Nhật khó nhưng thú vị."],
-    ["どう / どんな", "N は どうですか: hỏi cảm tưởng. どんな N: hỏi tính chất của N.", "日本の 生活は どうですか。", "Cuộc sống ở Nhật thế nào?"]
+    ["Các nhóm động từ trong tiếng Nhật","Nhóm 1 (＿imasu), Nhóm 2 (＿emasu), Nhóm 3 (đặc biệt)","Nhóm 1: 買います、あります、働きます、帰ります、歩きます、休みます、遊びます、行きます、聞きます、書きます、読みます、撮ります、運びます、持ちます、泳ぎます、弾きます… ｜ Nhóm 2: 食べます、寝ます、疲れます、出かけます、浴びます… và 3 động từ đuôi ＿imasu nhưng thuộc nhóm 2: 見ます、起きます、います. ｜ Nhóm 3: 来ます、します、N＋します (勉強します、旅行します、散歩します、買い物します…)."],
+    ["Động từ thể khả năng (動詞の可能形)","Chia động từ sang thể khả năng","Nhóm 1: ＿imasu → ＿emasu: 行きます → 行けます, 帰ります → 帰れます, 買います → 買えます, 読みます → 読めます. ｜ Nhóm 2: ＿masu → ＿raremasu: 寝ます → 寝られます, 食べます → 食べられます, 起きます → 起きられます, 見ます → 見られます. ｜ Nhóm 3: します → できます, 来ます → 来られます, 旅行します → 旅行できます, 買い物します → 買い物できます. ｜ Không chia sang thể khả năng: あります/います (có, ở), 知ります (biết), 分かります (hiểu)."],
+    ["(N は) ～ が V (thể khả năng)","N (có thể) làm được V","❶ Diễn tả khả năng, năng lực của chủ thể. ｜ ❷ Diễn tả khả năng thực hiện một sự việc, hành động nhờ có điều kiện, hoàn cảnh cụ thể nào đó. ｜ Trợ từ 「を」 được thay bởi trợ từ 「が」.","マイさんは 日本の 新聞が 読めます。","いい 天気の 日は、BBQ が できます。","ナムさんは ギターが 弾けます。","A：写真、撮れましたか？\nB：はい、撮れました。"],
+    ["N (phương tiện, công cụ) で + V","Làm V bằng N","「で」 là trợ từ biểu thị phương thức, phương tiện, công cụ. ｜ Hỏi: 何で Vか. ｜ Trường hợp 「歩いて V」 không có trợ từ 「で」 đi kèm.","車で 東京に 行きました。","スプーンで プリンを 食べます。","ベトナム語で 説明します。","A：学校には 何で 行きますか。\nB：歩いて 行きます。"],
+    ["Số tiền / khoảng thời gian + くらいです / かかります","(Làm V) bằng N tốn / mất ～ (số tiền / khoảng thời gian)","Hỏi: どのくらいですか / どのくらい かかりますか.","日本から ベトナムまで、飛行機で 5時間くらいです。","東京駅まで ６５００円くらい かかります。"],
+    ["Số tiền / khoảng thời gian で + V","V (được) với số tiền / trong khoảng thời gian ～","「で」 biểu thị số tiền hoặc thời gian để có thể thực hiện V. ｜ Hỏi: いくらで / どのくらいで ＋ Vか.","1万円で、何が 買えますか。","この 料理は、15分で できます。"],
+    ["N1 は N2 が 好き / 嫌い / 上手 / 下手 / 得意 / 苦手 だ / です","N1 thích / ghét / giỏi / kém N2","Có thể thêm phó từ chỉ mức độ như 「とても」、「まあまあ」、「あ(ん)まり」、「そんなに」、「全然」 vào trước các tính từ này.","私は 猫が 嫌いです。","妹は 料理が 苦手です。","山田さんは 歌が あまり 上手じゃないです。"],
+    ["～から ～","Vì ～ nên ～","Nですから～ / Aなだから～ / Aいから～. ｜ Dùng thể lịch sự hoặc thể thường đều được: ～ですから / ～だから. ｜ Để hỏi nguyên nhân, lí do: 「どうして」.","明日は 休みですから、カラオケに 行きます。","安いですから、買います。","A：どうしてですか。\nB：歌が あまり 上手じゃありませんから。"],
+    ["N1 は N2 が A","N1 có N2 (mang đặc điểm, tính chất) A","「は」 đứng sau danh từ chủ thể. ｜ 「が」 đứng sau danh từ là một bộ phận, phương diện, khía cạnh của/ thuộc chủ thể đó.","この ホテルは 部屋が 広くて きれいです。","妹は 髪が 長いです。","兄は 目が 大きくて 鼻が 高いです。"],
+    ["Phân biệt 「は」 và 「が」","N1 が N2/ A です; N1 が V ます","「は」: thông tin mới hay nội dung người nói muốn nhấn mạnh nằm sau 「は」; dùng trong câu có vị ngữ là từ nghi vấn. ｜ 「が」: thông tin mới hay nội dung muốn nhấn mạnh nằm trước 「が」; dùng trong câu có chủ ngữ là từ nghi vấn.","あの 人は どなたですか。","どの 人が 田中さんですか。","A：パーティーに 誰が 来ましたか。\nB：マイさんが 来ました。"]
   ],
   quiz: [
-    ["富士山は (  ) 山です。(Núi cao)", "高い", "高く", "高いな", "高な", "い-Adj đứng trực tiếp trước danh từ."],
-    ["京都は (  ) 町です。(Kyoto là thành phố đẹp)", "きれいな", "きれいい", "きれい", "きれいの", "な-Adj + な + N."],
-    ["この 本は 面白(  )。(Cuốn sách này không thú vị)", "くないです", "じゃ ないです", "くないでした", "じゃ ありません", "い-Adj phủ định: bỏ い + くないです."],
-    ["あの 人は 親切(  )。(Người đó không tốt bụng)", "じゃ ありません", "くないです", "くありません", "ではない", "な-Adj phủ định: じゃ ありません."],
-    ["日本語は 難しいです(  )、面白いです。", "が", "を", "に", "で", "が (nhưng) nối hai vế trái ngược."],
-    ["東京は (  )ですか。(Tokyo thế nào?)", "どう", "どこ", "だれ", "どれ", "Hỏi cảm tưởng: どうですか."],
-    ["この 料理は (  ) おいしくないです。(Món này không ngon lắm)", "あまり", "とても", "いつも", "たくさん", "あまり + phủ định = không ~ lắm."],
-    ["「いい」ở dạng phủ định lịch sự là?", "よくないです", "いくないです", "いいくないです", "よいじゃ ありません", "いい → よくないです (bất quy tắc)."]
+    ["Động từ 「見ます」 thuộc nhóm nào?","Nhóm 2","Nhóm 1","Nhóm 3","Không thuộc nhóm nào","見ます, 起きます, います có đuôi ＿imasu nhưng thuộc nhóm 2."],
+    ["「行きます」 ở thể khả năng là?","行けます","行られます","行きられます","行いけます","Nhóm 1: ＿imasu → ＿emasu."],
+    ["「寝ます」 ở thể khả năng là?","寝られます","寝けます","寝ります","寝できます","Nhóm 2: ＿masu → ＿raremasu."],
+    ["「旅行します」 ở thể khả năng là?","旅行できます","旅行します","旅行られます","旅行けます","Nhóm 3: します → できます."],
+    ["ナムさんは ギター(  ) 弾けます。","が","に","で","と","Ở thể khả năng, 「を」 được thay bởi 「が」."],
+    ["車(  ) 東京に 行きました。(đi bằng xe ô tô)","で","を","に","と","Phương tiện, công cụ: N で."],
+    ["学校には 何(  ) 行きますか。…歩いて 行きます。","で","を","に","が","Hỏi phương tiện: 何で ～か."],
+    ["1万円(  )、何が 買えますか。","で","に","を","が","Số tiền で + V: với số tiền đó có thể V."],
+    ["私は 猫(  ) 嫌いです。","が","を","に","で","N1 は N2 が 好き/嫌い…"],
+    ["明日は 休み(  )、カラオケに 行きます。(Vì ngày mai nghỉ nên…)","ですから","だけど","ですが","ですし","Nですから ～: vì ～ nên ～."],
+    ["妹は 髪(  ) 長いです。(Em gái tóc dài)","が","を","に","で","N1 は N2 が A: 「が」 đứng sau bộ phận/ khía cạnh của chủ thể."],
+    ["A：パーティーに 誰(  ) 来ましたか。 B：マイさんが 来ました。","が","は","を","に","Chủ ngữ là từ nghi vấn thì dùng 「が」."]
   ]
 },
 {
   id: 9, title: "Chương 9",
   vocab: `
-分かります|わかります|hiểu
-|あります|có (đồ vật, sự việc)
-好き|すき|thích (な)
-嫌い|きらい|ghét (な)
-上手|じょうず|giỏi (な)
-下手|へた|kém (な)
-料理|りょうり|món ăn, nấu ăn
-飲み物|のみもの|đồ uống
-|スポーツ|thể thao
-野球|やきゅう|bóng chày
-|ダンス|khiêu vũ
-音楽|おんがく|âm nhạc
-歌|うた|bài hát
-絵|え|tranh
-字|じ|chữ
-漢字|かんじ|chữ Hán
-|ひらがな|chữ Hiragana
-|かたかな|chữ Katakana
-細かいお金|こまかいおかね|tiền lẻ
-|チケット|vé (xem phim, hòa nhạc)
-時間|じかん|thời gian
-用事|ようじ|việc bận
-約束|やくそく|cuộc hẹn, lời hứa
-|アルバイト|việc làm thêm
-ご主人|ごしゅじん|chồng (người khác)
-夫|おっと|chồng (của mình)
-奥さん|おくさん|vợ (người khác)
-妻|つま|vợ (của mình)
-子ども|こども|con cái, trẻ em
-|よく|thường, rõ
-|だいたい|đại khái, hầu hết
-|たくさん|nhiều
-少し|すこし|một chút
-全然|ぜんぜん|hoàn toàn không (+ phủ định)
-早く|はやく|sớm, nhanh
-|どうして|tại sao
-残念|ざんねん|đáng tiếc (な)
+無料|むりょう|miễn phí|n
+趣味|しゅみ|sở thích|n
+夢|ゆめ|ước mơ, giấc mơ|n
+日課|にっか|thói quen hàng ngày|n
+日記|にっき|nhật kí|n
+花|はな|bông hoa|n
+切手|きって|con tem|n
+自分|じぶん|bản thân|n
+新聞|しんぶん|tờ báo|n
+空港|くうこう|sân bay|n
+飲み物|のみもの|đồ uống|n
+|シャワー|vòi hoa sen|n
+|コーヒーマシン|máy pha cà phê|n
+|カフェ|quán cà phê|n
+|ゲーム|game, trò chơi|n
+|クラシック|nhạc cổ điển|n
+|コンサート|buổi hòa nhạc|n
+|スキー|trượt tuyết|n
+|シール|nhãn dán|n
+描きます|かきます|vẽ  ［～を］|v1
+書きます|かきます|viết  ［～を］|v1
+作ります|つくります|làm, tạo ra  ［～を］|v1
+登ります|のぼります|leo (núi)|v1
+片付けます|かたづけます|sắp xếp  ［～を］|v2
+育てます|そだてます|nuôi dạy, nuôi dưỡng, nuôi trồng  ［～を］|v2
+集めます|あつめます|thu thập, sưu tầm  ［～を］|v2
+建てます|たてます|xây dựng  ［～を］|v2
+浴びます|あびます|tắm|v2
+運転|うんてん|lái xe  ［～を］|n+v3
+今度|こんど|lần tới|adv
+|それと|thêm nữa|exp
+|そうだ|A, đúng rồi! À, phải rồi! (dùng khi chợt nhớ ra hoặc nảy ra điều gì đó muốn nói)|exp
+字|じ|chữ|n
+|クーポン|phiếu giảm giá|n
+|ランチ|bữa trưa|n
+|ニュース|tin tức|n
+汚い|きたない|bẩn, xấu (chữ viết)|i
+歌う|うたう|hát|v1
+|そろそろ|sắp, chuẩn bị|adv
+|こんなに|đến mức này, như thế này|adv
+|～パーセントオフ|giảm ～%|exp
+|そうか|vậy à, thế à (cách nói suồng sã, thân mật của 「そうですか」, dùng khi nói với gia đình và bạn bè, khi mình đã hiểu những gì đối phương nói)|exp
+|そっか|vậy à, thế à (cách nói suồng sã, thân mật của 「そうですか」, dùng khi nói với gia đình và bạn bè, khi mình đã hiểu những gì đối phương nói)|exp
+何でしょうか|なんでしょうか|cách nói lịch sự của 「何ですか」|exp
+最後|さいご|cuối cùng|n
+夜行バス|やこうバス|xe buýt đêm|n
+|アクセサリー|trang sức, phụ kiện|n
+|チーズ|phô mai|n
+|ダイエット|ăn kiêng|n
+死ぬ|しぬ|chết|v1
+～中|～ちゅう|đang ～|suf
+ダイエット中|ダイエットちゅう|đang ăn kiêng|n
+勉強中|べんきょうちゅう|đang học|n
+仕事中|しごとちゅう|đang làm việc|n
 `,
   grammar: [
-    ["N が あります / わかります", "Chủ thể của あります, わかります đi với が.", "わたしは 日本語が わかります。", "Tôi hiểu tiếng Nhật."],
-    ["N が 好きです / 嫌いです / 上手です / 下手です", "Sở thích, năng lực: đối tượng đi với が.", "わたしは 料理が 好きです。", "Tôi thích nấu ăn."],
-    ["どんな N", "Hỏi loại, kiểu của danh từ.", "どんな スポーツが 好きですか。", "Bạn thích môn thể thao nào?"],
-    ["Phó từ chỉ mức độ", "よく > だいたい > 少し > あまり > ぜんぜん (hai từ cuối đi với phủ định).", "英語が 少し わかります。", "Tôi hiểu một chút tiếng Anh."],
-    ["S1 から、S2", "Vì S1 nên S2 (nguyên nhân đặt trước から).", "時間が ありませんから、行きません。", "Vì không có thời gian nên tôi không đi."],
-    ["どうして", "Hỏi lý do: どうして ～か → ～から です.", "どうして 来ませんでしたか。…用事が ありましたから。", "Sao bạn không đến? — Vì tôi có việc."]
+    ["V ます → V る (thể từ điển 辞書形)","Thể thường của Vます","Dùng suồng sã với người thân, bạn bè. ｜ Nhóm 1: ＿imasu → ＿u: 行きます → 行く, 買います → 買う. ｜ Nhóm 2: ＿masu → ＿ru: 寝ます → 寝る, 食べます → 食べる. ｜ Nhóm 3: します → する, 来ます → くる, 旅行します → 旅行する."],
+    ["V ますか → V る？","Thể thường của câu hỏi","Bỏ 「か」, lên giọng ở cuối câu. ｜ はい → うん; いいえ → ううん. ｜ Vます → Vる; Vません → Vない.","A：明日、勉強する？\nB：うん、勉強する。","A：週末、出かける？\nB：ううん、家に いる。"],
+    ["V る + ことが できる / N が できる","Có thể làm V / N","「こと」 được dùng để danh từ hóa động từ. ｜ 「Vることが できる」 thường dùng trong văn viết.","わたしの 姉は ギターを 弾くことが できる。","私は 車の 運転が できます。","A：ショッピングモールで 映画を 見ることが できますか。\nB：はい、できます。"],
+    ["V る + ことです","(Sở thích, ước mơ…) là V","「こと」 danh từ hóa động từ làm vị ngữ.","（私の）趣味は 映画を 見ることです。","夢は 会社を 作ることです。"],
+    ["V ません → V ない (ない形)","Thể ない","Nhóm 1: ＿imasu → ＿anai: 行きます → 行かない. ｜ Nhóm 2: ＿masu → ＿nai: 寝ます → 寝ない. ｜ Nhóm 3: します → しない, 来ます → 来ない.","A：明日の バーベキュー（に）行く？\nB：ううん、行かない。","A：毎日、本を 読む？\nB：ううん、読まない。"],
+    ["(一緒に) V ませんか → (一緒に) V ない？","Có cùng V không? (thể thường)","「Vませんか → Vない？」 (lên giọng ở cuối câu).","ショッピングモールに 行きませんか。→ ショッピングモール（に）行かない？","一緒に 映画を 見ませんか。→ 一緒に 映画（を）見ない？"],
+    ["V (thể khả năng) ます → V る / ない","Thể từ điển và thể ない của động từ thể khả năng","Cách chia thể từ điển (辞書形) và thể ない của động từ thể khả năng hoàn toàn giống động từ nhóm 2. ｜ 行けます → 行ける → 行けない; 見られます → 見られる → 見られない; 来られます → 来られる → 来られない; できます → できる → できない.","A：Bさんは 泳げる？\nB：うん。少し 泳げる。","A：Bさんは 英語が 話せる？\nB：ううん、全然 話せない（よ）。"],
+    ["V ました → V た (た形)","Thể た — thể thường của Vました","Nhóm 1: ＿います/＿ちます/＿ります → ＿った (買った, 持った, 帰った); ＿みます/＿びます/＿にます → ＿んだ (飲んだ, 遊んだ, 死んだ); ＿きます → ＿いた (書いた); ＿ぎます → ＿いだ; ＿します → ＿した (話した); ngoại lệ: 行きます → 行った. ｜ Nhóm 2: ＿ます → ＿た (寝た, 食べた). ｜ Nhóm 3: します → した, 来ます → 来た. ｜ Aかったです → Aかった; A(な)でした/Nでした → だった."],
+    ["V ませんでした → V なかった","Phủ định quá khứ thể thường","Vません → Vませんでした; Vない → Vなかった (食べない → 食べなかった, 読まない → 読まなかった).","A：昨日、田中さん、会社に 来た？\nB：ううん、来なかったよ。","A：昨日、何時間 働いた？\nB：８時間 働いた。"],
+    ["V (thể khả năng) ました → V た / V なかった","Quá khứ thể thường của động từ thể khả năng","行けました → 行けた → 行けなかった; 見られました → 見られた → 見られなかった; 来られました → 来られた → 来られなかった.","富士山の 写真を 撮れた。","今朝は 6時に 起きられた。","A：Bさんは、寿司、食べられる？\nB：うん、前は 食べられなかったけど、今は 食べられるよ。"],
+    ["Thể thường của V たいです","Vたい / Vたくない / Vたかった / Vたくなかった","Vたいですか → Vたい？; Vたいです → Vたい; Vたくないです → Vたくない; Vたかったです → Vたかった; Vたくなかったです → Vたくなかった.","A：夏休み、どこか 行きたい？\nB：うん、東京に 行きたい。","A：何か 食べたい？\nB：ううん、何も 食べたくない。"]
   ],
   quiz: [
-    ["わたしは 音楽(  ) 好きです。", "が", "を", "に", "で", "好きです đi với が."],
-    ["田中さんは 日本語(  ) わかります。", "が", "を", "に", "で", "わかります đi với が."],
-    ["わたしは 料理が (  )。(Tôi nấu ăn giỏi)", "上手です", "上手ます", "上手がです", "上手なです", "な-Adj làm vị ngữ: bỏ な, thêm です."],
-    ["英語が (  ) わかりません。(Hoàn toàn không hiểu tiếng Anh)", "ぜんぜん", "とても", "たくさん", "だいたい", "ぜんぜん + phủ định."],
-    ["時間が ありません(  )、行きません。(Vì không có thời gian nên không đi)", "から", "が", "を", "も", "S1 から、S2 = vì S1 nên S2."],
-    ["A: (  ) 昨日 パーティーに 来ませんでしたか。 B: 用事が ありましたから。", "どうして", "どこ", "だれ", "いつ", "Hỏi lý do: どうして."],
-    ["(  ) 音楽が 好きですか。(Bạn thích loại nhạc nào?)", "どんな", "どう", "いつ", "だれ", "どんな + N: loại N nào."],
-    ["Câu nào đúng ngữ pháp:「Tôi hiểu một chút tiếng Nhật」?", "日本語が すこし わかります。", "日本語を すこし わかります。", "日本語に すこし わかります。", "日本語で すこし わかります。", "わかります đi với が."]
+    ["「行きます」 ở thể từ điển là?","行く","行きる","行う","行くる","Nhóm 1: ＿imasu → ＿u."],
+    ["「寝ます」 ở thể từ điển là?","寝る","寝う","寝く","寝ます","Nhóm 2: ＿masu → ＿ru."],
+    ["「来ます」 ở thể từ điển là?","来る","来く","来きる","来う","Nhóm 3: 来ます → 来る (くる)."],
+    ["「行きます」 ở thể ない là?","行かない","行きない","行くない","行ない","Nhóm 1: ＿imasu → ＿anai."],
+    ["「食べます」 ở thể ない là?","食べない","食べらない","食べはない","食べずない","Nhóm 2: ＿masu → ＿nai."],
+    ["「買います」 ở thể た là?","買った","買いた","買んだ","買ました","＿います → ＿った."],
+    ["「書きます」 ở thể た là?","書いた","書った","書んだ","書きた","＿きます → ＿いた."],
+    ["「遊びます」 ở thể た là?","遊んだ","遊った","遊いた","遊びた","＿びます → ＿んだ."],
+    ["「行きます」 ở thể た là?","行った","行いた","行んだ","行きた","行きます là ngoại lệ: 行った."],
+    ["「話します」 ở thể た là?","話した","話いた","話った","話んだ","＿します → ＿した."],
+    ["A：昨日、田中さん、会社に 来た？ B：ううん、(  )よ。","来なかった","来ない","来ませんでした","来なくなった","Phủ định quá khứ thể thường: Vなかった."],
+    ["私の 趣味は 映画を (  ) ことです。","見る","見ます","見た","見て","Vる + ことです."],
+    ["ケーキを 買う(  ) できる。","ことが","ことを","ことに","ことで","Vる + ことが できる."],
+    ["「一緒に 映画を 見ませんか」 → 一緒に 映画（を）(  )？","見ない","見る","見ます","見ません","Vませんか → Vない？ (thể thường)."],
+    ["「行きたくないです」 → 「行き(  )」 (thể thường)","たくない","たいくない","たない","たくないだ","Vたくないです → Vたくない."]
   ]
 },
 {
   id: 10, title: "Chương 10",
   vocab: `
-|います|có, ở (người, động vật)
-男の人|おとこのひと|người đàn ông
-女の人|おんなのひと|người phụ nữ
-男の子|おとこのこ|bé trai
-女の子|おんなのこ|bé gái
-犬|いぬ|con chó
-猫|ねこ|con mèo
-木|き|cây
-箱|はこ|cái hộp
-冷蔵庫|れいぞうこ|tủ lạnh
-|テーブル|cái bàn
-|ベッド|giường
-棚|たな|cái kệ, giá
-|ドア|cửa ra vào
-窓|まど|cửa sổ
-|ポスト|hòm thư
-|ビル|tòa nhà
-公園|こうえん|công viên
-喫茶店|きっさてん|quán cà phê
-本屋|ほんや|hiệu sách
-乗り場|のりば|bến xe, ga đón
-県|けん|tỉnh
-上|うえ|trên
-下|した|dưới
-前|まえ|trước
-後ろ|うしろ|sau
-右|みぎ|phải
-左|ひだり|trái
-中|なか|trong
-外|そと|ngoài
-隣|となり|bên cạnh
-近く|ちかく|gần, vùng lân cận
-間|あいだ|giữa
-|いろいろ|nhiều loại (な)
+約束|やくそく|lời hứa, cuộc hẹn|n
+荷物|にもつ|hành lý|n
+自動販売機|じどうはんばいき|máy bán hàng tự động|n
+会議|かいぎ|cuộc họp|n
+歯|は|răng|n
+宿題|しゅくだい|bài về nhà|n
+|エーティーエム|cây rút tiền|n
+|コンビニ|cửa hàng tiện lợi|n
+磨く|みがく|đánh (răng, giày,...)  ［～を］|v1
+引き出す|ひきだす|rút (tiền), kéo ra  ［～を］|v1
+終わる|おわる|kết thúc|v1
+準備|じゅんび|chuẩn bị  ［～を］|n+v3
+掃除|そうじ|dọn dẹp  ［～を］|n+v3
+|みんなで|tất cả (mọi người) (cùng thực hiện một hành động nào đó)|adv
+曲|きょく|ca khúc, khúc nhạc|n
+海外|かいがい|nước ngoài|n
+|バンド|nhóm nhạc|n
+|さっき|lúc nãy, vừa nãy|n+adv
+～度|～ど|～lần|n+adv
+一度|いちど|1 lần (ví dụ: 4年に1度 = 4 năm 1 lần)|n+adv
+何度も|なんども|nhiều lần (一度も～ない = một lần cũng không/ chưa ～)|n+adv
+待つ|まつ|chờ  ［～を］|v1
+着く|つく|đến (nơi)  ［～に］|v1
+始まる|はじまる|( ～) bắt đầu  ［～が］|v1
+入る|はいる|vào (vào phòng, vào đại học...)  ［～に］|v1
+遅れる|おくれる|muộn  ［～に］|v2
+慣れる|なれる|quen, quen thuộc (với ～)  ［～に］|v2
+卒業|そつぎょう|tốt nghiệp|n+v3
+|ごめん|xin lỗi  ［cũng đọc: ごめんなさい］|exp
+お待たせ|おまたせ|xin lỗi đã để anh/chị/bạn chờ (lưu ý: đây là lối nói suồng sã của 「お待たせしました」)|exp
+|こちらこそ|chính phía tôi ～|exp
+お腹がいっぱい|おなかがいっぱい|no|exp
 `,
   grammar: [
-    ["N が あります / います", "あります: vật, cây cối, sự việc (không tự di chuyển); います: người, động vật.", "机の 上に 本が あります。", "Trên bàn có sách.", "庭に 犬が います。", "Trong vườn có con chó."],
-    ["N1 は N2(nơi) に あります / います", "Nói vị trí của N1 (đã biết).", "ミラーさんは 事務所に います。", "Anh Miller đang ở văn phòng."],
-    ["N1 の + từ chỉ vị trí", "上, 下, 前, 後ろ, 右, 左, 中, 外, 隣, 近く, 間 đi sau の.", "銀行は 郵便局の 隣に あります。", "Ngân hàng nằm cạnh bưu điện."],
-    ["N1 や N2 (など)", "Liệt kê không đầy đủ: N1, N2 (và những thứ khác).", "箱の 中に 手紙や 写真が あります。", "Trong hộp có thư, ảnh (v.v.)."],
-    ["だれも / 何も ～ません", "Không có ai / không có gì (phủ định hoàn toàn).", "部屋に だれも いません。", "Trong phòng không có ai."]
+    ["V ましょう → V よう (意向形)","Thể ý chí — thể thường của Vましょう","Nhóm 1: ＿imasu → ＿ou: 行きます → 行こう, 帰ります → 帰ろう, 買います → 買おう. ｜ Nhóm 2: ＿masu → ＿you: 寝ます → 寝よう, 食べます → 食べよう, 浴びます → 浴びよう. ｜ Nhóm 3: します → しよう, 来ます → 来よう. ｜ Dùng để rủ rê, chốt ý định.","A：おいしい ケーキが 食べたいな。\nB：じゃあ、（一緒に）駅前の カフェに 行こうよ。","A：日本語を 勉強したいな。\nB：日本語学校で 勉強しよう。"],
+    ["V1る / N の + 前に、V2","Trước khi V1 / N thì V2","Thì của câu được chia ở cuối câu (Vます、Vた、Vたい、Vよう…). ｜ Trước 「前に」 động từ luôn ở dạng 「Vる」.","昨日 寝る 前に 本を 読みました。","旅行の 前に 荷物を 準備します。","今晩 コンサートの 前に、食事を しましょう。"],
+    ["V1た / N の + 後で、V2","Sau khi V1 / N thì V2","Thì của câu được chia ở cuối câu. ｜ Trước 「後で」 động từ luôn ở dạng 「Vた」.","毎日 家に 帰った 後で、テレビを 見ます。","会議の 後で 会議室を 掃除します。","食事の 後で、コンサートに 行きましょう。"],
+    ["V1たら、V2","Sau khi V1 thì V2 (khi/ nếu V1)","V1 chắc chắn xảy ra trong tương lai và là điều kiện để xảy ra V2. ｜ V2 ở tương lai: Vる、Vたい、Vよう. ｜ Khác với 「後で」: V2 không kết thúc bằng quá khứ. ｜ ○ 実家に 帰ったら、ゆっくり 休みます。 ✘ 実家に 帰ったら、ゆっくり 休みました。","日本に 行ったら ラーメンを 食べたい。","ベトナムへ 行ったら、ミーケビーチへ 行きたいです。","家に 帰ったら、シャワーを 浴びます。"],
+    ["V たばかりだ","Vừa mới V","「ばかり」 được xem như một danh từ → 「ばかりだから」、「ばかりの」. ｜ Khoảng thời gian hành động vừa kết thúc có tính chủ quan: 昨日、去年…","今、ご飯を 食べたばかりですから、食べたくないです。","日本に 来たばかりですから、日本語が 話せません。"],
+    ["V たことが あります","Đã từng V","Thường kết hợp với các phó từ: 前に、一度、一回… ｜ 「Vたことがない」: chưa từng làm V; dạng phủ định thường kết hợp với phó từ 一度も. ｜ Khi giao tiếp thân mật, 「が」 có thể lược bỏ.","私は 海外へ 行ったことが ある。","私の 母は 一度も 海外に 行ったことが ありません。","A：ダナンに 行ったことが ありますか。\nB：はい、１回あります。"]
   ],
   quiz: [
-    ["机の 上に 本が (  )。(Trên bàn có sách)", "あります", "います", "きます", "ります", "Vật vô tri: あります."],
-    ["庭に 犬が (  )。(Trong vườn có con chó)", "います", "あります", "ます", "ありません", "Động vật: います."],
-    ["テーブルの (  )に 猫が います。(Dưới gầm bàn có con mèo)", "下", "上", "前", "外", "下 (した) = dưới."],
-    ["駅の (  )に 銀行が あります。(Cạnh ga có ngân hàng)", "隣", "下", "中", "後ろ", "隣 (となり) = bên cạnh."],
-    ["机の 上に 本(  ) ノートが あります。(Trên bàn có sách, vở...)", "や", "に", "は", "を", "N1 や N2: liệt kê không đầy đủ."],
-    ["ミラーさんは 事務所(  ) います。", "に", "を", "で", "が", "Nơi tồn tại của います: に."],
-    ["Câu nào đúng:「Ngân hàng ở bên phải bưu điện」?", "銀行は 郵便局の 右に あります。", "銀行は 郵便局の 右で あります。", "銀行は 郵便局を 右に あります。", "銀行が 郵便局の 右に います。", "N1 の + vị trí + に あります."],
-    ["部屋に だれも (  )。(Trong phòng không có ai)", "いません", "ありません", "いりません", "いなかった", "Người: います → いません."]
+    ["「行きます」 ở thể ý chí (意向形) là?","行こう","行ごう","行きよう","行くよう","Nhóm 1: ＿imasu → ＿ou."],
+    ["「食べます」 ở thể ý chí là?","食べよう","食べおう","食べろう","食べいよう","Nhóm 2: ＿masu → ＿you."],
+    ["「します」 ở thể ý chí là?","しよう","すよう","しおう","しろう","Nhóm 3: します → しよう, 来ます → 来よう."],
+    ["Câu nào đúng? (Hôm qua trước khi ngủ tôi đã đọc sách)","昨日 寝る 前に 本を 読みました。","昨日 寝た 前に 本を 読みました。","昨日 寝て 前に 本を 読みました。","昨日 寝ない 前に 本を 読みました。","Trước 「前に」 động từ luôn ở dạng 「Vる」."],
+    ["ご飯を 食べ(  ) 後で、散歩します。","た","る","て","ない","Trước 「後で」 động từ luôn ở dạng 「Vた」."],
+    ["日本に 行っ(  )、ラーメンを 食べたいです。","たら","たり","てら","ると","V1たら、V2: sau khi V1 thì V2 (V1 chắc chắn xảy ra trong tương lai)."],
+    ["Câu nào đúng?","実家に 帰ったら、ゆっくり 休みます。","実家に 帰ったら、ゆっくり 休みました。","実家に 帰ったら、ゆっくり 休んだ。","実家に 帰ったら、ゆっくり 休んでいました。","Với V1たら, vế V2 ở tương lai: không kết thúc bằng quá khứ."],
+    ["今、ご飯を 食べ(  )ばかりです。","た","る","て","ない","Vたばかりだ: vừa mới V."],
+    ["私は 海外へ 行っ(  )ことが あります。","た","る","て","ない","Vたことが あります: đã từng V."],
+    ["母は (  ) 海外に 行ったことが ありません。(chưa một lần nào)","一度も","一度は","一度に","一度で","Dạng phủ định thường kết hợp với 一度も."]
   ]
 },
 {
   id: 11, title: "Chương 11",
   vocab: `
-一つ|ひとつ|1 cái
-二つ|ふたつ|2 cái
-三つ|みっつ|3 cái
-四つ|よっつ|4 cái
-五つ|いつつ|5 cái
-六つ|むっつ|6 cái
-七つ|ななつ|7 cái
-八つ|やっつ|8 cái
-九つ|ここのつ|9 cái
-十|とお|10 cái
-|いくつ|mấy cái, mấy tuổi
-一人|ひとり|1 người
-二人|ふたり|2 người
-|りんご|táo
-|みかん|quýt
-|サンドイッチ|bánh sandwich
-|カレー|cà ri
-|アイスクリーム|kem
-切手|きって|tem
-|はがき|bưu thiếp
-封筒|ふうとう|phong bì
-両親|りょうしん|bố mẹ
-兄弟|きょうだい|anh chị em
-兄|あに|anh trai (của mình)
-姉|あね|chị gái (của mình)
-弟|おとうと|em trai (của mình)
-妹|いもうと|em gái (của mình)
-外国|がいこく|nước ngoài
-週間|しゅうかん|~ tuần (thời lượng)
-か月|かげつ|~ tháng (thời lượng)
-年|ねん|~ năm
-|ぐらい|khoảng
-|どのくらい|bao lâu, khoảng bao nhiêu
-全部で|ぜんぶで|tổng cộng
-|みんな|mọi người
-|だけ|chỉ
+席|せき|chỗ ngồi|n
+説明書|せつめいしょ|sách hướng dẫn|n
+両親|りょうしん|bố mẹ|n
+お風呂|おふろ|bồn tắm|n
+|ドライブ|việc lái xe ô tô đi dạo/ đi chơi xa|n
+|アプリ|ứng dụng (phần mềm), app|n
+遅い|おそい|muộn, chậm|i
+|しょうがない|đành chịu, hết cách|i
+言う|いう|nói|v1
+急ぐ|いそぐ|khẩn trương, nhanh chóng|v1
+頑張る|がんばる|cố gắng  ［～を］|v1
+間に合う|まにあう|kịp, kịp giờ  ［～に］|v1
+|やる|làm  ［～を］|v1
+出る|でる|ra (khỏi phòng/ khỏi nhà)  ［～を］|v2
+予約|よやく|đặt trước  ［～を］|n+v3
+練習|れんしゅう|luyện tập  ［～を］|n+v3
+安心|あんしん|an tâm, yên tâm|n+v3
+|まだ|vẫn chưa (khi đi với phủ định) vẫn còn (khi đi với khẳng định)|adv
+お疲れ様です|おつかれさまです|anh/ chị làm việc vất vả rồi.|exp
+お疲れ様でした|おつかれさまでした|anh/ chị làm việc vất vả rồi (nói khi kết thúc công việc)|exp
+乾杯!|かんぱい|cạn ly!|exp
+頑張ってください|がんばってください|cố gắng lên.|exp
+世界|せかい|thế giới|n
+世界一周|せかいいっしゅう|vòng quanh thế giới|n
+広告|こうこく|quảng cáo|n
+野球|やきゅう|bóng chày|n
+健康診断|けんこうしんだん|khám sức khỏe|n
+病気|びょうき|ốm, bệnh|n
+全員|ぜんいん|tất cả mọi người|n+adv
+不合格|ふごうかく|không đỗ; trượt|n
+資料|しりょう|tài liệu|n
+世話|せわ|chăm sóc|n
+薬|くすり|thuốc|n
+|たばこ|thuốc lá|n
+お知らせ|おしらせ|thông báo|n
+手|て|tay, bàn tay|n
+|レポート|báo cáo|n
+|だめ|không được|na
+洗う|あらう|rửa  ［～を］|v1
+吸う|すう|hút (thuốc)  ［～を］|v1
+回す|まわす|xoay tròn, vung tròn (thứ gì đó)  ［～を］|v1
+乗る|のる|lên (tàu, xe,.. )  ［～に］|v1
+連れて行く|つれていく|dẫn (ai) đi (đến đâu)  ［人を・場所に］|v1
+持っていく|もっていく|mang đi, cầm đi  ［～を］|v1
+晴れる|はれる|nắng|v2
+気を付ける|きをつける|chú ý  ［～に］|v2
+注意|ちゅうい|chú ý; nhắc nhở (người khác)  ［～に］|n+v3
+合格|ごうかく|đỗ～  ［～に］|n+v3
+生活|せいかつ|sinh sống, sinh hoạt|n+v3
+残業|ざんぎょう|tăng ca|n+v3
+出張|しゅっちょう|đi công tác|n+v3
+一生懸命|いっしょうけんめい|chăm chỉ|adv
+絶対に|ぜったいに|nhất định, tuyệt đối|adv
+|いつか|một lúc nào đó|adv
+|そうなんですね|vậy à, thế à (sử dụng để thể hiện sự đồng cảm hoặc bất ngờ, ngạc nhiên với câu chuyện của đối phương)|exp
+|そうなんだ|vậy à, thế à (cách nói suồng sã, thân mật của 「そうなんですね」)|exp
 `,
   grammar: [
-    ["Số đếm ひとつ ～ とお", "1 cái = ひとつ ... 10 cái = とお. Từ 11 trở đi dùng số thường + 個.", "りんごを 3つ 買いました。", "Tôi đã mua 3 quả táo."],
-    ["Đếm người, máy móc, vật mỏng", "～人 (người: 一人, 二人, 三人...), ～台 (máy, xe), ～枚 (giấy, tem, áo).", "切手を 5枚 ください。", "Cho tôi 5 con tem."],
-    ["Số lượng + V", "Từ chỉ số lượng đặt ngay trước động từ, không có trợ từ.", "教室に 学生が 10人 います。", "Trong lớp có 10 học sinh."],
-    ["～ぐらい / どのくらい", "Khoảng ~; hỏi thời gian / số lượng.", "東京から 京都まで 2時間半ぐらい かかります。", "Từ Tokyo đến Kyoto mất khoảng 2 tiếng rưỡi."],
-    ["N(thời gian) に ～回", "Tần suất: trong một khoảng thời gian có bao nhiêu lần.", "1週間に 2回 テニスを します。", "Một tuần tôi chơi tennis 2 lần."],
-    ["N だけ", "Chỉ N.", "休みは 日曜日だけです。", "Ngày nghỉ chỉ có Chủ nhật."]
+    ["Thể ば (ば形)","Cách chia sang thể ば","Động từ nhóm 1: ＿imasu → ＿eba: 行きます → 行けば, 読みます → 読めば, 書きます → 書けば. ｜ Nhóm 2: ＿masu → ＿reba: 寝ます → 寝れば, います → いれば, 起きます → 起きれば. ｜ Nhóm 3: します → すれば, 来ます → 来れば, 買い物します → 買い物すれば. ｜ Vない → Vなければ (行かない → 行かなければ). ｜ Tính từ Aい: Aい + ければ (大きい → 大きければ, 高い → 高ければ, いい → よければ); Aいくない → Aいくなければ."],
+    ["V ば / Aい ければ ～","Nếu ～ thì sẽ (là có thể) ～","Vế sau thường là những sự việc mà người nói kỳ vọng, mong đợi, nên thường là những từ mang tính đánh giá: だいじょうぶ、いい、わかる, hay là V (khả năng).","お金が あれば、旅行に 行けます。","A：大丈夫ですか？\nB：ええ、少し 寝れば、大丈夫です。","高ければ、買いません。"],
+    ["Từ nghi vấn + V ば、～か","Nên V (như thế nào…) thì ～?","Vế trước 「～ば」 có thể kết hợp với các từ nghi vấn: いつ、どこ、誰、何、どう、どのくらい… ｜ Vế sau thường kết hợp cùng 「いい」 hoặc là một kết quả mà bản thân mong đợi. ｜ Trả lời cho 「V ば いい」: 「～Vると いいですよ」 hoặc 「～Vたら どうですか」.","どうすれば、日本の 大学に 行けますか。","お金が ありません。どうすれば いいですか。→ アルバイトを したら どうですか。"],
+    ["V なければ、～","Nếu không V thì ～","ない → なければ: 行かない → 行かなければ, 読まない → 読まなければ, 書かない → 書かなければ.","野菜も 食べなければ、病気に なりますよ。","働かなければ、生活できません。"],
+    ["V なければなりません / V ないといけません","Phải làm V","「～なければ なりません」 và 「～ないと いけません」; thể thường: 「～ないと いけない」、「～ないと」.","学生は 毎日 授業に 来なければ なりません。","店に 行く 前に、予約しないと いけない。","あ、6時だ。帰らないと。"],
+    ["V なきゃ、～","Nếu không ～ thì không ～ (câu điều kiện phủ định)","「～なきゃ」 là cách nói ngắn của 「～なければ」, thường được dùng trong văn nói. ｜ 行かない → 行かなければ／行かなきゃ; 見ない → 見なければ／見なきゃ; しない → しなければ／しなきゃ; 来ない → 来なければ／来なきゃ.","全部 食べなきゃ、もったいないですよ。","本を 見なきゃ、漢字の 読み方が わからない。"],
+    ["V なきゃ いけない / V ないと いけない","Phải V (cách nói thân mật)","なければ + なりません/ いけません/ だめだ; なきゃ + いけない/ だめだ; ないと + いけない/ だめだ.","忙しいから、日曜日も 仕事を しなきゃ いけない。","買い物の 前に、ATMに 行かなきゃ いけない。"]
   ],
   quiz: [
-    ["りんごを (  ) 買いました。(Mua 3 quả táo)", "三つ", "三枚", "三台", "三本", "Vật nhỏ, không có đơn vị riêng: 〜つ."],
-    ["教室に 学生が (  ) います。(Có 5 học sinh)", "五人", "五つ", "五台", "五枚", "Người: ～人."],
-    ["切手を (  ) ください。(Cho tôi 2 con tem)", "二枚", "二つ", "二人", "二台", "Vật mỏng, dẹt: ～枚."],
-    ["家族は (  )ですか。(Gia đình bạn có mấy người?)", "何人", "いくつ", "何枚", "何台", "Hỏi số người: 何人."],
-    ["東京から 大阪まで 2時間半(  ) かかります。(Khoảng 2 tiếng rưỡi)", "ぐらい", "ごろ", "まで", "から", "ぐらい = khoảng (lượng); ごろ = khoảng (thời điểm)."],
-    ["1か月(  ) 2回 映画を 見ます。(Một tháng xem phim 2 lần)", "に", "を", "で", "が", "Khoảng thời gian + に + số lần."],
-    ["「1人」đọc là gì?", "ひとり", "いちにん", "ひとにん", "いちり", "1人 = ひとり, 2人 = ふたり (đọc đặc biệt)."],
-    ["「8つ」đọc là gì?", "やっつ", "はちつ", "ようつ", "やつつ", "8つ = やっつ."]
+    ["「行きます」 ở thể ば là?","行けば","行くば","行きば","行かば","Nhóm 1: ＿imasu → ＿eba."],
+    ["「食べます」 ở thể ば là?","食べれば","食べるば","食べば","食べられば","Nhóm 2: ＿masu → ＿reba."],
+    ["「します」 ở thể ば là?","すれば","しれば","するば","しば","Nhóm 3: します → すれば, 来ます → 来れば."],
+    ["「高い」 ở thể ば là?","高ければ","高いば","高くば","高かれば","Aい: bỏ い + ければ."],
+    ["「いい」 ở thể ば là?","よければ","いければ","いいければ","よいば","いい → よければ."],
+    ["「行かない」 ở thể ば là?","行かなければ","行かなくば","行かないば","行かなけば","ない → なければ."],
+    ["お金が (  )、旅行に 行けます。(Nếu có tiền thì có thể đi du lịch)","あれば","あるば","ありば","あらば","あります → あれば."],
+    ["お金が ありません。どうすれば (  )ですか。","いい","いく","ある","いる","Vế sau của 「Vば」 thường kết hợp cùng 「いい」."],
+    ["学生は 毎日 勉強し(  ) なりません。(Học sinh phải học mỗi ngày)","なければ","ないで","なくて","ないが","Vなければ なりません: phải làm V."],
+    ["店に 行く 前に、予約し(  ) いけない。(thể thường)","ないと","なくて","ないで","ずに","Vないと いけない: phải V."],
+    ["全部 食べ(  )、もったいないですよ。(Nếu không ăn hết thì uổng đấy)","なきゃ","なくて","ないで","ない","「なきゃ」 là cách nói ngắn của 「なければ」."]
   ]
 },
 {
   id: 12, title: "Chương 12",
   vocab: `
-簡単|かんたん|đơn giản (な)
-近い|ちかい|gần (い)
-遠い|とおい|xa (い)
-速い|はやい|nhanh (い)
-遅い|おそい|chậm, muộn (い)
-多い|おおい|nhiều (い)
-少ない|すくない|ít (い)
-暖かい|あたたかい|ấm áp (い)
-涼しい|すずしい|mát mẻ (い)
-甘い|あまい|ngọt (い)
-辛い|からい|cay (い)
-重い|おもい|nặng (い)
-軽い|かるい|nhẹ (い)
-季節|きせつ|mùa
-春|はる|mùa xuân
-夏|なつ|mùa hè
-秋|あき|mùa thu
-冬|ふゆ|mùa đông
-天気|てんき|thời tiết
-雨|あめ|mưa
-雪|ゆき|tuyết
-曇り|くもり|trời nhiều mây
-|ホテル|khách sạn
-空港|くうこう|sân bay
-海|うみ|biển
-世界|せかい|thế giới
-|パーティー|bữa tiệc
-祭り|まつり|lễ hội
-試験|しけん|kỳ thi
-刺身|さしみ|sashimi
-|すし|sushi
-|てんぷら|tempura
-紅葉|もみじ|lá đỏ mùa thu
-|どちらも|cả hai
-|ずっと|hơn hẳn, suốt
-初めて|はじめて|lần đầu tiên
-一番|いちばん|nhất
+体|からだ|cơ thể|n
+|ハンバーグ|thịt viên rán|n
+|インターネット|internet|n
+置く|おく|đặt, để  ［～を］|v1
+下ろす|おろす|rút (tiền)  ［～を］|v1
+調べる|しらべる|tra cứu, tìm hiểu  ［～を］|v2
+帰ってくる|かえってくる|về đến|v3
+|もう|đã, rồi|adv
+|おやすみ|chúc ngủ ngon  ［cũng đọc: おやすみなさい］|exp
+|ほら|nào! (lời kêu gọi sự chú ý của đối phương)|exp
+|やだ|① không thích, không được ② thôi chết! (cách nói khác của いやだ, nữ giới thường dùng khi gặp chuyện mình không thích hoặc khi nhầm lẫn. Lưu ý: không dùng với người bề trên.)|exp
+空|そら|bầu trời|n
+雪|ゆき|tuyết|n
+風|かぜ|gió|n
+地面|じめん|mặt đất|n
+休憩室|きゅうけいしつ|phòng nghỉ|n
+探す|さがす|tìm kiếm  ［～を］|v1
+降る|ふる|rơi (mưa rơi, tuyết rơi)|v1
+飛ぶ|とぶ|bay|v1
+走る|はしる|chạy|v1
+通う|かよう|đi lại (chỉ việc thường hay đi đến một địa điểm nào đó như đi học 「学校に通う」, đi làm 「会社に通う」,...)  ［～に］|v1
+泣く|なく|khóc|v1
+笑う|わらう|cười|v1
+曇る|くもる|âm u, nhiều mây|v1
+続く|つづく|liên tục|v1
+吹く|ふく|thổi|v1
+揺れる|ゆれる|rung lắc|v2
+運動|うんどう|vận động, tập thể dục|n+v3
+|コピー|photo  ［～を］|n+v3
+体にいい|からだにいい|tốt cho cơ thể (cách chia thì và thể hoàn toàn tương tự tính từ đuôi い)|i
+お先に失礼します|おさきにしつれいします|tôi xin phép về trước|exp
 `,
   grammar: [
-    ["Quá khứ của câu danh từ & な-Adj", "Khẳng định: ～でした. Phủ định: ～じゃ ありませんでした.", "昨日は 雨でした。", "Hôm qua trời mưa."],
-    ["Quá khứ của い-Adj", "Khẳng định: ～かったです. Phủ định: ～くなかったです / ～く ありませんでした. いい → よかったです.", "旅行は 楽しかったです。", "Chuyến du lịch đã rất vui."],
-    ["N1 は N2 より Adj", "N1 ... hơn N2.", "東京は 大阪より 人が 多いです。", "Tokyo đông người hơn Osaka."],
-    ["N1 と N2 と どちらが Adj ですか", "So sánh hai đối tượng. Trả lời: N1 / N2 の ほうが Adj です.", "犬と 猫と どちらが 好きですか。…猫のほうが 好きです。", "Chó và mèo, bạn thích con nào hơn? — Tôi thích mèo hơn."],
-    ["N1[の中]で ～が いちばん Adj", "So sánh nhất trong một nhóm. Hỏi bằng 何, どこ, だれ, いつ.", "1年で いつが いちばん 寒いですか。…2月が いちばん 寒いです。", "Một năm, khi nào lạnh nhất? — Tháng 2 lạnh nhất."],
-    ["どちらも", "Cả hai (đều). Với phủ định: cả hai đều không.", "どちらも 好きです。", "Tôi thích cả hai."]
+    ["Thể て (て形)","Cách chia động từ sang thể て","Nhóm 1: ＿います/＿ちます/＿ります → ＿って (買って, 持って, 帰って); ＿みます/＿びます/＿にます → ＿んで (飲んで, 遊んで, 死んで); ＿きます → ＿いて (聞いて); ＿ぎます → ＿いで (急いで); ＿します → ＿して (話して); ngoại lệ: 行きます → 行って. ｜ Nhóm 2: ＿ます → ＿て (寝て, 食べて, 起きて, 浴びて). ｜ Nhóm 3: します → して (買い物して, 旅行して), 来ます → 来て."],
+    ["V1 て、V2 て、… V","V1 rồi V2, … rồi V","Thể て được sử dụng để nối các hành động xảy ra liên tục. ｜ Thì của câu được chia ở động từ cuối cùng trong câu.","テレビを 見て、シャワーを 浴びて、寝ます。","病院に 行って、薬を 買って、家に 帰りました。","A：昨日、何を しましたか。\nB：昨日 友達の うちに 行って、ケーキを 食べて、それから コーヒーを 飲みました。"],
+    ["V1 てから V2","Sau khi V1 thì V2","Khác với 「V1て、V2て～」: 「Vて」 liệt kê các hành động liên tiếp của một chủ thể và có thể xuất hiện nhiều lần trong 1 câu; 「Vてから」 hành động vế trước và vế sau có thể là cùng một hoặc hai chủ thể, và trong 1 câu chỉ dùng 「Vてから」 1 lần. ｜ ✕ お父さんが 帰ってきて 一緒に ご飯を 食べます。 ○ いつも、お父さんが 帰ってきてから、一緒に ご飯を 食べます。","朝、新聞を 読んでから 会社へ 行きます。","A：今から ゲームを しますか。\nB：いいえ、宿題を してから ゲームを します。"],
+    ["(N は) V て います","N đang V","Diễn tả hành động V đang xảy ra ngay tại thời điểm nói. ｜ Trong văn nói suồng sã, thân mật, 「い」 của 「ている」 có thể được lược bỏ.","A：田中さんは どこですか。\nB：今、休憩室で 休んでいますよ。","もしもし、今、何（を）して（い）る？","A：何を していますか。\nB：日本語を 勉強しています。"],
+    ["N が V て います","N đang V (sự việc trước mắt)","Diễn tả sự việc, hiện tượng đang xảy ra ngay trước mắt mà đối phương không nhìn thấy hoặc không để ý đến. ｜ Chủ thể N được biểu thị bởi trợ từ 「が」.","あ、見て。あそこで 猫が 寝ているよ。","あれ、田中さんが 何か 食べていますね。","犬が 遊んで（い）ます（よ）。"],
+    ["(N は) V て います (thói quen)","Thường V","Diễn tả thói quen, lối sống.","最近は、毎日 スポーツジムに 行っています。","毎朝、新聞を 読んでいます。"],
+    ["N が V て います (trạng thái)","Diễn tả trạng thái, kết quả của hành động","Động từ thể hiện trạng thái như 「ある」、「いる」… không có dạng 「Vている」.","あ、窓が 開いていますよ。","あ、桜が 咲いていますよ。","あ、服が 汚れていますよ。"],
+    ["V て います (trạng thái, hành động duy trì lâu dài)","Đang V (kéo dài)","Diễn tả trạng thái, hành động duy trì trong một thời gian dài: 住む、結婚する、習う、持つ、働く、勉強する.","鈴木さんは その会社で 働いていますね。","ABC日本語学校で 3年、日本語を 勉強しています。","車を 持っていますか。→ はい、持っています。／いいえ、持っていません。"],
+    ["N を 知っていますか","Bạn có biết N không?","Trả lời: はい、知っています。／いいえ、知りません。(quá khứ: 知りませんでした).","この 会社を 知っていますか。","私は 「東京タワー」を 知りませんでした。"]
   ],
   quiz: [
-    ["昨日は 雨(  )。(Hôm qua trời mưa)", "でした", "ました", "かったです", "じゃ ありません", "Câu danh từ ở quá khứ: ～でした."],
-    ["昨日の パーティーは 楽し(  )。(Bữa tiệc hôm qua đã vui)", "かったです", "でした", "くないです", "かったでした", "い-Adj quá khứ: bỏ い + かったです."],
-    ["旅行は 楽しく(  )。(Chuyến đi đã không vui)", "ありませんでした", "なかったでした", "じゃ ありませんでした", "ませんでした", "い-Adj quá khứ phủ định: ～く ありませんでした."],
-    ["東京は 大阪(  ) 人が 多いです。(Tokyo đông người hơn Osaka)", "より", "から", "まで", "だけ", "N1 は N2 より Adj."],
-    ["犬と 猫と (  )が 好きですか。(Chó và mèo, thích con nào hơn?)", "どちら", "どれ", "どこ", "いつ", "So sánh hai đối tượng: どちら."],
-    ["果物(  ) 何が いちばん 好きですか。", "の中で", "の中に", "の中を", "の中は", "Trong phạm vi nhóm: N の中で."],
-    ["私は 犬より 猫(  ) 好きです。(Tôi thích mèo hơn chó)", "のほうが", "のなかで", "よりも", "のほうを", "N のほうが: phía N thì hơn."],
-    ["昨日は 天気が (  )。(Hôm qua thời tiết tốt)", "よかったです", "いかったです", "よいでした", "よくでした", "いい → よかったです (bất quy tắc)."]
+    ["「買います」 ở thể て là?","買って","買いて","買んで","買て","＿います → ＿って."],
+    ["「飲みます」 ở thể て là?","飲んで","飲って","飲いて","飲みて","＿みます → ＿んで."],
+    ["「聞きます」 ở thể て là?","聞いて","聞って","聞んで","聞きて","＿きます → ＿いて."],
+    ["「行きます」 ở thể て là?","行って","行いて","行んで","行きて","行きます là ngoại lệ: 行って."],
+    ["「急ぎます」 ở thể て là?","急いで","急いて","急んで","急って","＿ぎます → ＿いで."],
+    ["「話します」 ở thể て là?","話して","話いて","話って","話んで","＿します → ＿して."],
+    ["「食べます」 ở thể て là?","食べて","食べって","食べんで","食べいて","Nhóm 2: ＿ます → ＿て."],
+    ["「来ます」 ở thể て là?","来て","来きて","来って","来んで","来ます → 来て."],
+    ["テレビを 見(  )、シャワーを 浴びて、寝ます。","て","た","る","ない","V1て、V2て…: nối các hành động xảy ra liên tục."],
+    ["朝、新聞を 読ん(  ) 会社へ 行きます。","でから","てから","でて","たから","読む → 読んで + から: sau khi đọc báo thì đi làm."],
+    ["今、カフェで コーヒーを 飲ん(  )。(đang uống)","でいます","ています","でです","たいます","Vて います: đang V (飲む → 飲んで)."],
+    ["あ、窓が 開(  )よ。(Cửa sổ đang mở — trạng thái)","いています","いでいます","けています","くています","Trạng thái, kết quả của hành động: N が Vて います (開く → 開いて)."],
+    ["Hỏi 「Bạn có biết công ty này không?」 nói thế nào?","この 会社を 知っていますか。","この 会社を 知りますか。","この 会社を 知りましたか。","この 会社を 知っていましたか。","Nを 知っていますか: bạn có biết N không?"]
   ]
 }
 ];
@@ -790,4 +1298,144 @@ const EXTRA_READINGS = `
 人 chỉ|じん chỉ
 日本 + 人|にほん + じん
 Người: ～人|Người: ～にん
+鈴木|すずき
+員|いん
+時|じ
+分|ふん
+時半|じはん
+郵便|ゆうびん
+局|きょく
+番号|ばんごう
+誕生|たんじょう
+酒|さけ
+日本酒|にほんしゅ
+賑やか|にぎやか
+美味しい|おいしい
+北海道|ほっかいどう
+匹|ひき
+お願い|おねがい
+冊|さつ
+杯|はい
+男|おとこ
+女|おんな
+週間|しゅうかん
+祭り|まつり
+方|かた
+使い方|つかいかた
+書き方|かきかた
+行き方|いきかた
+読み方|よみかた
+食べ方|たべかた
+動詞|どうし
+可能|かのう
+形|けい
+辞書|じしょ
+意向|いこう
+室|しつ
+度|ど
+知|し
+分かります|わかります
+万|まん
+旅|たび
+開|あ
+桜|さくら
+咲|さ
+住む|すむ
+結婚|けっこん
+習う|ならう
+年|ねん
+何ですか|なんですか
+何の|なんの
+何で|なんで
+何人|なんにん
+何匹|なんびき
+何歳|なんさい
+1時|いちじ
+2時|にじ
+3時|さんじ
+4時|よじ
+5時|ごじ
+6時|ろくじ
+7時|しちじ
+8時|はちじ
+9時|くじ
+10時|じゅうじ
+11時|じゅういちじ
+12時|じゅうにじ
+10時半|じゅうじはん
+9時半|くじはん
+４時|よじ
+４時半|よじはん
+６時|ろくじ
+９時|くじ
+1分|いっぷん
+2分|にふん
+3分|さんぷん
+4分|よんぷん
+5分|ごふん
+6分|ろっぷん
+7分|ななふん
+8分|はっぷん
+9分|きゅうふん
+10分|じゅっぷん
+15分|じゅうごふん
+30分|さんじゅっぷん
+50分|ごじゅっぷん
+1人|ひとり
+2人|ふたり
+3人|さんにん
+4人|よにん
+5人|ごにん
+6人|ろくにん
+7人|ななにん
+8人|はちにん
+9人|きゅうにん
+10人|じゅうにん
+1匹|いっぴき
+2匹|にひき
+3匹|さんびき
+4匹|よんひき
+5匹|ごひき
+6匹|ろっぴき
+7匹|ななひき
+8匹|はっぴき
+9匹|きゅうひき
+10匹|じゅっぴき
+３日|みっか
+4日|よっか
+5日|いつか
+3本|さんぼん
+4時間|よじかん
+5時間|ごじかん
+8時間|はちじかん
+８時間|はちじかん
+1か月|いっかげつ
+1回|いっかい
+１回|いっかい
+1週間|いっしゅうかん
+3年|さんねん
+500円|ごひゃくえん
+1,000円|せんえん
+1,980円|せんきゅうひゃくはちじゅうえん
+～時半|～じはん
+半|はん
+補足|ほそく
+場所|ばしょ
+山田|やまだ
+後で|あとで
+の日|のひ
+汚れ|よごれ
+何時間|なんじかん
+時間|じかん
+来る|くる
+来ない|こない
+来なかった|こなかった
+来なくなった|こなくなった
+来なければ|こなければ
+来なきゃ|こなきゃ
+来られ|こられ
+来よう|こよう
+来れば|くれば
+1万円|いちまんえん
+６５００円|ろくせんごひゃくえん
 `;
