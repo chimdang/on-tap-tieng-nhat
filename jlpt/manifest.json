@@ -1,0 +1,181 @@
+{
+ "2009": {
+  "pages": {
+   "mondai": [
+    "mondai-01.jpg",
+    "mondai-02.jpg",
+    "mondai-03.jpg",
+    "mondai-04.jpg",
+    "mondai-05.jpg",
+    "mondai-06.jpg",
+    "mondai-07.jpg",
+    "mondai-08.jpg",
+    "mondai-09.jpg",
+    "mondai-10.jpg",
+    "mondai-11.jpg",
+    "mondai-12.jpg",
+    "mondai-13.jpg",
+    "mondai-14.jpg",
+    "mondai-15.jpg",
+    "mondai-16.jpg",
+    "mondai-17.jpg",
+    "mondai-18.jpg",
+    "mondai-19.jpg",
+    "mondai-20.jpg",
+    "mondai-21.jpg",
+    "mondai-22.jpg"
+   ],
+   "script": [
+    "script-01.jpg",
+    "script-02.jpg",
+    "script-03.jpg"
+   ]
+  },
+  "audio": {
+   "all": "audio-all.mp3"
+  }
+ },
+ "2012": {
+  "pages": {
+   "v": [
+    "v-01.jpg",
+    "v-02.jpg",
+    "v-03.jpg",
+    "v-04.jpg",
+    "v-05.jpg",
+    "v-06.jpg",
+    "v-07.jpg",
+    "v-08.jpg",
+    "v-09.jpg",
+    "v-10.jpg"
+   ],
+   "g": [
+    "g-01.jpg",
+    "g-02.jpg",
+    "g-03.jpg",
+    "g-04.jpg",
+    "g-05.jpg",
+    "g-06.jpg",
+    "g-07.jpg",
+    "g-08.jpg",
+    "g-09.jpg"
+   ],
+   "r": [
+    "r-01.jpg",
+    "r-02.jpg",
+    "r-03.jpg",
+    "r-04.jpg",
+    "r-05.jpg",
+    "r-06.jpg",
+    "r-07.jpg",
+    "r-08.jpg"
+   ],
+   "l": [
+    "l-01.jpg",
+    "l-02.jpg",
+    "l-03.jpg",
+    "l-04.jpg",
+    "l-05.jpg",
+    "l-06.jpg",
+    "l-07.jpg",
+    "l-08.jpg",
+    "l-09.jpg",
+    "l-10.jpg",
+    "l-11.jpg",
+    "l-12.jpg",
+    "l-13.jpg",
+    "l-14.jpg",
+    "l-15.jpg",
+    "l-16.jpg"
+   ],
+   "script": [
+    "script-01.jpg",
+    "script-02.jpg",
+    "script-03.jpg",
+    "script-04.jpg",
+    "script-05.jpg",
+    "script-06.jpg",
+    "script-07.jpg",
+    "script-08.jpg"
+   ]
+  },
+  "audio": {
+   "1": "audio-1.mp3",
+   "2": "audio-2.mp3",
+   "3": "audio-3.mp3",
+   "4": "audio-4.mp3"
+  }
+ },
+ "2018": {
+  "pages": {
+   "v": [
+    "v-01.jpg",
+    "v-02.jpg",
+    "v-03.jpg",
+    "v-04.jpg",
+    "v-05.jpg",
+    "v-06.jpg",
+    "v-07.jpg",
+    "v-08.jpg",
+    "v-09.jpg",
+    "v-10.jpg"
+   ],
+   "g": [
+    "g-01.jpg",
+    "g-02.jpg",
+    "g-03.jpg",
+    "g-04.jpg",
+    "g-05.jpg",
+    "g-06.jpg",
+    "g-07.jpg",
+    "g-08.jpg",
+    "g-09.jpg"
+   ],
+   "r": [
+    "r-01.jpg",
+    "r-02.jpg",
+    "r-03.jpg",
+    "r-04.jpg",
+    "r-05.jpg",
+    "r-06.jpg",
+    "r-07.jpg",
+    "r-08.jpg"
+   ],
+   "l": [
+    "l-01.jpg",
+    "l-02.jpg",
+    "l-03.jpg",
+    "l-04.jpg",
+    "l-05.jpg",
+    "l-06.jpg",
+    "l-07.jpg",
+    "l-08.jpg",
+    "l-09.jpg",
+    "l-10.jpg",
+    "l-11.jpg",
+    "l-12.jpg",
+    "l-13.jpg",
+    "l-14.jpg",
+    "l-15.jpg",
+    "l-16.jpg"
+   ],
+   "script": [
+    "script-01.jpg",
+    "script-02.jpg",
+    "script-03.jpg",
+    "script-04.jpg",
+    "script-05.jpg",
+    "script-06.jpg",
+    "script-07.jpg",
+    "script-08.jpg",
+    "script-09.jpg"
+   ]
+  },
+  "audio": {
+   "1": "audio-1.mp3",
+   "2": "audio-2.mp3",
+   "3": "audio-3.mp3",
+   "4": "audio-4.mp3"
+  }
+ }
+}
