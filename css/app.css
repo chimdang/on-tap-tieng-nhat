@@ -525,3 +525,5 @@ ruby rt { font-size: .5em; font-weight: 400; }
 /* ---- Nút loa nhỏ cạnh nghĩa của từ ví dụ ---- */
 .say-sm { display: inline-grid; width: 30px; height: 30px; margin-left: 10px; vertical-align: middle; }
 .say-sm svg { width: 16px; height: 16px; }
+.rd { display: inline-flex; align-items: center; margin-right: 16px; white-space: nowrap; }
+.rd .say-sm { margin-left: 6px; }

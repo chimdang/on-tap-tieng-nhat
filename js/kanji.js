@@ -66,7 +66,7 @@
       '<div class="row test-row"><button class="btn btn-sm" id="k-tg-mask" aria-pressed="false">Che đáp án để tự kiểm tra</button><button class="btn btn-sm" id="k-reveal" hidden>Hiện đáp án</button></div>' +
       '<div class="row rate-row"><span class="rate-label">Bạn nhớ chữ này chưa?</span><button class="btn btn-sm" id="k-no">Chưa nhớ</button><button class="btn btn-sm btn-solid" id="k-yes">Nhớ rồi</button></div></div></div>';
     pad = $('k-pad'); ctx = pad.getContext('2d');
-    $('k-words').addEventListener('click', (ev) => { const b = ev.target.closest('[data-say]'); if (b) JP.say(b.dataset.say); });
+    $('k-info').addEventListener('click', (ev) => { const b = ev.target.closest('[data-say]'); if (b) JP.say(b.dataset.say); });
     $('k-tg-ghost').addEventListener('click', () => { ui.ghost = !ui.ghost; save(); toggles(); });
     $('k-tg-mask').addEventListener('click', () => { ui.mask = !ui.mask; save(); $('k-info').classList.remove('is-shown'); toggles(); });
     $('k-reveal').addEventListener('click', () => $('k-info').classList.toggle('is-shown'));
@@ -111,7 +111,9 @@
     hv.classList.toggle('is-long', hv.textContent.length > 8);
     $('k-where').textContent = 'Chữ thứ ' + (pos + 1) + ' trong ' + l.length + ' chữ. Chương ' + e.ch + ', bài ' + e.lesson + '. ' + STATUS_TEXT[status(e.k)] + '.';
     $('k-pos').textContent = (pos + 1) + ' / ' + l.length;
-    const lst = (a) => a.length ? a.map(esc).join('、') : '<span class="none">Không có</span>';
+    const lst = (a) => a.length
+      ? a.map((x) => '<span class="rd">' + esc(x) + JP.sayBtn(x.replace(/[・･]/g, ''), true) + '</span>').join('')
+      : '<span class="none">Không có</span>';
     $('k-on').innerHTML = lst(e.on);
     $('k-kun').innerHTML = lst(e.kun);
     $('k-words').innerHTML = e.words.map((x) =>
