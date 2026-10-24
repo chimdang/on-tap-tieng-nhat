@@ -521,3 +521,7 @@ ruby rt { font-size: .5em; font-weight: 400; }
   .vtable .vr { width: 28%; }
 }
 .vtable td { vertical-align: middle; }
+
+/* ---- Nút loa nhỏ cạnh nghĩa của từ ví dụ ---- */
+.say-sm { display: inline-grid; width: 30px; height: 30px; margin-left: 10px; vertical-align: middle; }
+.say-sm svg { width: 16px; height: 16px; }

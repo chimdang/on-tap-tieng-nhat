@@ -66,6 +66,7 @@
       '<div class="row test-row"><button class="btn btn-sm" id="k-tg-mask" aria-pressed="false">Che đáp án để tự kiểm tra</button><button class="btn btn-sm" id="k-reveal" hidden>Hiện đáp án</button></div>' +
       '<div class="row rate-row"><span class="rate-label">Bạn nhớ chữ này chưa?</span><button class="btn btn-sm" id="k-no">Chưa nhớ</button><button class="btn btn-sm btn-solid" id="k-yes">Nhớ rồi</button></div></div></div>';
     pad = $('k-pad'); ctx = pad.getContext('2d');
+    $('k-words').addEventListener('click', (ev) => { const b = ev.target.closest('[data-say]'); if (b) JP.say(b.dataset.say); });
     $('k-tg-ghost').addEventListener('click', () => { ui.ghost = !ui.ghost; save(); toggles(); });
     $('k-tg-mask').addEventListener('click', () => { ui.mask = !ui.mask; save(); $('k-info').classList.remove('is-shown'); toggles(); });
     $('k-reveal').addEventListener('click', () => $('k-info').classList.toggle('is-shown'));
@@ -114,7 +115,7 @@
     $('k-on').innerHTML = lst(e.on);
     $('k-kun').innerHTML = lst(e.kun);
     $('k-words').innerHTML = e.words.map((x) =>
-      '<li><span class="w"><ruby lang="ja">' + esc(x.w) + '<rp>(</rp><rt class="sec">' + esc(JP.slash(x.r)) + '</rt><rp>)</rp></ruby></span><span class="m sec">' + esc(x.vi) + '</span></li>').join('');
+      '<li><span class="w"><ruby lang="ja">' + esc(x.w) + '<rp>(</rp><rt class="sec">' + esc(JP.slash(x.r)) + '</rt><rp>)</rp></ruby></span><span class="m sec">' + esc(x.vi) + JP.sayBtn(x.r.split('/')[0].replace(/\s/g, ''), true) + '</span></li>').join('');
     $('k-info').classList.remove('is-shown');
     if (!keepPad) clearPad();
   }
