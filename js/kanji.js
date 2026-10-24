@@ -32,7 +32,7 @@
     return '<div class="fc-top">' + (w0 ? JP.sayBtn(w0.r.replace(/\s|\//g, '')) : '') +
       '<span class="fc-read" lang="ja">On: ' + esc(e.on.join('、') || 'không có') + ' &nbsp; Kun: ' + esc(e.kun.join('、') || 'không có') + '</span></div>' +
       '<div class="fc-main"><p class="bigword bigword-xl" lang="ja">' + esc(e.k) + '</p><p class="fc-mean">' + esc(e.vi || 'Không có âm Hán Việt') + '</p></div>' +
-      JP.exampleList(e.words.map((x) => '<ruby>' + esc(x.w) + '<rp>(</rp><rt>' + esc(JP.slash(x.r)) + '</rt><rp>)</rp></ruby> <span class="ex-vi">' + esc(x.vi) + '</span>'));
+      JP.exampleList(e.words.map((x) => JP.rubyWord(x) + ' <span class="ex-vi">' + esc(x.vi) + '</span>'));
   };
 
   const host = $('v-kanji');
@@ -117,7 +117,7 @@
     $('k-on').innerHTML = lst(e.on);
     $('k-kun').innerHTML = lst(e.kun);
     $('k-words').innerHTML = e.words.map((x) =>
-      '<li><span class="w"><ruby lang="ja">' + esc(x.w) + '<rp>(</rp><rt class="sec">' + esc(JP.slash(x.r)) + '</rt><rp>)</rp></ruby></span><span class="m sec">' + esc(x.vi) + JP.sayBtn(x.r.split('/')[0].replace(/\s/g, ''), true) + '</span></li>').join('');
+      '<li><span class="w" lang="ja">' + JP.rubyWord(x, 'sec') + '</span><span class="m sec">' + esc(x.vi) + JP.sayBtn(x.r.split('/')[0].replace(/\s/g, ''), true) + '</span></li>').join('');
     $('k-info').classList.remove('is-shown');
     if (!keepPad) clearPad();
   }
