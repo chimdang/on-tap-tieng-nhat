@@ -607,3 +607,46 @@ body { position: relative; overflow-x: hidden; }
   .tabs { gap: 5px; }
 }
 .vt th, .vt td.w { white-space: nowrap; }
+
+/* =====================================================================
+   ĐIỆN THOẠI: chạm dễ, cuộn mượt, nhẹ máy
+   ===================================================================== */
+html { -webkit-text-size-adjust: 100%; }
+button, .chip, .opt, .card-face, .tab { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.chips.scroll { position: relative; }
+.card-main.vn { overflow-wrap: anywhere; }
+
+@media (max-width: 700px) {
+  body { background-attachment: scroll; }                       /* nền cố định làm giật khi cuộn trên điện thoại */
+  .wrap { padding: 10px max(12px, env(safe-area-inset-right)) 84px max(12px, env(safe-area-inset-left)); }
+  .panel, .q, .g, .stat, .h-item, .sticky, .kitem { backdrop-filter: none; -webkit-backdrop-filter: none; background-color: rgba(28, 20, 56, .82); }
+  .deco .petal:nth-of-type(n+7) { display: none; }
+  .deco .aurora.a3 { display: none; }
+
+  /* hàng chọn chương: một hàng cuộn ngang, không chiếm nhiều chỗ */
+  .chips.mini.scroll { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-snap-type: x proximity; padding: 2px 0; }
+  .chips.mini.scroll::-webkit-scrollbar { display: none; }
+  .chips.mini.scroll .chip { flex: none; scroll-snap-align: center; }
+  .chip.sq { min-width: 40px; padding: 8px 0; }
+  .chips.mini .chip { padding: 7px 12px; }
+
+  /* nút và đáp án đủ lớn để chạm */
+  .seg button { padding: 9px 12px; min-height: 38px; }
+  .btn { min-height: 42px; }
+  .btn.sm { min-height: 36px; padding: 6px 12px; }
+  .pill { padding: 5px 10px; }
+  .opt { min-height: 50px; padding: 12px 12px; font-size: 15.5px; line-height: 1.45; }
+  .opt { overflow-wrap: anywhere; }
+  .q-head { font-size: 16px; }
+  .card-face { min-height: 260px; padding: 26px 14px; }
+  .card-ctrl .btn, .card-nav .btn { min-height: 48px; font-size: 14px; }
+
+  /* thanh trạng thái luyện tập: xuống dòng gọn */
+  .stats { gap: 6px; }
+  .panel.tight .row { row-gap: 6px; }
+  .seg { max-width: 100%; }
+  .seg button { white-space: nowrap; }
+}
+@media (max-width: 380px) {
+  .seg button { padding: 8px 8px; font-size: 12px; }
+}

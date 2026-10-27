@@ -1,5 +1,5 @@
 /*
-  DỮ LIỆU ÔN TẬP — Chương 1 ~ 12 (trích từ tài liệu trong thư mục JAPAN và japannguphap)
+  DỮ LIỆU ÔN TẬP — Chương 1 ~ 13 (trích từ tài liệu trong thư mục JAPAN và japannguphap)
   -----------------------------------------------------------------
   vocab   : mỗi dòng "Kanji|Cách đọc|Nghĩa|Loại từ|Phần". Không có kanji thì để trống phần đầu.
             Loại từ: n danh từ · v1/v2/v3 động từ nhóm I/II/III · i tính từ い · na tính từ な · adv phó từ
@@ -1229,6 +1229,74 @@ const CHAPTERS = [
     ["あ、窓が 開(  )よ。(Cửa sổ đang mở — trạng thái)","いています","いでいます","けています","くています","Trạng thái, kết quả của hành động: N が Vて います (開く → 開いて)."],
     ["Hỏi 「Bạn có biết công ty này không?」 nói thế nào?","この 会社を 知っていますか。","この 会社を 知りますか。","この 会社を 知りましたか。","この 会社を 知っていましたか。","Nを 知っていますか: bạn có biết N không?"]
   ]
+},
+{
+  id: 13, title: "Chương 13",
+  vocab: `
+俺|おれ|tôi, tớ, tao  ［nam giới dùng, thân mật］|n|A
+小学生|しょうがくせい|học sinh tiểu học|n|A
+内容|ないよう|nội dung|n|A
+制服|せいふく|đồng phục|n|A
+宅配便|たくはいびん|dịch vụ giao hàng tận nhà|n|A
+|えんぴつ|bút chì|n|A
+|はんこ|con dấu|n|A
+|はがき|bưu thiếp|n|A
+|メモ|bản ghi nhớ, ghi chép|n|A
+|メール|email, tin nhắn|n|A
+|サイン|chữ ký|n|A
+アルバイト先|アルバイトさき|nơi làm thêm, chỗ làm thêm|n|A
+|ティーシャツ|áo phông  ［viết: Tシャツ］|n|A
+|スーツ|âu phục, com lê|n|A
+|ボールペン|bút bi|n|A
+|クレジットカード|thẻ tín dụng|n|A
+|ドル|đô la|n|A
+楽|らく|nhàn, an nhàn, nhàn nhã|na|A
+|ふわふわ|mềm, bông xốp|na+adv|A
+触る|さわる|sờ, chạm  ［～を/に］|v1|A
+持って帰る|もってかえる|mang về  ［～を］|v1|A
+取る|とる|ghi chép  ［メモを］|v1|A
+開ける|あける|mở  ［～を］|v2|A
+覚える|おぼえる|nhớ, ghi nhớ  ［～を］|v2|A
+|アルバイト|làm thêm|n+v3|A
+早退|そうたい|về sớm  ［～を］|n+v3|A
+料理|りょうり|nấu ăn  ［～を］|n+v3|A
+試着|しちゃく|mặc thử (quần áo...)  ［～を］|n+v3|A
+連絡|れんらく|liên lạc  ［～を/に］|n+v3|A
+参加|さんか|tham gia  ［～に］|n+v3|A
+構わない|かまわない|không sao, không thành vấn đề  ［cách nói lịch sự: 構いません（かまいません）］|exp|A
+|いかがですか|anh/chị thấy thế nào ạ?  ［cách nói lịch sự của 「どうですか」］|exp|A
+|いただきます|① tôi xin nhận ạ (nói khi nhận thứ gì từ người khác, hàm ý cảm ơn) ② tôi xin phép dùng bữa (nói trước khi ăn/uống)|exp|A
+商品|しょうひん|hàng hóa|n|B
+道|みち|con đường|n|B
+店長|てんちょう|quản lý cửa hàng, chủ cửa hàng|n|B
+先輩|せんぱい|đàn anh, tiền bối|n|B
+食器|しょっき|dụng cụ đồ ăn (bát đĩa, thìa đũa...)|n|B
+申込書|もうしこみしょ|tờ khai đăng ký, đơn đăng ký|n|B
+迷惑|めいわく|phiền phức, phiền hà|n|B
+住所|じゅうしょ|địa chỉ|n|B
+|キッチン|phòng bếp|n|B
+|スーツケース|va li|n|B
+手伝う|てつだう|giúp đỡ  ［～を］|v1|B
+拭く|ふく|lau (bàn...)  ［～を］|v1|B
+助かる|たすかる|① được giúp đỡ ② may quá! đỡ quá! (cách nói khi nhận được sự giúp đỡ từ người khác)|v1|B
+並ぶ|ならぶ|xếp hàng (ở ～)  ［～に］|v1|B
+取る|とる|photo  ［コピーを］|v1|B
+貸す|かす|cho vay, cho mượn, cho thuê (nhà, xe...)  ［～を］|v1|B
+止まる|とまる|dừng, đỗ, đậu|v1|B
+足りる|たりる|đủ|v2|B
+見せる|みせる|cho (ai) xem ～  ［～を～に］|v2|B
+届ける|とどける|gửi, đưa ～ đến (ai đó)  ［～を～に］|v2|B
+|つける|bật, mở  ［～を］|v2|B
+教える|おしえる|dạy, chỉ bảo, cho biết  ［～を］|v2|B
+忘れる|わすれる|quên  ［～を］|v2|B
+持ってくる|もってくる|mang đến  ［～を］|v3|B
+確認|かくにん|xác nhận ～  ［～を］|n+v3|B
+|メール|gửi mail, tin nhắn  ［～に］|n+v3|B
+|チーズ！|lời nói khi hô chụp ảnh (như “cheese!”)|exp|B
+`,
+  gsec: "", qsec: "",
+  grammar: [],
+  quiz: []
 }
 ];
 

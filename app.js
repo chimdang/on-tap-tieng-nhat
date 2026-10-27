@@ -183,6 +183,12 @@ const state = Object.assign({
   tcfg: { subjects: ['vocab', 'grammar'], chapters: ALL_IDS.slice(), n: 20, dir: 'mix', mins: 0 },
   jcfg: { paper: JLPT[JLPT.length - 1].id, mode: 'full', sec: 'v', timed: 1 }
 }, saved.ui || {});
+/* chương mới thêm sau này: người dùng đang chọn "tất cả các chương cũ" thì tự thêm chương mới */
+{
+  const tc = state.tcfg.chapters, last = ALL_IDS[ALL_IDS.length - 1];
+  if (!tc.includes(last) && ALL_IDS.slice(0, -1).every(id => tc.includes(id))) tc.push(last);
+  if (!byId(state.chapter)) state.chapter = last;
+}
 const DATA_V = 3;   // tăng khi từ vựng / ngữ pháp được làm lại: tiến độ "Đã nhớ" và sổ câu sai cũ của phần đó không còn khớp
 const stale = saved.dv !== DATA_V;
 const known = new Set((saved.known || []).filter(id => !stale || id[0] === 'k'));
@@ -277,10 +283,12 @@ function renderReview() {
         <span class="spacer"></span>
         ${seg('mode', state.mode, [['study', '📖 Học'], ['practice', '✍️ Luyện tập']])}
       </div>
-      <div class="row"><span class="label sm">Chương</span><div class="chips mini">${chs}</div></div>
+      <div class="row"><span class="label sm">Chương</span><div class="chips mini scroll" id="chapRow">${chs}</div></div>
       <div class="row"><span class="label sm">Phần</span><div class="chips mini">${parts}</div></div>
     </div>
     <div id="study"></div>`;
+  const on = $('#chapRow .chip.on');   // điện thoại: hàng chương cuộn ngang, đưa chương đang chọn vào giữa
+  if (on) $('#chapRow').scrollLeft = on.offsetLeft - ($('#chapRow').clientWidth - on.offsetWidth) / 2;
   drawStudy();
 }
 
@@ -296,6 +304,7 @@ function drawStudy() {
 /* ---------- học: ngữ pháp ---------- */
 function drawGrammar(host) {
   const c = byId(state.chapter), list = grammarScope(c);
+  if (!list.length) { host.innerHTML = `<div class="empty">📭 Chương này chưa có ngữ pháp.</div>`; return; }
   host.innerHTML = list.map(({ g, n, sec }) => {
     const notes = g[2] ? `<ul class="g-notes">${g[2].split(' ｜ ').map(t => `<li>${jp(t)}</li>`).join('')}</ul>` : '';
     const ex = g.slice(3).map(t => `<div class="g-ex">${jp(t)}</div>`).join('');
@@ -371,7 +380,7 @@ function drawCards(host) {
   const back = state.cdir === 'jv' ? { main: w.m, cls: 'vn', sub: reading } : { main: disp(w), cls: '', sub: reading };
   const face = cards.flip
     ? `<div class="card-face back" data-act="flip"><div class="card-main ${back.cls}">${jp(back.main)}</div>${back.sub ? `<div class="card-sub">${esc(back.sub)}</div>` : ''}<div class="pos-row">${posBadges(w)}</div></div>`
-    : `<div class="card-face" data-act="flip"><div class="card-main ${front.cls}">${jp(front.main)}</div><div class="pos-row">${posBadges(w)}</div><div class="card-hint">Nhấn để lật thẻ · phím Space</div></div>`;
+    : `<div class="card-face" data-act="flip"><div class="card-main ${front.cls}">${jp(front.main)}</div><div class="pos-row">${posBadges(w)}</div><div class="card-hint">Nhấn để lật · vuốt trái/phải để đổi thẻ</div></div>`;
   host.innerHTML = `${opts}
     <div class="deck-info"><span>Thẻ ${cards.i + 1} / ${cards.list.length}</span>${known.has(w.id) ? '<span class="card-mark">✓ Đã nhớ</span>' : '<span></span>'}</div>
     <div class="card3d">${face}</div>
@@ -403,13 +412,13 @@ function drawKCards(host) {
       </div>
     </div>`;
   if (!cards.list.length) {
-    host.innerHTML = opts + `<div class="empty">🎉 Không còn chữ nào trong phạm vi này!<br>Bỏ chọn “Chưa nhớ” để xem lại.</div>`;
+    host.innerHTML = opts + (all.length ? `<div class="empty">🎉 Không còn chữ nào trong phạm vi này!<br>Bỏ chọn “Chưa nhớ” để xem lại.</div>` : `<div class="empty">📭 Chương này chưa có kanji.</div>`);
     return;
   }
   const it = cards.list[cards.i];
   const face = cards.flip
     ? `<div class="card-face back kback" data-act="flip">${kanjiDetail(it, true)}</div>`
-    : `<div class="card-face" data-act="flip"><div class="card-main kbig">${esc(it.k)}</div><div class="card-hint">Nhấn để lật thẻ · phím Space</div></div>`;
+    : `<div class="card-face" data-act="flip"><div class="card-main kbig">${esc(it.k)}</div><div class="card-hint">Nhấn để lật · vuốt trái/phải để đổi thẻ</div></div>`;
   host.innerHTML = `${opts}
     <div class="deck-info"><span>Thẻ ${cards.i + 1} / ${cards.list.length}</span>${known.has(it.id) ? '<span class="card-mark">✓ Đã nhớ</span>' : '<span></span>'}</div>
     <div class="card3d">${face}</div>
@@ -450,7 +459,7 @@ function drawKList(host) {
       </div>
       ${state.cover !== 'none' ? '<div class="row note">Nhấn vào phần bị che để xem đáp án.</div>' : ''}
     </div>
-    <div class="klist">${items}</div>`;
+    <div class="klist">${items || `<div class="empty">📭 Chương này chưa có kanji.</div>`}</div>`;
 }
 
 /* ---------- học: từ vựng — danh sách ---------- */
@@ -524,7 +533,7 @@ function drawPractice(host) {
       </div>
       <div class="bar" style="margin-top:8px"><i id="pBar"></i></div>
     </div>
-    ${practice.qs.length ? '' : '<div class="empty">Phạm vi này chưa có câu hỏi.</div>'}
+    ${practice.qs.length ? '' : '<div class="empty">📭 Phạm vi này chưa có câu hỏi.</div>'}
     <div id="practiceList">${practice.qs.map(qCard).join('')}</div>
     <div id="pFinish"></div>`;
   practice.qs.forEach((q, i) => {
@@ -589,7 +598,7 @@ const scoreMsg = r => (r >= .9 ? 'Xuất sắc! 🎉' : r >= .75 ? 'Tốt lắm!
 
 function chLabel(ids) {
   const s = ids.slice().sort((a, b) => a - b);
-  if (s.length === ALL_IDS.length) return 'Chương 1–12';
+  if (s.length === ALL_IDS.length) return `Chương 1–${ALL_IDS[ALL_IDS.length - 1]}`;
   if (s.length === 1) return `Chương ${s[0]}`;
   const contiguous = s.every((v, i) => i === 0 || v === s[i - 1] + 1);
   return contiguous ? `Chương ${s[0]}–${s[s.length - 1]}` : `${s.length} chương`;
@@ -1201,6 +1210,17 @@ app.addEventListener('click', e => {
   if (opt.closest('#practiceList')) answerPractice(opt);
   else if (opt.closest('#testList')) pickTestOption(opt);
 });
+
+/* điện thoại: vuốt ngang trên thẻ để chuyển thẻ trước / sau */
+{
+  let sx = 0, sy = 0;
+  document.addEventListener('touchstart', e => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (!e.target.closest || !e.target.closest('.card3d') || !cards || cards.list.length < 2) return;
+    const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dy) < 45) act(dx < 0 ? 'cnext' : 'cprev');
+  }, { passive: true });
+}
 
 document.addEventListener('keydown', e => {
   if (state.tab !== 'review' || state.mode !== 'study' || state.subject === 'grammar' || state.vview !== 'cards') return;
