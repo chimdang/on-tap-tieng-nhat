@@ -35,7 +35,7 @@
     '<div class="modes" role="group" aria-label="Cách ôn ngữ pháp">' +
     '<button class="mode" data-mode="lesson">Bài giảng</button><button class="mode" data-mode="cloze">Điền từ</button><button class="mode" data-mode="cards">Thẻ mẫu câu</button></div>' +
     '<div id="gram-body"></div>';
-  const scope = JP.scope($('gram-scope'), 'grammar', { sections: true, onChange: () => render() });
+  const scope = JP.scope($('gram-scope'), 'grammar', { sections: true, chapters: JP.CHAPTERS.filter((c) => JP.grammar[c] && JP.grammar[c].patterns.length), onChange: () => render() });
   const patterns = () => scope.filter(ALL);
 
   const cleanLine = (t) => t.replace(/^[•・\s]+/, '').trim();

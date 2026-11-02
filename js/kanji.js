@@ -41,7 +41,7 @@
     '<div class="modes" role="group" aria-label="Cách ôn kanji">' +
     '<button class="mode" data-mode="learn">Học và tập viết</button><button class="mode" data-mode="quiz">Luyện tập</button><button class="mode" data-mode="table">Bảng chữ</button></div>' +
     '<div id="kanji-body"></div>';
-  const scope = JP.scope($('kanji-scope'), 'kanji', { sections: false, onChange: () => { ui.mode === 'learn' ? fixIdx() : null; render(); } });
+  const scope = JP.scope($('kanji-scope'), 'kanji', { sections: false, chapters: Array.from(new Set(JP.kanji.map((e) => e.ch))).sort((a, b) => a - b), onChange: () => { ui.mode === 'learn' ? fixIdx() : null; render(); } });
   const list = () => scope.filter(JP.kanji);
 
   function fixIdx() {

@@ -22,7 +22,7 @@
   JP.store = (key, value) => {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* bị chặn thì bỏ qua */ }
   };
-  JP.CHAPTERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  JP.CHAPTERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   // ---- dữ liệu
   JP.vocab = (window.VOCAB || []).map((e) => Object.assign({ id: 'v|' + e.ch + e.sec + '|' + e.w + '|' + e.r }, e));
@@ -113,13 +113,17 @@
   // ---- chọn phạm vi: chương (nhiều chương) và bài A, B, C... (có thể bỏ bớt)
   JP.scope = (host, key, opts) => {
     const state = Object.assign({ chs: [1], off: [] }, JP.load('jp-scope-' + key, {}));
+    if (opts.chapters) {
+      state.chs = state.chs.filter((c) => opts.chapters.indexOf(c) >= 0);
+      if (!state.chs.length) state.chs = [opts.chapters[0]];
+    }
     const api = {
       get: () => state,
       has: (ch, sec) => state.chs.indexOf(ch) >= 0 && (!opts.sections || state.off.indexOf(ch + sec) < 0),
       filter: (items) => items.filter((i) => api.has(i.ch, i.sec)),
     };
     function paint() {
-      const chips = JP.CHAPTERS.map((c) =>
+      const chips = (opts.chapters || JP.CHAPTERS).map((c) =>
         '<label class="pick"><input type="checkbox" data-ch="' + c + '"' + (state.chs.indexOf(c) >= 0 ? ' checked' : '') + '><span>' + c + '</span></label>').join('');
       let secs = '';
       if (opts.sections) {
@@ -147,7 +151,7 @@
     });
     host.addEventListener('click', (ev) => {
       if (ev.target.dataset.all) {
-        state.chs = JP.CHAPTERS.slice(); state.off = [];
+        state.chs = (opts.chapters || JP.CHAPTERS).slice(); state.off = [];
         JP.store('jp-scope-' + key, state);
         paint();
         opts.onChange && opts.onChange(api);
