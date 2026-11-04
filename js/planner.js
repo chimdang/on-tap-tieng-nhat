@@ -144,26 +144,43 @@
     const ch = +t.chuong;
     const view = { vocab: 'vocab', kanji: 'kanji', grammar: 'grammar' }[t.loai];
     if (t.loai === 'review') return '<a href="#review" data-act="review">Mở ôn hôm nay</a>';
-    if (!view || !(ch >= 1 && ch <= 12)) return '';
+    if (!view) return '';
+    if (!(ch >= 1 && ch <= 13)) return '<a href="#' + view + '">Mở ' + esc(TYPE_NAME[t.loai].toLowerCase()) + '</a>';
     const sec = t.bai && JP.sections(ch).indexOf(t.bai) >= 0 ? ' data-sec="' + esc(t.bai) + '"' : '';
     return '<a href="#' + view + '" data-open="' + view + '" data-ch="' + ch + '"' + sec + '>Mở chương ' + ch + (sec ? t.bai : '') + '</a>';
   }
 
+  function planDates(d, perWeek) {
+    // kế hoạch có sẵn ghi rõ ngày từng buổi; kế hoạch do AI lập thì tính từ hôm nay
+    const fallback = dates(d.buoi.length, perWeek);
+    return d.buoi.map((b, i) => (b.ngay ? new Date(b.ngay + 'T00:00:00') : fallback[i]));
+  }
+
+  function renderDay(b, i, date, today) {
+    const isToday = date.toDateString() === today.toDateString();
+    const tasks = (b.viec || []).map((t, k) => {
+      const id = 's' + i + 't' + k;
+      return '<li class="plan-task' + (plan.done[id] ? ' is-done' : '') + '"><label><input type="checkbox" data-done="' + id + '"' + (plan.done[id] ? ' checked' : '') + '>' +
+        '<span class="plan-kind">' + esc(TYPE_NAME[t.loai] || 'Việc') + '</span> <span class="plan-text">' + esc(t.noi_dung || '') + '</span></label>' +
+        '<span class="plan-meta">' + (t.phut ? esc(t.phut) + ' phút' : '') + '</span>' + taskLink(t) + '</li>';
+    }).join('');
+    return '<section class="plan-day' + (isToday ? ' is-today' : '') + '"><h4>' + esc(fmt(date)) + (isToday ? ' (hôm nay)' : '') +
+      ' <small>' + esc(b.ten || 'Buổi ' + (i + 1)) + '</small></h4><ul>' + tasks + '</ul></section>';
+  }
+
   function renderPlan() {
     const d = plan.data;
-    const ds = dates(d.buoi.length, +plan.form.perWeek || 5);
-    const today = new Date().toDateString();
-    return '<div class="plan-out"><p class="plan-eval">' + esc(d.danh_gia || '') + '</p>' +
-      d.buoi.map((b, i) => {
-        const isToday = ds[i].toDateString() === today;
-        const tasks = (b.viec || []).map((t, k) => {
-          const id = 's' + i + 't' + k;
-          return '<li class="plan-task' + (plan.done[id] ? ' is-done' : '') + '"><label><input type="checkbox" data-done="' + id + '"' + (plan.done[id] ? ' checked' : '') + '>' +
-            '<span class="plan-kind">' + esc(TYPE_NAME[t.loai] || 'Việc') + '</span> <span class="plan-text">' + esc(t.noi_dung || '') + '</span></label>' +
-            '<span class="plan-meta">' + (t.phut ? esc(t.phut) + ' phút' : '') + '</span>' + taskLink(t) + '</li>';
-        }).join('');
-        return '<section class="plan-day' + (isToday ? ' is-today' : '') + '"><h4>' + esc(fmt(ds[i])) + (isToday ? ' (hôm nay)' : '') + ' <small>' + esc(b.ten || 'Buổi ' + (i + 1)) + '</small></h4><ul>' + tasks + '</ul></section>';
-      }).join('') +
+    const ds = planDates(d, +plan.form.perWeek || 5);
+    const today = new Date(new Date().toDateString());
+    const past = [], rest = [];
+    d.buoi.forEach((b, i) => { (ds[i] < today ? past : rest).push(renderDay(b, i, ds[i], today)); });
+    const doneCount = Object.keys(plan.done).filter((k) => plan.done[k]).length;
+    const total = d.buoi.reduce((n, b) => n + (b.viec || []).length, 0);
+    return '<div class="plan-out">' + (d.ten ? '<h3 class="plan-name">' + esc(d.ten) + '</h3>' : '') +
+      '<p class="plan-eval">' + esc(d.danh_gia || '') + '</p>' +
+      '<p class="plan-prog">Đã xong ' + doneCount + ' trên ' + total + ' việc.</p>' +
+      (past.length ? '<details class="plan-past"><summary>Các ngày đã qua (' + past.length + ')</summary>' + past.join('') + '</details>' : '') +
+      rest.join('') +
       ((d.meo || []).length ? '<ul class="plan-tips">' + d.meo.map((m) => '<li>' + esc(m) + '</li>').join('') + '</ul>' : '') +
       '<p class="plan-foot">Lập lúc ' + new Date(plan.made).toLocaleString('vi-VN') + '. <button class="link" data-act="clear-plan">Xoá kế hoạch</button></p></div>';
   }
@@ -171,9 +188,9 @@
   function paint() {
     if (!host) return;
     const hasKey = !!getKey();
-    host.innerHTML =
-      '<details class="plan"' + (plan || message || busy ? ' open' : '') + '><summary><span class="plan-title">Lập kế hoạch học bằng AI</span> <span class="plan-beta">bản thử</span></summary>' +
-      '<div class="plan-body"><div class="plan-form">' +
+    const controls =
+      (window.PLAN_N5 ? '<div class="plan-preset"><p><b>Kế hoạch có sẵn:</b> ôn thi N5 ngày 6/12, xếp theo lịch trường, không cần khoá API.</p><button class="btn btn-solid" data-act="load-n5">' + (plan && plan.data && plan.data.ten ? 'Nạp lại kế hoạch N5' : 'Dùng kế hoạch ôn thi N5') + '</button></div>' : '') +
+      '<h3 class="plan-ai-title">Hoặc nhờ AI lập kế hoạch riêng</h3><div class="plan-form">' +
       '<label class="plan-f"><span>Mục tiêu</span><select id="pl-goal">' + Object.keys(GOALS).map((g) => '<option value="' + g + '"' + (form.goal === g ? ' selected' : '') + '>' + esc(GOALS[g]) + '</option>').join('') + '</select></label>' +
       '<label class="plan-f"><span>Ngày cần xong (không bắt buộc)</span><input type="date" id="pl-date" value="' + esc(form.date) + '"></label>' +
       '<label class="plan-f"><span>Số buổi học mỗi tuần</span><input type="number" id="pl-week" min="1" max="7" value="' + (+form.perWeek) + '"></label>' +
@@ -186,7 +203,12 @@
       (hasKey ? '<button class="btn btn-sm" data-act="forget-key">Xoá khoá đã lưu</button>' : '') + '</div>' +
       (message ? '<p class="plan-msg" role="alert">' + esc(message) + '</p>' : '') +
       '<p class="plan-note">Khoá chỉ nằm trong trình duyệt này và chỉ được gửi tới api.anthropic.com, cùng bản tóm tắt số từ, kanji, mẫu đã thuộc và những mục hay sai. Mỗi lần lập tốn một khoản nhỏ trong tài khoản API của bạn. Nên tạo một khoá riêng có đặt hạn mức chi tiêu, và đừng dùng trên máy dùng chung.</p>' +
-      (plan ? renderPlan() : '') + '</div></details>';
+      '';
+    host.innerHTML =
+      '<details class="plan"' + (plan || message || busy ? ' open' : '') + '><summary><span class="plan-title">Kế hoạch học</span> <span class="plan-beta">có AI, bản thử</span></summary>' +
+      '<div class="plan-body">' + (plan
+        ? renderPlan() + '<details class="plan-ctl"' + (message || busy ? ' open' : '') + '><summary>Đổi kế hoạch hoặc nhờ AI lập lại</summary>' + controls + '</details>'
+        : controls) + '</div></details>';
   }
 
   function onChange(ev) {
@@ -202,6 +224,11 @@
       plan.done[t.dataset.done] = t.checked;
       JP.store(PLAN, plan);
       t.closest('.plan-task').classList.toggle('is-done', t.checked);
+      const prog = host.querySelector('.plan-prog');
+      if (prog) {
+        const total = plan.data.buoi.reduce((n, b) => n + (b.viec || []).length, 0);
+        prog.textContent = 'Đã xong ' + Object.keys(plan.done).filter((k) => plan.done[k]).length + ' trên ' + total + ' việc.';
+      }
       return;
     } else return;
     JP.store(FORM, form);
@@ -211,6 +238,11 @@
     const a = ev.target.closest('[data-act]');
     if (!a) return;
     if (a.dataset.act === 'forget-key') { setKey(''); message = 'Đã xoá khoá khỏi trình duyệt này.'; paint(); }
+    else if (a.dataset.act === 'load-n5') {
+      if (plan && Object.keys(plan.done || {}).length && !confirm('Nạp lại sẽ xoá các dấu tick đã làm. Tiếp tục?')) return;
+      plan = { made: Date.now(), form: { perWeek: 6 }, data: window.PLAN_N5, done: {} };
+      JP.store(PLAN, plan); message = ''; paint();
+    }
     else if (a.dataset.act === 'clear-plan') { plan = null; JP.store(PLAN, null); paint(); }
     else if (a.dataset.act === 'review') { ev.preventDefault(); JP.startReview && JP.startReview(false); }
   }
