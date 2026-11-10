@@ -22,7 +22,7 @@
   JP.store = (key, value) => {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* bị chặn thì bỏ qua */ }
   };
-  JP.CHAPTERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+  JP.CHAPTERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   // ---- dữ liệu
   JP.vocab = (window.VOCAB || []).map((e) => Object.assign({ id: 'v|' + e.ch + e.sec + '|' + e.w + '|' + e.r }, e));

@@ -17,6 +17,11 @@
 
   const form = Object.assign({ goal: 'all', date: '', perWeek: 5, minutes: 30, note: '', model: MODELS[0][0], remember: true }, JP.load(FORM, {}));
   let plan = JP.load(PLAN, null);
+  // kế hoạch có sẵn được cập nhật: giữ nguyên các dấu tick, chỉ đổi nội dung kế hoạch
+  if (plan && plan.data && window.PLAN_N5 && plan.data.ten === window.PLAN_N5.ten && (plan.data.rev || 1) < (window.PLAN_N5.rev || 1)) {
+    plan.data = window.PLAN_N5;
+    JP.store(PLAN, plan);
+  }
   let busy = false;
   let message = '';
   let host = null;
@@ -145,7 +150,7 @@
     const view = { vocab: 'vocab', kanji: 'kanji', grammar: 'grammar' }[t.loai];
     if (t.loai === 'review') return '<a href="#review" data-act="review">Mở ôn hôm nay</a>';
     if (!view) return '';
-    if (!(ch >= 1 && ch <= 13)) return '<a href="#' + view + '">Mở ' + esc(TYPE_NAME[t.loai].toLowerCase()) + '</a>';
+    if (!(ch >= 1 && ch <= 14)) return '<a href="#' + view + '">Mở ' + esc(TYPE_NAME[t.loai].toLowerCase()) + '</a>';
     const sec = t.bai && JP.sections(ch).indexOf(t.bai) >= 0 ? ' data-sec="' + esc(t.bai) + '"' : '';
     return '<a href="#' + view + '" data-open="' + view + '" data-ch="' + ch + '"' + sec + '>Mở chương ' + ch + (sec ? t.bai : '') + '</a>';
   }

@@ -76,7 +76,7 @@
     $('viewer').innerHTML =
       '<div class="viewer-head"><h2 class="vt" lang="ja">' + (p.pat ? '文型 ' + String(p.pat).padStart(2, '0') + '  ' : '') + esc(p.title) + '</h2>' +
       '<p class="where">Chương ' + p.ch + ', bài ' + p.sec + '. Slide ' + (i + 1) + ' trên ' + p.slides.length + '.' + (rec ? (JP.isMastered(p.id) ? ' Đã thuộc.' : ' Đang học.') : '') + '</p></div>' +
-      '<figure class="slide"><img src="' + s.img + '" alt="Slide ' + s.n + ' của chương ' + p.ch + ': ' + esc(p.title) + '" width="864" height="720"></figure>' +
+      '<figure class="slide"><img src="' + s.img + '" alt="Slide ' + s.n + ' của chương ' + p.ch + ': ' + esc(p.title) + '" width="' + (s.w || 864) + '" height="' + (s.h || 720) + '"></figure>' +
       '<div class="row pager"><button class="btn" id="g-prev">Slide trước</button><span class="pager-pos">' + (i + 1) + ' / ' + p.slides.length + '</span><button class="btn btn-solid" id="g-next">Slide sau</button></div>' +
       '<div class="row rate-row"><span class="rate-label">Bạn hiểu mẫu câu này chưa?</span><button class="btn btn-sm" id="g-no">Chưa hiểu</button><button class="btn btn-sm btn-solid" id="g-yes">Hiểu rồi</button></div>' +
       '<details class="astext"><summary>Xem nội dung dạng chữ</summary><div class="astext-body">' + (txt.join('') || '<p>Slide này chỉ có hình.</p>') + '</div></details>';
