@@ -22,6 +22,12 @@
     plan.data = window.PLAN_N5;
     JP.store(PLAN, plan);
   }
+  // lần đầu mở trên một trình duyệt chưa có kế hoạch: nạp luôn kế hoạch ôn thi N5 có sẵn (trừ khi người dùng đã xoá)
+  const PLAN_OFF = 'jp-plan-off';
+  if (!plan && window.PLAN_N5 && !JP.load(PLAN_OFF, false)) {
+    plan = { made: Date.now(), form: { perWeek: 6 }, data: window.PLAN_N5, done: {} };
+    JP.store(PLAN, plan);
+  }
   let busy = false;
   let message = '';
   let host = null;
@@ -246,9 +252,9 @@
     else if (a.dataset.act === 'load-n5') {
       if (plan && Object.keys(plan.done || {}).length && !confirm('Nạp lại sẽ xoá các dấu tick đã làm. Tiếp tục?')) return;
       plan = { made: Date.now(), form: { perWeek: 6 }, data: window.PLAN_N5, done: {} };
-      JP.store(PLAN, plan); message = ''; paint();
+      JP.store(PLAN, plan); JP.store(PLAN_OFF, false); message = ''; paint();
     }
-    else if (a.dataset.act === 'clear-plan') { plan = null; JP.store(PLAN, null); paint(); }
+    else if (a.dataset.act === 'clear-plan') { plan = null; JP.store(PLAN, null); JP.store(PLAN_OFF, true); paint(); }
     else if (a.dataset.act === 'review') { ev.preventDefault(); JP.startReview && JP.startReview(false); }
   }
 
