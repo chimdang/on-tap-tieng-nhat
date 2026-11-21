@@ -13,7 +13,7 @@
     ['claude-sonnet-5-5', 'Claude Sonnet 5.5 (rẻ hơn)'],
     ['claude-haiku-5-5', 'Claude Haiku 5.5 (rẻ nhất, nhanh)'],
   ];
-  const TYPE_NAME = { vocab: 'Từ vựng', kanji: 'Kanji', grammar: 'Ngữ pháp', review: 'Ôn tập' };
+  const TYPE_NAME = { vocab: 'Từ vựng', kanji: 'Kanji', grammar: 'Ngữ pháp', review: 'Ôn tập', de: 'Đề thi thử', tailieu: 'Tài liệu trường' };
 
   const form = Object.assign({ goal: 'all', date: '', perWeek: 5, minutes: 30, note: '', model: MODELS[0][0], remember: true }, JP.load(FORM, {}));
   let plan = JP.load(PLAN, null);
@@ -172,7 +172,7 @@
     const tasks = (b.viec || []).map((t, k) => {
       const id = 's' + i + 't' + k;
       return '<li class="plan-task' + (plan.done[id] ? ' is-done' : '') + '"><label><input type="checkbox" data-done="' + id + '"' + (plan.done[id] ? ' checked' : '') + '>' +
-        '<span class="plan-kind">' + esc(TYPE_NAME[t.loai] || 'Việc') + '</span> <span class="plan-text">' + esc(t.noi_dung || '') + '</span></label>' +
+        (t.gio ? '<span class="plan-time">' + esc(t.gio) + '</span> ' : '') + '<span class="plan-kind">' + esc(TYPE_NAME[t.loai] || 'Việc') + '</span> <span class="plan-text">' + esc(t.noi_dung || '') + '</span></label>' +
         '<span class="plan-meta">' + (t.phut ? esc(t.phut) + ' phút' : '') + '</span>' + taskLink(t) + '</li>';
     }).join('');
     return '<section class="plan-day' + (isToday ? ' is-today' : '') + '"><h4>' + esc(fmt(date)) + (isToday ? ' (hôm nay)' : '') +

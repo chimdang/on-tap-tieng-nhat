@@ -553,6 +553,7 @@ ruby rt { font-size: .5em; font-weight: 400; }
 .plan-task { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 4px 14px; align-items: baseline; padding: 7px 0; border-bottom: 1.5px dotted var(--line); }
 .plan-task label { display: flex; align-items: baseline; gap: 8px; cursor: pointer; }
 .plan-kind { flex: none; padding: 0 8px; background: var(--ok-wash); border-radius: 6px; font-size: .8125rem; font-weight: 700; }
+.plan-time { flex: none; font-size: .8125rem; font-weight: 800; font-variant-numeric: tabular-nums; opacity: .85; }
 .plan-meta { color: var(--ink-2); font-size: .875rem; white-space: nowrap; }
 .plan-task a { font-size: .875rem; font-weight: 600; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 .plan-task.is-done .plan-text { color: var(--ink-2); text-decoration: line-through; }
