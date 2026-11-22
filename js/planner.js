@@ -13,7 +13,7 @@
     ['claude-sonnet-5-5', 'Claude Sonnet 5.5 (rẻ hơn)'],
     ['claude-haiku-5-5', 'Claude Haiku 5.5 (rẻ nhất, nhanh)'],
   ];
-  const TYPE_NAME = { vocab: 'Từ vựng', kanji: 'Kanji', grammar: 'Ngữ pháp', review: 'Ôn tập', de: 'Đề thi thử', tailieu: 'Tài liệu trường' };
+  const TYPE_NAME = { vocab: 'Từ vựng', kanji: 'Kanji', grammar: 'Ngữ pháp', review: 'Ôn tập', de: 'Đề thi thử', tailieu: 'Tài liệu trường', nghi: 'Nghỉ' };
 
   const form = Object.assign({ goal: 'all', date: '', perWeek: 5, minutes: 30, note: '', model: MODELS[0][0], remember: true }, JP.load(FORM, {}));
   let plan = JP.load(PLAN, null);
