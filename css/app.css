@@ -564,3 +564,24 @@ ruby rt { font-size: .5em; font-weight: 400; }
   .plan-form { grid-template-columns: 1fr; }
   .plan-task { grid-template-columns: 1fr; }
 }
+
+/* Học nhanh một nhóm kanji (mở từ kế hoạch) */
+.plan-drill { margin-left: 8px; }
+.drill-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.drill-chip { min-width: 3rem; padding: 6px 10px; border: 1.5px solid var(--grid-strong); border-radius: 10px; background: var(--paper, transparent); color: var(--ink); font-size: 1.5rem; line-height: 1.2; font-family: inherit; text-align: center; }
+button.drill-chip { cursor: pointer; }
+.drill-chip.is-on { border-color: var(--ink); box-shadow: 0 0 0 2px var(--ink) inset; }
+.drill-chip.is-ok { background: #d8f3e2; border-color: #2fbf6c; }
+.drill-chip.is-half { background: #fff5d6; border-color: #e0b13a; }
+.drill-chip.is-ng { background: #fde1e1; border-color: #d65a5a; }
+.drill-big .ghost { color: var(--ink); }
+.drill-count { margin: 0 0 8px; color: var(--ink-2); }
+.drill-tip { margin-top: 22px; color: var(--ink-2); }
+.drill-sum { padding: 8px 0; }
+.drill-sum h3 { margin-bottom: 10px; font-size: 1.25rem; }
+.drill-sum .row { margin-top: 14px; flex-wrap: wrap; gap: 10px; }
+@media (prefers-color-scheme: dark) {
+  .drill-chip.is-ok { background: #174d2c; }
+  .drill-chip.is-half { background: #51420f; }
+  .drill-chip.is-ng { background: #5a2323; }
+}

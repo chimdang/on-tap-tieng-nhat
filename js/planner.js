@@ -151,6 +151,25 @@
   }
   const fmt = (d) => ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'][d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth() + 1);
 
+  // nhóm chữ của việc kanji: việc "Học và tập viết" cho chữ liệt kê sau dấu hai chấm; việc "Trắc nghiệm" lấy các chữ đã học trong ngày
+  const LEARN_RE = /^Học và tập viết \d+ kanji[^:]*:\s*(.+)$/;
+  function drillChars(b, k) {
+    const t = b.viec[k];
+    if (t.loai !== 'kanji') return null;
+    const own = LEARN_RE.exec(t.noi_dung || '');
+    if (own) return { chars: own[1].split(/\s+/).filter(Boolean), mode: 'learn', label: 'Học và ôn nhanh ' + own[1].split(/\s+/).filter(Boolean).length + ' chữ này' };
+    if (!/^Trắc nghiệm/.test(t.noi_dung || '')) return null;
+    let all = [];
+    for (let i = 0; i < k; i++) { const m = LEARN_RE.exec(b.viec[i].noi_dung || ''); if (m) all = all.concat(m[1].split(/\s+/).filter(Boolean)); }
+    if (!all.length) return null;
+    const n = /(\d+) chữ/.exec(t.noi_dung);
+    const take = n && +n[1] < all.length ? all.slice(-(+n[1])) : all;
+    return { chars: take, mode: 'quiz', label: 'Ôn nhanh ' + take.length + ' chữ này' };
+  }
+  function drillBtn(d) {
+    return d ? ' <button class="btn btn-sm btn-solid plan-drill" data-act="drill" data-mode="' + d.mode + '" data-chars="' + esc(d.chars.join('')) + '">' + esc(d.label) + '</button>' : '';
+  }
+
   function taskLink(t) {
     const ch = +t.chuong;
     const view = { vocab: 'vocab', kanji: 'kanji', grammar: 'grammar' }[t.loai];
@@ -173,7 +192,7 @@
       const id = 's' + i + 't' + k;
       return '<li class="plan-task' + (plan.done[id] ? ' is-done' : '') + '"><label><input type="checkbox" data-done="' + id + '"' + (plan.done[id] ? ' checked' : '') + '>' +
         (t.gio ? '<span class="plan-time">' + esc(t.gio) + '</span> ' : '') + '<span class="plan-kind">' + esc(TYPE_NAME[t.loai] || 'Việc') + '</span> <span class="plan-text">' + esc(t.noi_dung || '') + '</span></label>' +
-        '<span class="plan-meta">' + (t.phut ? esc(t.phut) + ' phút' : '') + '</span>' + taskLink(t) + '</li>';
+        '<span class="plan-meta">' + (t.phut ? esc(t.phut) + ' phút' : '') + '</span>' + drillBtn(drillChars(b, k)) + taskLink(t) + '</li>';
     }).join('');
     return '<section class="plan-day' + (isToday ? ' is-today' : '') + '"><h4>' + esc(fmt(date)) + (isToday ? ' (hôm nay)' : '') +
       ' <small>' + esc(b.ten || 'Buổi ' + (i + 1)) + '</small></h4><ul>' + tasks + '</ul></section>';
@@ -255,6 +274,7 @@
       JP.store(PLAN, plan); JP.store(PLAN_OFF, false); message = ''; paint();
     }
     else if (a.dataset.act === 'clear-plan') { plan = null; JP.store(PLAN, null); JP.store(PLAN_OFF, true); paint(); }
+    else if (a.dataset.act === 'drill') { ev.preventDefault(); JP.drill && JP.drill.open(Array.from(a.dataset.chars), a.dataset.mode); }
     else if (a.dataset.act === 'review') { ev.preventDefault(); JP.startReview && JP.startReview(false); }
   }
 
