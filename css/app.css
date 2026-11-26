@@ -603,3 +603,14 @@ button.drill-chip { cursor: pointer; }
   .gap-w, .gap-r, .gap-v { grid-column: 1; }
   .gap-list li .say { grid-column: 2; grid-row: 1 / span 3; }
 }
+
+/* Điền nghĩa */
+.ty-opts { flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.ty-word { display: flex; align-items: center; gap: 14px; margin: 8px 0 14px; }
+.ty-form { display: flex; flex-wrap: wrap; gap: 10px; }
+.ty-in { flex: 1 1 16rem; min-width: 0; padding: 12px 14px; border: 2px solid var(--grid-strong); border-radius: 12px; background: transparent; color: var(--ink); font: inherit; font-size: 1.125rem; }
+.ty-in:focus { outline: none; border-color: var(--ink); }
+#ty-res { margin-top: 16px; }
+#ty-res .row { flex-wrap: wrap; gap: 10px; }
+.ty-full { margin: 6px 0 14px; font-size: 1.125rem; }
+.ty-bad { margin: 8px 0; padding-left: 20px; line-height: 1.9; }
