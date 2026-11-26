@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   const JP = window.JP;
-  const VIEWS = { home: JP.homeView, vocab: JP.vocabView, kanji: JP.kanjiView, grammar: JP.grammarView, review: JP.reviewView, drill: JP.drillView };
+  const VIEWS = { home: JP.homeView, vocab: JP.vocabView, kanji: JP.kanjiView, grammar: JP.grammarView, review: JP.reviewView, drill: JP.drillView, gap: JP.gapView };
   let current = null;
 
   function show(name) {

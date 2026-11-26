@@ -67,6 +67,7 @@
       '<dl class="today-sum"><div><dt>Từ vựng</dt><dd><b>' + tot.vd + '</b> trên ' + tot.v + '</dd></div>' +
       '<div><dt>Kanji</dt><dd><b>' + tot.kd + '</b> trên ' + tot.k + '</dd></div>' +
       '<div><dt>Mẫu ngữ pháp</dt><dd><b>' + tot.gd + '</b> trên ' + tot.g + '</dd></div></dl></div>' +
+      (JP.gapView && JP.gapView.count ? '<div class="gap-entry"><div><h2>Từ cần học gấp</h2><p>' + JP.gapView.count + ' từ hay gặp trong đề của trường: lật thẻ và ôn nhanh.</p></div><button class="btn btn-solid" id="go-gap">Học ngay</button></div>' : '') +
       '<div id="planner"></div>' +
       '<h2 class="toc-title">Mục lục</h2><div class="toc">' +
       rows.map((r) =>
@@ -100,7 +101,8 @@
       JP.go(a.dataset.open);
       return;
     }
-    if (ev.target.id === 'go-review') startReview(false);
+    if (ev.target.id === 'go-gap') JP.go('gap');
+    else if (ev.target.id === 'go-review') startReview(false);
     else if (ev.target.id === 'go-new') startReview(true);
     else if (ev.target.id === 'reset-all' && confirm('Xoá toàn bộ tiến độ ôn tập?')) { JP.resetProgress(); }
   });
