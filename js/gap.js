@@ -90,8 +90,8 @@
     return {
       id: x.id, item: x,
       ask: m === 'read' ? 'Chọn cách đọc đúng' : m === 'mean' ? 'Chọn nghĩa đúng' : 'Chọn từ tiếng Nhật đúng',
-      // câu hỏi cách đọc thì không gắn furigana, vì đó chính là đáp án
-      prompt: '<p class="bigword"' + (m === 'word' ? '' : ' lang="ja"') + '>' + (m === 'word' ? esc(x.vi) : m === 'mean' ? ruby(x) : esc(x.w)) + '</p>',
+      // người học muốn có furigana ở mọi câu; muốn tự kiểm tra cách đọc thì tắt nút Furigana
+      prompt: '<p class="bigword"' + (m === 'word' ? '' : ' lang="ja"') + '>' + (m === 'word' ? esc(x.vi) : ruby(x)) + '</p>',
       hint: '', say: '', sayAfter: firstRd(x.r),
       options: opts.map((o) => ({ html: field === 'w' ? ruby(o) : esc(o[field]), plain: esc(o[field]), lang: m === 'mean' ? 'vi' : 'ja' })),
       answer: opts.indexOf(x),
