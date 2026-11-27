@@ -44,13 +44,22 @@
 
   // ===== lật thẻ =====
   function card(x, flipped) {
-    if (!flipped) return '<div class="fc-front"><p class="bigword" lang="ja">' + esc(x.w) + '</p><p class="flash-hint">Đọc to và đoán nghĩa, rồi bấm để lật</p></div>';
+    if (!flipped) return '<div class="fc-front"><p class="bigword" lang="ja">' + ruby(x) + '</p><p class="flash-hint">Đọc to và đoán nghĩa, rồi bấm để lật</p></div>';
     return '<div class="fc-top">' + JP.sayBtn(firstRd(x.r)) + '<span class="fc-read" lang="ja">' + esc(x.r) + '</span></div>' +
       '<div class="fc-main"><p class="bigword" lang="ja">' + esc(x.w) + '</p><p class="fc-mean">' + esc(x.vi) + '</p></div>';
   }
+  // furigana: luôn dựng sẵn, bật tắt bằng lớp CSS nên không làm mất câu đang hỏi
+  const ruby = (x) => (hasKanji(x) ? JP.rubyWord({ w: x.w, r: firstRd(x.r) }) : esc(x.w));
+  function bindTools() {
+    const body = $('gap-body');
+    const apply = () => body.classList.toggle('no-furi', !JP.furi());
+    apply();
+    JP.bindFuri(body, apply);
+    JP.bindAuto(body);
+  }
   function showFlash() {
-    $('gap-body').innerHTML = '<div class="group tool-row">' + JP.autoPick() + '</div><div id="gap-flash"></div>';
-    JP.bindAuto($('gap-body'));
+    $('gap-body').innerHTML = '<div class="group tool-row">' + JP.furiPick() + JP.autoPick() + '</div><div id="gap-flash"></div>';
+    bindTools();
     flash = JP.flash($('gap-flash'), {
       items: () => JP.order(list()),
       render: card,
@@ -81,9 +90,10 @@
     return {
       id: x.id, item: x,
       ask: m === 'read' ? 'Chọn cách đọc đúng' : m === 'mean' ? 'Chọn nghĩa đúng' : 'Chọn từ tiếng Nhật đúng',
-      prompt: '<p class="bigword"' + (m === 'word' ? '' : ' lang="ja"') + '>' + esc(m === 'word' ? x.vi : x.w) + '</p>',
+      // câu hỏi cách đọc thì không gắn furigana, vì đó chính là đáp án
+      prompt: '<p class="bigword"' + (m === 'word' ? '' : ' lang="ja"') + '>' + (m === 'word' ? esc(x.vi) : m === 'mean' ? ruby(x) : esc(x.w)) + '</p>',
       hint: '', say: '', sayAfter: firstRd(x.r),
-      options: opts.map((o) => ({ html: esc(o[field]), plain: esc(o[field]), lang: m === 'mean' ? 'vi' : 'ja' })),
+      options: opts.map((o) => ({ html: field === 'w' ? ruby(o) : esc(o[field]), plain: esc(o[field]), lang: m === 'mean' ? 'vi' : 'ja' })),
       answer: opts.indexOf(x),
       explain: '<b lang="ja">' + esc(x.w) + '</b>' + (x.r !== x.w ? ' (<span lang="ja">' + esc(x.r) + '</span>)' : '') + ': ' + esc(x.vi) + '.',
     };
@@ -106,8 +116,8 @@
     if (quiz) quiz.active = false;
     const src = JP.shuffle(items || list());
     run = { queue: src, total: src.length, bad: [] };
-    $('gap-body').innerHTML = '<p class="drill-count" id="gap-prog"></p><div class="group tool-row">' + JP.autoPick() + '</div><div id="gap-quiz"></div>';
-    JP.bindAuto($('gap-body'));
+    $('gap-body').innerHTML = '<p class="drill-count" id="gap-prog"></p><div class="group tool-row">' + JP.furiPick() + JP.autoPick() + '</div><div id="gap-quiz"></div>';
+    bindTools();
     qopts = {
       next: nextQ,
       empty: '',

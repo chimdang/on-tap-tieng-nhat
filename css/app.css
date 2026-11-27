@@ -614,3 +614,6 @@ button.drill-chip { cursor: pointer; }
 #ty-res .row { flex-wrap: wrap; gap: 10px; }
 .ty-full { margin: 6px 0 14px; font-size: 1.125rem; }
 .ty-bad { margin: 8px 0; padding-left: 20px; line-height: 1.9; }
+
+/* tắt furigana ở trang bộ từ */
+.no-furi rt, .no-furi rp { display: none; }
