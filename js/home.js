@@ -68,6 +68,7 @@
       '<div><dt>Kanji</dt><dd><b>' + tot.kd + '</b> trên ' + tot.k + '</dd></div>' +
       '<div><dt>Mẫu ngữ pháp</dt><dd><b>' + tot.gd + '</b> trên ' + tot.g + '</dd></div></dl></div>' +
       (JP.gapView && JP.gapView.count ? '<div class="gap-entry"><div><h2>Từ cần học gấp</h2><p>' + JP.gapView.count + ' từ hay gặp trong đề của trường: lật thẻ và ôn nhanh.</p></div><button class="btn btn-solid" id="go-gap">Học ngay</button></div>' : '') +
+      (JP.gapView && JP.gapView.kanjiCount ? '<div class="gap-entry"><div><h2>Từ viết bằng kanji</h2><p>' + JP.gapView.kanjiCount + ' từ theo chủ đề, kèm nhóm chữ dễ nhầm.</p></div><button class="btn btn-solid" id="go-kanji-words">Học ngay</button></div>' : '') +
       '<div class="gap-entry"><div><h2>Điền nghĩa từ vựng</h2><p>Hiện từ tiếng Nhật, bạn tự gõ nghĩa. Chọn theo chương hoặc từ cần học gấp.</p></div><button class="btn btn-solid" id="go-type">Làm bài</button></div>' +
       '<div id="planner"></div>' +
       '<h2 class="toc-title">Mục lục</h2><div class="toc">' +
@@ -103,7 +104,8 @@
       return;
     }
     if (ev.target.id === 'go-type') JP.go('type');
-    else if (ev.target.id === 'go-gap') JP.go('gap');
+    else if (ev.target.id === 'go-gap') JP.gapView.open('gap');
+    else if (ev.target.id === 'go-kanji-words') JP.gapView.open('kanji');
     else if (ev.target.id === 'go-review') startReview(false);
     else if (ev.target.id === 'go-new') startReview(true);
     else if (ev.target.id === 'reset-all' && confirm('Xoá toàn bộ tiến độ ôn tập?')) { JP.resetProgress(); }

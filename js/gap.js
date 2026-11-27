@@ -1,27 +1,40 @@
-/* Từ cần học gấp (data/hoc-gap.js): lật thẻ, ôn nhanh và bảng từ theo từng nhóm. */
+/* Hai bộ từ: cần học gấp (data/hoc-gap.js) và từ viết bằng kanji (data/tu-kanji.js). Lật thẻ, ôn nhanh, bảng từ theo nhóm. */
 (function () {
   'use strict';
   const JP = window.JP;
   const $ = JP.$;
   const esc = JP.esc;
   const host = $('v-gap');
-  const GROUPS = window.HOC_GAP || [];
+  const SETS = {
+    gap: { ten: 'Từ cần học gấp', note: 'Lọc từ phần trùng giữa từ vựng trên web và 4 đề của trường. Học lần lượt từ trái sang phải.', groups: window.HOC_GAP || [] },
+    kanji: { ten: 'Từ viết bằng kanji', note: '★ là từ có trong 3 hoặc 4 đề của trường. Đọc cả từ, vì đề hay hỏi cách đọc của từ.', groups: window.TU_KANJI || [] },
+  };
   const KEY = 'jp-gap';
 
   // từ nào trùng với từ vựng trên web thì dùng chung mã tiến độ, để cũng hiện trong "Ôn hôm nay"
   const clean = (s) => String(s || '').split('/')[0].replace(/[（(][^）)]*[）)]/g, '').replace(/[～〜\s]/g, '');
   const known = {};
   JP.vocab.forEach((e) => { known[clean(e.w) + '|' + clean(e.r || e.w)] = e.id; });
-  GROUPS.forEach((g) => g.items.forEach((x) => {
-    x.id = known[x.w + '|' + x.r] || 'gap|' + x.w + '|' + x.r;
-    x.g = g.key;
-  }));
-  const ALL = [].concat.apply([], GROUPS.map((g) => g.items));
+  Object.keys(SETS).forEach((k) => {
+    const set = SETS[k], seen = {};
+    set.all = [];
+    set.groups.forEach((g) => g.items.forEach((x) => {
+      x.id = known[x.w + '|' + clean(x.r)] || 'gap|' + x.w + '|' + x.r;
+      x.g = g.key;
+      if (!seen[x.id]) { seen[x.id] = true; set.all.push(x); }   // nhóm ★ lặp lại từ của nhóm khác
+    }));
+  });
   const hasKanji = (x) => x.w !== x.r && /[㐀-鿿]/.test(x.w);
 
-  const ui = Object.assign({ group: GROUPS.length ? GROUPS[0].key : 'all', mode: 'flash', hide: false }, JP.load(KEY, {}));
+  const ui = Object.assign({ set: 'gap', picked: {}, mode: 'flash', hide: false }, JP.load(KEY, {}));
   const save = () => JP.store(KEY, ui);
-  const list = () => (ui.group === 'all' ? ALL : ALL.filter((x) => x.g === ui.group));
+  const cur = () => SETS[ui.set] || SETS.gap;
+  const group = () => {
+    const k = ui.picked[ui.set];
+    return k === 'all' || cur().groups.some((g) => g.key === k) ? k : (cur().groups[0] || {}).key;
+  };
+  const list = () => (group() === 'all' ? cur().all : ((cur().groups.find((g) => g.key === group()) || {}).items || []));
+  const firstRd = (r) => r.split('/')[0].trim();
   let flash = null, quiz = null, qopts = null, run = null;
 
   function stop() {
@@ -32,7 +45,7 @@
   // ===== lật thẻ =====
   function card(x, flipped) {
     if (!flipped) return '<div class="fc-front"><p class="bigword" lang="ja">' + esc(x.w) + '</p><p class="flash-hint">Đọc to và đoán nghĩa, rồi bấm để lật</p></div>';
-    return '<div class="fc-top">' + JP.sayBtn(x.r) + '<span class="fc-read" lang="ja">' + esc(x.r) + '</span></div>' +
+    return '<div class="fc-top">' + JP.sayBtn(firstRd(x.r)) + '<span class="fc-read" lang="ja">' + esc(x.r) + '</span></div>' +
       '<div class="fc-main"><p class="bigword" lang="ja">' + esc(x.w) + '</p><p class="fc-mean">' + esc(x.vi) + '</p></div>';
   }
   function showFlash() {
@@ -41,7 +54,7 @@
     flash = JP.flash($('gap-flash'), {
       items: () => JP.order(list()),
       render: card,
-      speak: (x, flipped) => (flipped ? x.r : ''),
+      speak: (x, flipped) => (flipped ? firstRd(x.r) : ''),
       onRate: (x, ok) => JP.rate(x.id, ok),
       empty: 'Xong cả nhóm này. Chọn nhóm khác hoặc chuyển sang "Ôn nhanh".',
     });
@@ -52,7 +65,7 @@
   // ===== ôn nhanh: mỗi từ phải trả lời đúng 1 lần, từ sai quay lại sau =====
   function distract(item, field) {
     const seen = {}; seen[item[field]] = true;
-    const ranked = ALL.filter((o) => o !== item).map((o) => ({
+    const ranked = cur().all.filter((o) => o.id !== item.id).map((o) => ({
       o, s: (o.g === item.g ? 2 : 0) + (Math.abs(o[field].length - item[field].length) <= 1 ? 1 : 0) +
         (field === 'r' && o.r.charAt(0) === item.r.charAt(0) ? 1 : 0) + Math.random() * 1.5,
     })).sort((a, b) => b.s - a.s);
@@ -69,7 +82,7 @@
       id: x.id, item: x,
       ask: m === 'read' ? 'Chọn cách đọc đúng' : m === 'mean' ? 'Chọn nghĩa đúng' : 'Chọn từ tiếng Nhật đúng',
       prompt: '<p class="bigword"' + (m === 'word' ? '' : ' lang="ja"') + '>' + esc(m === 'word' ? x.vi : x.w) + '</p>',
-      hint: '', say: '', sayAfter: x.r,
+      hint: '', say: '', sayAfter: firstRd(x.r),
       options: opts.map((o) => ({ html: esc(o[field]), plain: esc(o[field]), lang: m === 'mean' ? 'vi' : 'ja' })),
       answer: opts.indexOf(x),
       explain: '<b lang="ja">' + esc(x.w) + '</b>' + (x.r !== x.w ? ' (<span lang="ja">' + esc(x.r) + '</span>)' : '') + ': ' + esc(x.vi) + '.',
@@ -116,26 +129,26 @@
 
   // ===== bảng từ =====
   function showTable() {
-    const groups = GROUPS.filter((g) => ui.group === 'all' || g.key === ui.group);
+    const groups = cur().groups.filter((g) => (group() === 'all' ? g.key !== 'sao' : g.key === group()));
     $('gap-body').innerHTML = '<div class="group tool-row"><label class="pick"><input type="checkbox" id="gap-hide"' + (ui.hide ? ' checked' : '') + '><span>Che nghĩa</span></label>' +
       '<span class="gap-note">Khi che, bấm vào dòng để hiện.</span></div>' +
       groups.map((g) => '<section class="chap"><h3>' + esc(g.ten) + ' <small>' + g.items.length + ' từ</small></h3><ul class="gap-list' + (ui.hide ? ' is-hidden' : '') + '">' +
-        g.items.map((x) => '<li><span class="gap-w" lang="ja">' + esc(x.w) + '</span><span class="gap-r" lang="ja">' + (x.r !== x.w ? esc(x.r) : '') + '</span><span class="gap-v">' + esc(x.vi) + '</span>' + JP.sayBtn(x.r, true) + '</li>').join('') +
+        g.items.map((x) => '<li><span class="gap-w" lang="ja">' + (x.sao ? '★' : '') + esc(x.w) + '</span><span class="gap-r" lang="ja">' + (x.r !== x.w ? esc(x.r) : '') + '</span><span class="gap-v">' + esc(x.vi) + '</span>' + JP.sayBtn(firstRd(x.r), true) + '</li>').join('') +
         '</ul></section>').join('');
     $('gap-hide').addEventListener('change', (ev) => { ui.hide = ev.target.checked; save(); showTable(); });
   }
 
   function render() {
     stop();
-    const pick = (v, l) => '<label class="pick"><input type="radio" name="gapg" value="' + v + '"' + (ui.group === v ? ' checked' : '') + '><span>' + esc(l) + '</span></label>';
+    const pick = (v, l) => '<label class="pick"><input type="radio" name="gapg" value="' + v + '"' + (group() === v ? ' checked' : '') + '><span>' + esc(l) + '</span></label>';
     host.innerHTML = '<p class="back-row"><button class="link" data-gap="back">Về mục lục</button></p>' +
-      '<h2 class="review-title">Từ cần học gấp</h2>' +
-      '<p class="gap-note">Lọc từ phần trùng giữa từ vựng trên web và 4 đề của trường. Học lần lượt từ trái sang phải.</p>' +
-      '<div class="group tool-row gap-groups">' + GROUPS.map((g) => pick(g.key, g.ten + ' (' + g.items.length + ')')).join('') + pick('all', 'Tất cả (' + ALL.length + ')') + '</div>' +
+      '<h2 class="review-title">' + esc(cur().ten) + '</h2>' +
+      '<p class="gap-note">' + esc(cur().note) + '</p>' +
+      '<div class="group tool-row gap-groups">' + cur().groups.map((g) => pick(g.key, g.ten + ' (' + g.items.length + ')')).join('') + pick('all', 'Tất cả (' + cur().all.length + ')') + '</div>' +
       '<div class="modes" role="group"><button class="mode" data-mode="flash">Lật thẻ</button><button class="mode" data-mode="quiz">Ôn nhanh</button><button class="mode" data-mode="table">Bảng từ</button></div>' +
       '<div id="gap-body"></div>';
     host.querySelectorAll('.mode').forEach((b) => b.setAttribute('aria-pressed', b.dataset.mode === ui.mode));
-    host.querySelectorAll('input[name=gapg]').forEach((x) => x.addEventListener('change', () => { ui.group = x.value; save(); render(); }));
+    host.querySelectorAll('input[name=gapg]').forEach((x) => x.addEventListener('change', () => { ui.picked[ui.set] = x.value; save(); render(); }));
     if (ui.mode === 'quiz') showQuiz(); else if (ui.mode === 'table') showTable(); else showFlash();
   }
 
@@ -157,7 +170,9 @@
   });
 
   JP.gapView = {
-    count: ALL.length,
+    count: SETS.gap.all.length,
+    kanjiCount: SETS.kanji.all.length,
+    open(name) { ui.set = SETS[name] ? name : 'gap'; save(); JP.go('gap'); },
     show() { render(); window.scrollTo(0, 0); },
     hide() { stop(); },
   };

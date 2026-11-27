@@ -47,7 +47,11 @@
   let run = null, cur = null, state = 'ask', scope = null;
 
   function pool() {
-    if (ui.source === 'gap') return [].concat.apply([], (window.HOC_GAP || []).map((g) => g.items));
+    if (ui.source === 'gap' || ui.source === 'kanji') {
+      const seen = {};
+      return [].concat.apply([], ((ui.source === 'gap' ? window.HOC_GAP : window.TU_KANJI) || []).map((g) => g.items))
+        .filter((x) => !seen[x.id] && (seen[x.id] = true));
+    }
     return scope.filter(JP.vocab).filter((e) => e.vi);
   }
   function start(items) {
@@ -62,7 +66,7 @@
     next();
   }
   function wordHtml(x) {
-    return JP.furi() && x.r && x.r !== x.w ? JP.rubyWord(x) : esc(x.w);
+    return JP.furi() && x.r && x.r !== x.w ? JP.rubyWord({ w: x.w, r: x.r.split('/')[0].trim() }) : esc(x.w);
   }
   function progress() {
     const el = $('ty-prog');
@@ -120,7 +124,7 @@
     host.innerHTML =
       '<p class="back-row"><button class="link" data-ty="back">Về mục lục</button></p>' +
       '<h2 class="review-title">Điền nghĩa từ vựng</h2>' +
-      '<div class="group tool-row ty-opts">' + pick('tysrc', 'chap', 'Theo chương', ui.source === 'chap') + pick('tysrc', 'gap', 'Từ cần học gấp', ui.source === 'gap') + '</div>' +
+      '<div class="group tool-row ty-opts">' + pick('tysrc', 'chap', 'Theo chương', ui.source === 'chap') + pick('tysrc', 'gap', 'Từ cần học gấp', ui.source === 'gap') + pick('tysrc', 'kanji', 'Từ viết bằng kanji', ui.source === 'kanji') + '</div>' +
       '<div id="ty-scope"' + (ui.source === 'chap' ? '' : ' hidden') + '></div>' +
       '<div class="group tool-row ty-opts"><span class="group-label">Số từ mỗi lượt</span>' +
       [[10, '10'], [20, '20'], [50, '50'], [0, 'Tất cả']].map(([v, l]) => pick('tysize', v, l, ui.size === v)).join('') + JP.furiPick() + JP.autoPick() + '</div>' +
